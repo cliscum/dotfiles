@@ -1,0 +1,71 @@
+[options]
+allow_bold = true
+audible_bell = false
+browser = xdg-open
+clickable_url = true
+cursor_blink = on
+cursor_shape = block
+dynamic_title = true
+filter_unmatched_urls = false
+font = Inconsolata 13
+fullscreen = false
+mouse_autohide = false
+resize_grip = false
+scroll_on_keystroke = true
+scroll_on_output = false
+scrollback_lines = 1000
+search_wrap = true
+urgent_on_bell = true
+
+# ! Colors from http://flatuicolors.com
+# #define COLOR_ALIZARIN      #e74c3c
+# #define COLOR_AMETHYST      #9b59b6
+# #define COLOR_ASBESTOS      #7f8c8d
+# #define COLOR_BELIZE_HOLE   #2980b9
+# #define COLOR_CARROT        #e67e22
+# #define COLOR_CLOUDS        #ecf0f1
+# #define COLOR_CONCRETE      #95a5a6
+# #define COLOR_EMERALD       #2ecc71
+# #define COLOR_GREEN_SEA     #16a085
+# #define COLOR_MIDNIGHT_BLUE #2c3e50
+# #define COLOR_NEPHRITIS     #27ae60
+# #define COLOR_ORANGE        #f39c12
+# #define COLOR_PETER_RIVER   #3498db
+# #define COLOR_POMEGRANATE   #c0392b
+# #define COLOR_PUMPKIN       #d35400
+# #define COLOR_SILVER        #bdc3c7
+# #define COLOR_SUN_FLOWER    #f1c40f
+# #define COLOR_TURQUOISE     #1abc9c
+# #define COLOR_WET_ASPHALT   #34495e
+# #define COLOR_WISTERIA      #8e44ad
+
+[colors]
+background      = #2c3e50
+foreground      = #bdc3c7
+foreground_bold = #ecf0f1
+cursor          = #3498db
+# Colors (dark, light)
+# black
+color0          = #2c3e50
+color8          = #34495e
+# red
+color1          = #c0392b
+color9          = #e74c3c
+# green
+color2          = #27ae60
+color10         = #2ecc71
+# yellow
+color3          = #e67e22
+color11         = #f1c40f
+# blue
+color4          = #2980b9
+color12         = #3498db
+# magenta
+color5          = #8e44ad
+color13         = #9b59b6
+# cyan
+color6          = #16a085
+color14         = #1abc9c
+# white
+color7          = #bdc3c7
+color15         = #ecf0f1

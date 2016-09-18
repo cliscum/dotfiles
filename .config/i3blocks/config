@@ -1,0 +1,79 @@
+align=center
+command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME
+markup=none
+separator=true
+separator_block_width=15
+
+[mediaplayer]
+# instance=spotify
+# instance=google-play-music-desktop-player
+interval=5
+label=
+markup=pango
+signal=10
+
+[mlb]
+instance=PHI
+interval=120
+label=<span weight='heavy'>⚾</span>
+markup=pango
+
+# [temperature]
+# interval=10
+# # label=
+# label=🌡
+
+[disk]
+instance=/
+interval=30
+label=
+
+[load_average]
+interval=5
+label=
+min_width= 0.0
+
+[cpu_usage]
+interval=5
+label=
+min_width= 00%
+
+[memory]
+interval=15
+
+[bandwidth]
+interval=5
+label=
+min_width= 00Z 00Z
+
+[wifi]
+instance=wlan0
+interval=5
+# label=
+# label=
+
+[volume]
+instance=Master
+interval=once
+label=
+signal=1
+
+[battery]
+interval=10
+
+[weather]
+instance=19102
+interval=180
+markup=pango
+
+[date]
+command=date '+%a, %b %e'
+interval=60
+label=
+
+[time]
+align=left
+command=date '+%l:%M:%S %p'
+interval=1
+label=
+min_width= 00:00:00 AM

@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+set -e
+
+# Reverse scroll direction. Prefer this to setting pointer in ~/.Xmodmap, which
+# has stopped working with xinput2 apps.
+# synclient VertScrollDelta=-222 HorizScrollDelta=-222
+
+# Given an xinput pointer id, reverse its Scrolling Distance, effectively
+# enabling natural scrolling.
+set_natural_scroll_a() {
+  pointer_id=$1
+  props=$( \
+    xinput list-props $pointer_id \
+    | grep 'Scrolling Distance' \
+    | grep -v Circular \
+    | sed 's#.*[[:space:]](\([0-9]*\)):[[:space:]]*\([0-9]*\),[[:space:]]\([0-9]*\)#\1 -\2 -\3#' \
+  )
+  echo "set-prop $pointer_id $props" | xargs xinput
+}
+
+set_natural_scroll_b() {
+  pointer_id=$1
+  props=$( \
+    xinput list-props $pointer_id \
+    | grep 'Natural Scrolling' \
+    | grep -v Default \
+    | sed 's#.*[[:space:]](\([[:digit:]]*\)):[[:space:]]*\([[:digit:]]*\)#\1 1#' \
+  )
+  echo "set-prop $pointer_id $props" | xargs xinput
+}
+
+# Set natural scrolling for each relevant xinput pointer.
+xinput list \
+  | egrep "slave.*pointer" \
+  | grep -v XTEST \
+  | sed -e 's/^.*id=//' -e 's/\s.*$//' \
+  | while read pointer_id; do
+      set_natural_scroll_a $pointer_id \
+      || set_natural_scroll_b $pointer_id
+    done

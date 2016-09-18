@@ -1,0 +1,15 @@
+[submodule ".zsh/zsh-git-prompt"]
+	path = .zsh/zsh-git-prompt
+	url = git@github.com:olivierverdier/zsh-git-prompt
+[submodule ".zsh/z"]
+	path = .zsh/z
+	url = git@github.com:rupa/z
+[submodule ".tmux/tmux-yank"]
+	path = .tmux/tmux-yank
+	url = git@github.com:tmux-plugins/tmux-yank
+[submodule ".tmux/tmux-copycat"]
+	path = .tmux/tmux-copycat
+	url = git@github.com:tmux-plugins/tmux-copycat
+[submodule ".emacs.d"]
+	path = .emacs.d
+	url = git@github.com:syl20bnr/spacemacs

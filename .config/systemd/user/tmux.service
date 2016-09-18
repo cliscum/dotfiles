@@ -1,0 +1,10 @@
+[Unit]
+Description=Start tmux in detached session
+
+[Service]
+Type=forking
+ExecStart=/home/cliscum/bin/cl-tmux-start
+ExecStop=/usr/bin/tmux kill-session -t meta
+
+[Install]
+WantedBy=default.target

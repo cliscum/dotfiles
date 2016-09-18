@@ -1,0 +1,89 @@
+general {
+  colors = true
+  color_good = "#bdc3c7"
+  color_bad = "#c0392b"
+  color_degraded = "#f1c40f"
+  interval = 5
+  separator = " ⫽ "
+}
+
+order += "disk /"
+order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "cpu_temperature 1"
+order += "load"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "volume master"
+order += "battery 0"
+order += "time"
+
+battery 0 {
+  # format = "%status %percentage %remaining %consumption"
+  format = "%status %percentage %consumption"
+  format_down = "b̶a̶t̶"
+  hide_seconds = true
+  integer_battery_capacity = true
+  # last_full_capacity = true
+  low_threshold = "30"
+  min_width = " 00% 00.00W"
+  # path = "/sys/class/power_supply/bq27500-0/uevent"
+  status_bat = ""
+  status_chr = ""
+  status_full = ""
+  threshold_type = "time"
+}
+
+cpu_temperature 0 {
+	format = "± %degrees°"
+	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input"
+	max_threshold = 95
+}
+
+cpu_temperature 1 {
+	format = " %degrees°"
+	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp3_input"
+	max_threshold = 95
+}
+
+cpu_usage {
+  format = " %usage"
+  min_width = " 00%"
+}
+
+disk "/" {
+  format = " %avail"
+}
+
+ethernet _first_ {
+  format_up = " %ip"
+  format_down = "e̶t̶h̶"
+}
+
+load {
+  format = " %1min"
+  min_width = " 0.00"
+}
+
+time {
+  format = " %a, %b %e, %l:%M:%S %p"
+  min_width = " Zzz, Mar 00, 00:00:00 AM"
+}
+
+volume master {
+  min_width = " 00%"
+  format = " %volume"
+  format_muted = "   %volume"
+  # format = " %volume"
+  # format_muted = " [%volume]"
+  # format = "♪ %volume"
+  # format_muted = "♪ [%volume]"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+wireless _first_ {
+  format_up = " %quality on %essid"
+  format_down = "w̶i̶f̶i̶"
+}

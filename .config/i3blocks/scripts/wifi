@@ -1,0 +1,38 @@
+#!/bin/bash
+
+dev=${BLOCK_INSTANCE:-wlan0}
+
+sudo iw dev $dev link | awk -f <(cat <<'EOF'
+{
+  if ($1 == "SSID:") {
+    ssid = $2;
+  }
+  else if ($1 == "signal:") {
+    signal = $2;
+    if ($2 > -50) {
+      q = "⣿";
+    }
+    else if ($2 > -60) {
+      q = "⣶";
+    }
+    else if ($2 > -70) {
+      q = "⣤";
+      color = "#f1c40f";
+    }
+    else {
+      q = "⣀";
+      color = "#e74c3c";
+    }
+  }
+}
+END {
+  if (ssid) {
+    printf("%s %d on %s\n", q, signal, ssid);
+    printf("%d\n", signal);
+    if (color) {
+      print color;
+    }
+  }
+}
+EOF
+                                 )

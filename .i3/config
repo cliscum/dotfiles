@@ -1,0 +1,193 @@
+# Begin i3-gaps config
+gaps inner 8
+gaps outer 0
+smart_gaps on
+smart_borders on
+# End i3-gaps config
+
+# xmodmap -pm
+set $mod Mod4
+set $alt Mod1
+
+# xrandr --current
+# set $display0 HDMI-1 # work left
+# set $display1 DVI-I-1 # work right
+set $display0 LVDS-1 # macbook arch
+set $display1 LVDS-1 # macbook arch
+# set $display0 default
+# set $display1 default
+# set $display0 eDP-0
+# set $display1 eDP-1
+
+set $status_command i3blocks
+set $signal_bar pkill -RTMIN+1 i3blocks
+
+# Executables
+set $playerctl playerctl
+set $rofi rofi
+set $screen_brightness cltools-brightness
+set $screen_lock slock
+set $screenshot scrot -e 'mv $f ~/Desktop/ 2>/dev/null'
+set $terminal i3-sensible-terminal
+set $volume amixer set Master
+
+set $black #000000
+
+# from http://flatuicolors.com/
+set $alizarin #e74c3c
+set $amethyst #9b59b6
+set $asbestos #7f8c8d
+set $belize_hole #2980b9
+set $carrot #e67e22
+set $clouds #ecf0f1
+set $concrete #95a5a6
+set $emerald #2ecc71
+set $green_sea #16a085
+set $midnight_blue #2c3e50
+set $nephritis #27ae60
+set $orange #f39c12
+set $peter_river #3498db
+set $pomegranate #c0392b
+set $pumpkin #d35400
+set $silver #bdc3c7
+set $sun_flower #f1c40f
+set $turquoise #1abc9c
+set $wet_asphalt #34495e
+set $wisteria #8e44ad
+
+# xprop
+assign [class="Keepassx"] 7
+assign [class="Spotify"] 8
+assign [class="spotify"] 8
+assign [class="google-chrome"] 5
+assign [class="chromium-browser"] 5
+
+# <colorclass>          <border> <background> <text> <indicator>
+client.background       $black
+client.focused          $sun_flower $sun_flower $midnight_blue $orange
+client.focused_inactive $green_sea $green_sea $clouds $carrot
+client.placeholder      $black $black $clouds $black
+client.unfocused        $midnight_blue $midnight_blue $concrete $orange
+client.urgent           $alizarin $alizarin $clouds $alizarin
+
+floating_modifier $mod
+
+font pango: SFNS Display 11
+
+for_window [class=".*"] title_format " %title"
+for_window [class="^.*"] border pixel 1
+
+new_window pixel 1
+
+workspace 1 output $display0
+workspace 2 output $display0
+workspace 3 output $display0
+workspace 4 output $display0
+workspace 5 output $display1
+workspace 6 output $display1
+workspace 7 output $display1
+workspace 8 output $display1
+
+force_focus_wrapping yes
+
+bindsym $mod+$alt+1 workspace 5
+bindsym $mod+$alt+2 workspace 6
+bindsym $mod+$alt+3 workspace 7
+bindsym $mod+$alt+4 workspace 8
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+Down focus down
+bindsym $mod+F12 exec $screen_lock
+bindsym $mod+Left focus left
+bindsym $mod+Return exec $terminal
+bindsym $mod+Right focus right
+bindsym $mod+Shift+$alt+1 move container to workspace 5
+bindsym $mod+Shift+$alt+2 move container to workspace 6
+bindsym $mod+Shift+$alt+3 move container to workspace 7
+bindsym $mod+Shift+$alt+4 move container to workspace 8
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Tab focus left
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+c kill
+bindsym $mod+Shift+e exec i3-nagbar -f 'pango: SFNS Text 12' -t warning -m 'Exit?' -b 'Yes' 'i3-msg exit'
+bindsym $mod+Shift+l reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Tab focus right
+bindsym $mod+Up focus up
+bindsym $mod+a focus parent
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+h split h
+bindsym $mod+r exec --no-startup-id $rofi -show run
+bindsym $mod+s layout stacking
+bindsym $mod+space focus mode_toggle
+bindsym $mod+v split v
+bindsym $mod+w layout tabbed
+bindsym $mod+z mode "resize"
+bindsym F10 exec --no-startup-id $volume 5%+ && $signal_bar
+# bindsym F6 exec --no-startup-id brightness down
+# bindsym F7 exec --no-startup-id brightness up
+bindsym F8 exec --no-startup-id $volume toggle && $signal_bar
+bindsym F9 exec --no-startup-id $volume 5%- && $signal_bar
+bindsym Print exec --no-startup-id $screenshot
+bindsym XF86AudioLowerVolume exec --no-startup-id $volume 5%- && $signal_bar
+bindsym XF86AudioMute exec --no-startup-id $volume toggle && $signal_bar
+bindsym XF86AudioNext exec --no-startup-id $playerctl next
+bindsym XF86AudioPause exec --no-startup-id $playerctl pause
+bindsym XF86AudioPlay exec --no-startup-id $playerctl play
+bindsym XF86AudioPrev exec --no-startup-id $playerctl previous
+bindsym XF86AudioRaiseVolume exec --no-startup-id $volume 5%+ && $signal_bar
+bindsym XF86Eject exec --no-startup-id $screenshot
+bindsym XF86LaunchA exec --no-startup-id $rofi -show run
+bindsym XF86LaunchB exec --no-startup-id $rofi -show window
+bindsym XF86MonBrightnessDown exec --no-startup-id $screen_brightness -3
+bindsym XF86MonBrightnessUp exec --no-startup-id $screen_brightness +3
+
+mode "resize" {
+  bindsym Down resize grow height 1 px or 1 ppt
+  bindsym Left resize shrink width 1 px or 1 ppt
+  bindsym Right resize grow width 1 px or 1 ppt
+  bindsym Up resize shrink height 1 px or 1 ppt
+
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+}
+
+bar {
+  font pango: FontAwesome, SFNS Text, Droid Sans 11
+  mode dock
+  position top
+  separator_symbol "│"
+  tray_output $display0
+  tray_padding 2
+  status_command $status_command
+  workspace_buttons yes
+
+  colors {
+    background $midnight_blue
+    separator $asbestos
+    statusline $clouds
+
+    active_workspace $midnight_blue $midnight_blue $clouds
+    focused_workspace $midnight_blue $midnight_blue $sun_flower
+    inactive_workspace $midnight_blue $midnight_blue $concrete
+    urgent_workspace $clouds $alizarin
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "coffeelint": {
+    "transforms": [ "coffee-react-transform" ]
+  },
+  "max_line_length": {
+    "name": "max_line_length",
+    "level": "ignore"
+  },
+  "check_scope": {
+    "module": "coffeescope2",
+    "level": "warn",
+    "environments": ["es5"],
+    "globals": {
+      "beforeEach": true,
+      "console": true,
+      "context": true,
+      "describe": true,
+      "document": true,
+      "ga": true,
+      "global": true,
+      "it": true,
+      "location": true,
+      "module": true,
+      "require": true,
+      "window": true
+    },
+    "overwrite": true,
+    "shadow": true,
+    "shadow_builtins": false,
+    "shadow_exceptions": ["err", "next"],
+    "undefined": true,
+    "hoist_local": true,
+    "hoist_parent": true,
+    "unused_variables": true,
+    "unused_arguments": false,
+    "unused_classes": true
+  }
+}

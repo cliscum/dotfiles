@@ -1,0 +1,111 @@
+! Colors from http://flatuicolors.com
+#define COLOR_ALIZARIN      #e74c3c
+#define COLOR_AMETHYST      #9b59b6
+#define COLOR_ASBESTOS      #7f8c8d
+#define COLOR_BELIZE_HOLE   #2980b9
+#define COLOR_CARROT        #e67e22
+#define COLOR_CLOUDS        #ecf0f1
+#define COLOR_CONCRETE      #95a5a6
+#define COLOR_EMERALD       #2ecc71
+#define COLOR_GREEN_SEA     #16a085
+#define COLOR_MIDNIGHT_BLUE #2c3e50
+#define COLOR_NEPHRITIS     #27ae60
+#define COLOR_ORANGE        #f39c12
+#define COLOR_PETER_RIVER   #3498db
+#define COLOR_POMEGRANATE   #c0392b
+#define COLOR_PUMPKIN       #d35400
+#define COLOR_SILVER        #bdc3c7
+#define COLOR_SUN_FLOWER    #f1c40f
+#define COLOR_TURQUOISE     #1abc9c
+#define COLOR_WET_ASPHALT   #34495e
+#define COLOR_WISTERIA      #8e44ad
+
+*customization: -color
+
+!*background: COLOR_CLOUDS
+*background: #ffffff
+*foreground: COLOR_MIDNIGHT_BLUE
+
+! Colors (dark, light)
+
+! black
+*color0:  COLOR_MIDNIGHT_BLUE
+*color8:  COLOR_WET_ASPHALT
+! red
+*color1:  COLOR_POMEGRANATE
+*color9:  COLOR_ALIZARIN
+! green
+*color2:  COLOR_NEPHRITIS
+*color10: COLOR_EMERALD
+! yellow
+*color3:  COLOR_CARROT
+*color11: COLOR_SUN_FLOWER
+! blue
+*color4:  COLOR_BELIZE_HOLE
+*color12: COLOR_PETER_RIVER
+! magenta
+*color5:  COLOR_WISTERIA
+*color13: COLOR_AMETHYST
+! cyan
+*color6:  COLOR_GREEN_SEA
+*color14: COLOR_TURQUOISE
+! white
+*color7:  COLOR_SILVER
+*color15: COLOR_CLOUDS
+
+Xft.dpi:        96
+Xft.antialias:  1
+Xft.hinting:    1
+Xft.hintstyle:  hintslight
+Xft.rgba:       rgb
+Xft.lcdfilter:  lcddefault
+
+WEECHAT*boldFont: xft:SFNS Display:bold:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:bold:pixelsize=16:antialias=true:hinting=true
+WEECHAT*font: xft:SFNS Display:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:pixelsize=16:antialias=true:hinting=true
+
+URxvt*boldFont: xft:Inconsolata:bold:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:bold:pixelsize=16:antialias=true:hinting=true
+URxvt*cursorColor: COLOR_PETER_RIVER
+URxvt*cursorColor2: COLOR_CLOUDS
+URxvt*cutchars: "\\ `\"'&()*,;<=>?@[]{|}:"
+URxvt*depth: 24
+URxvt*fading: 20
+URxvt*fadeColor: COLOR_CLOUDS
+URxvt*font: xft:Inconsolata:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:pixelsize=16:antialias=true:hinting=true
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+! URxvt*keysym.M-Escape: perl:keyboard-select:activate
+! URxvt*keysym.M-s: perl:keyboard-select:activate
+! URxvt*keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-u: perl:matcher:select
+! URxvt*keysym.M-v: perl:clipboard:paste
+URxvt*matcher.button: 1
+! URxvt*matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
+URxvt.matcher.rend.0: Uline Bold fg5
+URxvt*perl-ext-common: default,matcher,font-size
+! URxvt*perl-ext-common: selection,url-select,keyboard-select,clipboard
+URxvt*underlineURLs: true
+URxvt*perl-lib: /usr/lib/urxvt/perl/
+URxvt*saveLines: 1000
+URxvt*scrollBar: false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*urgentOnBell: true
+URxvt*url-launcher: /usr/bin/xdg-open
+URxvt.keysym.C-0x3D: font-size:increase
+URxvt.keysym.C-0x2D: font-size:decrease
+
+rofi.modi:                           window,run,ssh
+rofi.opacity:                        100
+rofi.width:                          36
+rofi.lines:                          8
+rofi.columns:                        1
+rofi.font:                           SFNS Text 24
+rofi.color-enabled:                  true
+!! bg, fg, bg alt, highlight bg, highlight fg
+rofi.color-normal:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_ASPHALT,COLOR_WET_ASPHALT,COLOR_SUN_FLOWER
+rofi.color-urgent:                   COLOR_WET_ASPHALT,COLOR_ALIZARIN,COLOR_WET_ASPHALT,COLOR_ALIZARIN,COLOR_CLOUDS
+rofi.color-active:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_ASPHALT,COLOR_WET_ASPHALT,COLOR_EMERALD
+!! bg, border
+rofi.color-window:                   COLOR_WET_ASPHALT,COLOR_EMERALD
+rofi.padding:                        40

@@ -1,0 +1,74 @@
+#!/bin/bash
+
+bat_num=${BLOCK_INSTANCE:-0}
+
+picowatts=$(( \
+  $(cat "/sys/class/power_supply/BAT0/current_now") * \
+  $(cat "/sys/class/power_supply/BAT0/voltage_now") \
+))
+
+acpi -i | grep "^Battery $bat_num:" | awk -f <(cat <<EOF
+{
+  if (NR == 1) {
+    state = \$3;
+    pct = \$4;
+    gsub(/,$/, "", state);
+    gsub(/%$/, "", pct);
+    pct /= 100;
+  }
+  else if (NR == 2) {
+    capacity_pct = \$10 / \$5;
+  }
+}
+END {
+  if (!pct && !capacity_pct) {
+    exit;
+  }
+
+  real_pct = 100 * pct * capacity_pct;
+
+  if (state == "Charging") {
+    icon = "";
+  }
+  else {
+    if (state == "Full" || real_pct > 80) {
+      icon = "";
+    }
+    else if (real_pct > 60) {
+      icon = "";
+    }
+    else if (real_pct > 40) {
+      icon = "";
+    }
+    else if (real_pct > 20) {
+      icon = "";
+    }
+    else {
+      icon = "";
+    }
+  }
+
+  if (real_pct <= 10) {
+    exit_code = 33;
+  }
+  if (real_pct <= 20) {
+    color = "#e74c3c";
+  }
+  else if (real_pct <= 35) {
+    color = "#f1c40f";
+  }
+
+  full_text = sprintf("%s %.0f%%", icon, real_pct);
+  if ($picowatts > 0) {
+    full_text = sprintf("%s %.1fW", full_text, $picowatts / 1e12);
+  }
+
+  printf("%s\n", full_text);
+  printf("%.0f%%\n", real_pct);
+  if (color) {
+    print color;
+  }
+  exit exit_code;
+}
+EOF
+    )

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+ARG=$1
+SCREEN_MAX=$(cat /sys/class/backlight/gmux_backlight/max_brightness \
+                 2>/dev/null || echo 40000)
+
+min () {
+    if [ $1 -lt $2 ]; then
+        echo $1
+    else
+        echo $2
+    fi
+}
+
+max () {
+    if [ $1 -gt $2 ]; then
+        echo $1
+    else
+        echo $2
+    fi
+}
+
+if echo "$ARG" |grep -q '^[-+]'; then
+    OP=$(echo "$ARG" |sed 's#^\(.\).*#\1#')
+    DIFF=$(echo "$ARG" |sed 's#^.##')
+    CUR=$(cat /sys/class/backlight/gmux_backlight/brightness)
+    SCREEN_VALUE=$(max 500 $(min $SCREEN_MAX $(echo "$CUR $OP $SCREEN_MAX * $DIFF / 100" | bc)))
+    PCT=$(echo "100 * $SCREEN_VALUE / $SCREEN_MAX" | bc)
+else
+    PCT=$ARG
+    SCREEN_VALUE=$(max 500 $(min $SCREEN_MAX $(echo "$SCREEN_MAX * $PCT / 100" | bc)))
+fi
+
+if [ $PCT -le 20 ]; then
+   KEYBOARD_VALUE=26
+else
+   KEYBOARD_VALUE=0
+fi
+
+echo $KEYBOARD_VALUE | sudo tee /sys/class/leds/smc::kbd_backlight/brightness
+echo $SCREEN_VALUE | sudo tee /sys/class/backlight/gmux_backlight/brightness

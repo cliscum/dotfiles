@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+# Old setting; for what?
+# xmodmap -e "keycode 96 = Insert Insert"
+
+# Options: CLIPBOARD, PRIMARY, SECONDARY
+autocutsel -fork -selection CLIPBOARD
+
+feh --bg-scale "$HOME/.config/backgrounds/Wave.jpg"
+
+# TODO fix for arch
+#gnome-settings-daemon &
+redshift-gtk &
+nm-applet &
+#blueman-applet &
+dropbox start -i &
+
+xkbmap_options='-option ctrl:nocaps'
+if [ $(hostname) = "strudel" ]; then
+  xkbmap_options="$xkbmap_options -option altwin:swap_alt_win"
+fi
+setxkbmap $xkbmap_options
+
+[ -f $HOME/bin/natural-scrolling ] && source $HOME/bin/natural-scrolling

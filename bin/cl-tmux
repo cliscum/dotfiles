@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+dir=$(dirname $0)
+
+if tmux has -t meta 2>/dev/null; then
+  exec $dir/cl-tmux-rejoin
+else
+  exec $dir/cl-tmux-start
+fi

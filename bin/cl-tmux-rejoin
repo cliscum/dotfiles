@@ -1,0 +1,13 @@
+#!/bin/bash
+
+tmux list-sessions |cut -d: -f1 |while read session
+do
+  tmux setenv -t $session SSH_AUTH_SOCK $SSH_AUTH_SOCK
+  # tmux list-windows -t $session |cut -d: -f1 |while read window
+  # do
+  #   tmux send-keys -t $session:$window \
+  #     "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" C-m
+  # done
+done
+
+tmux attach -t meta

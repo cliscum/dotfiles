@@ -1,0 +1,198 @@
+#!/usr/bin/env node
+
+var https = require('https');
+var util = require('util');
+
+var stdout = process.stdout;
+var zip = process.env.BLOCK_INSTANCE || process.argv[2];
+
+// Get API keys from:
+// * https://developer.forecast.io
+// * https://www.zipcodeapi.com/Register
+var apiKey = {
+  forecast: '74ec8050324919e3c3c06d7626e09265',
+  zip: 'gohjQMS4iBJxhWYZIPEJauUMOTqjsDzI1R2RDUWWwGuNCsNlhr4sWYeLSF5kiE2j'
+};
+
+https.get({
+  host: 'www.zipcodeapi.com',
+  path: util.format('/rest/%s/info.json/%s/degrees', apiKey.zip, zip)
+}, handleZIPResponse);
+
+function handleZIPResponse(response) {
+  var body = '';
+  response
+    .on('data', function(data) {
+      body += data;
+    })
+    .on('end', function() {
+      var json = JSON.parse(body);
+      var x = json.lng;
+      var y = json.lat;
+
+      https.get({
+        host: 'api.forecast.io',
+        path: util.format('/forecast/%s/%s,%s', apiKey.forecast, y, x)
+      }, handleForecastResponse);
+    });
+}
+
+function handleForecastResponse(response) {
+  var body = '';
+  response
+    .on('data', function(data) {
+      body += data;
+    })
+    .on('end', function() {
+      var json = JSON.parse(body);
+      var color, icon;
+
+      switch (json.currently.icon) {
+      case 'clear-day':
+        icon = '';
+        break;
+      case 'partly-cloudy-day':
+        icon = '<span weight="bold">⛅</span>';
+        break;
+      case 'clear-night':
+      case 'partly-cloudy-night':
+        icon = '';
+        break;
+      case 'cloudy':
+        icon = '';
+        break;
+      case 'fog':
+        icon = '';
+        break;
+      case 'rain':
+        icon = '';
+        break;
+      case 'snow':
+        icon = '';
+        break;
+      case 'sleet':
+        icon = '';
+        break;
+      case 'wind':
+        icon = '';
+        break;
+      default:
+        icon = '';
+        break;
+      }
+
+      var windBearingMin = (json.currently.windBearing + 22.5) % 360;
+      var windIcon;
+      if (windBearingMin < 45) {
+        windIcon = '↓';
+      } else if (windBearingMin < 90) {
+        windIcon = '↙';
+      } else if (windBearingMin < 135) {
+        windIcon = '←';
+      } else if (windBearingMin < 180) {
+        windIcon = '↖';
+      } else if (windBearingMin < 225) {
+        windIcon = '↑';
+      } else if (windBearingMin < 270) {
+        windIcon = '↗';
+      } else if (windBearingMin < 315) {
+        windIcon = '→';
+      } else if (windBearingMin < 360) {
+        windIcon = '↘';
+      } else {
+        windIcon = '';
+      }
+
+      var windIconSize = 'medium';
+      var windIconStretch = 'normal';
+      var windIconWeight = 'normal';
+      if (json.currently.windSpeed < 3) {
+        //windIconSize = 'xx-small';
+        windIconSize = 'small';
+        windIconStretch = 'ultracondensed';
+        windIconWeight = 'ultralight';
+      } else if (json.currently.windSpeed < 6) {
+        windIconSize = 'small';
+        windIconStretch = 'condensed';
+        windIconWeight = 'light';
+      } else if (json.currently.windSpeed < 9) {
+        windIconSize = 'medium';
+        windIconStretch = 'normal';
+        windIconWeight = 'normal';
+      } else if (json.currently.windSpeed < 12) {
+        windIconSize = 'large';
+        windIconStretch = 'expanded';
+        windIconWeight = 'bold';
+      } else if (json.currently.windSpeed < 15) {
+        windIconSize = 'x-large';
+        windIconStretch = 'extraexpanded';
+        windIconWeight = 'ultrabold';
+        windIcon = String.fromCharCode(64 + windIcon.charCodeAt(0));
+      } else {
+        //windIconSize = 'xx-large';
+        windIconSize = 'x-large';
+        windIconStretch = 'ultraexpanded';
+        windIconWeight = 'heavy';
+        windIcon = String.fromCharCode(64 + windIcon.charCodeAt(0));
+      }
+      windIcon = util.format(
+        '<span size="%s" stretch="%s" weight="%s">%s</span>',
+        windIconSize, windIconStretch, windIconWeight, windIcon);
+
+      // Humid levels to dew point:
+      //    ...
+      //    -1: 50-54
+      //    0:  55-59
+      //    1:  60-64
+      //    2:  65-69
+      //    3:  70-74
+      var humidLevel = Math.floor((json.currently.dewPoint - 55) / 5);
+      var humidSize = 'medium';
+      var humidStretch = 'normal';
+      var humidWeight = 'normal';
+      if (-1 > humidLevel) {
+        humidSize = 'x-small';
+        humidWeight = 'ultralight';
+      } else if (1 > humidLevel) {
+        humidSize = 'small';
+        humidWeight = 'light';
+      } else if (3 == humidLevel) {
+        humidWeight = 'bold';
+      } else if (3 < humidLevel) {
+        humidSize = 'large';
+        humidWeight = 'ultrabold';
+      }
+      var humidModifier = util.format(
+        ' <span size="%s" stretch="%s" weight="%s">H' +
+          '<sup><span size="smaller">%d</span></sup></span>',
+        humidSize, humidStretch, humidWeight, humidLevel);
+
+      var fullSummary = json.minutely.summary
+          .replace(/.$/, '');
+      var shortSummary = fullSummary
+          .replace(' in', '')
+          .replace(' the', '')
+          .replace(' for', ' /')
+          .replace(/[aeiou]/ig, '');
+      fullSummary = shortSummary;
+
+      var fullText = util.format(
+        '%s°%s %s %s',
+        Math.round(json.currently.temperature),
+        humidModifier,
+        windIcon,
+        fullSummary);
+      var shortText = util.format(
+        '%s°%s %s <span size="x-small">%s</span>',
+        Math.round(json.currently.temperature),
+        humidModifier,
+        windIcon,
+        shortSummary);
+
+      stdout.write(util.format('%s %s\n', icon, fullText));
+      stdout.write(util.format('%s %s\n', icon, shortText));
+      if (color) {
+        stdout.write(util.format('%s\n', color));
+      }
+    });
+}
