@@ -60,41 +60,6 @@ Xft.hintstyle:  hintslight
 Xft.rgba:       rgb
 Xft.lcdfilter:  lcddefault
 
-WEECHAT*boldFont: xft:SFNS Display:bold:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:bold:pixelsize=16:antialias=true:hinting=true
-WEECHAT*font: xft:SFNS Display:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:pixelsize=16:antialias=true:hinting=true
-
-URxvt*boldFont: xft:Inconsolata:bold:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:bold:pixelsize=16:antialias=true:hinting=true
-URxvt*cursorColor: COLOR_PETER_RIVER
-URxvt*cursorColor2: COLOR_CLOUDS
-URxvt*cutchars: "\\ `\"'&()*,;<=>?@[]{|}:"
-URxvt*depth: 24
-URxvt*fading: 20
-URxvt*fadeColor: COLOR_CLOUDS
-URxvt*font: xft:Inconsolata:pixelsize=16:antialias=true:hinting=true,xft:FontAwesome:pixelsize=16:antialias=true:hinting=true
-URxvt*iso14755: false
-URxvt*iso14755_52: false
-! URxvt*keysym.M-Escape: perl:keyboard-select:activate
-! URxvt*keysym.M-s: perl:keyboard-select:activate
-! URxvt*keysym.M-c: perl:clipboard:copy
-URxvt.keysym.M-u: perl:matcher:select
-! URxvt*keysym.M-v: perl:clipboard:paste
-URxvt*matcher.button: 1
-! URxvt*matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
-URxvt.matcher.rend.0: Uline Bold fg5
-URxvt*perl-ext-common: default,matcher,font-size
-! URxvt*perl-ext-common: selection,url-select,keyboard-select,clipboard
-URxvt*underlineURLs: true
-URxvt*perl-lib: /usr/lib/urxvt/perl/
-URxvt*saveLines: 1000
-URxvt*scrollBar: false
-URxvt*scrollTtyKeypress: true
-URxvt*scrollTtyOutput: false
-URxvt*scrollWithBuffer: true
-URxvt*urgentOnBell: true
-URxvt*url-launcher: /usr/bin/xdg-open
-URxvt.keysym.C-0x3D: font-size:increase
-URxvt.keysym.C-0x2D: font-size:decrease
-
 rofi.modi:                           window,run,ssh
 rofi.opacity:                        100
 rofi.width:                          36
