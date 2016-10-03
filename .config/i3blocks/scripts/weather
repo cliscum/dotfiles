@@ -170,11 +170,14 @@ function handleForecastResponse(response) {
       var fullSummary = json.minutely.summary
           .replace(/.$/, '');
       var shortSummary = fullSummary
+          .replace(' and', ' &')
           .replace(' in', '')
           .replace(' the', '')
           .replace(' for', ' /')
-          .replace(/[aeiou]/ig, '');
-      fullSummary = shortSummary;
+          .replace(/\./g, '')
+          .replace(/ min\b/g, 'm')
+          .replace(/\B[aeiou]/ig, '')
+          .replace('&', '&amp;');
 
       var fullText = util.format(
         '%s°%s %s %s',
