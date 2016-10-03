@@ -20,6 +20,9 @@
     web-mode
     ))
 
+(package-initialize)
+(require 'use-package)
+
 (defun homecookin/post-init-auto-highlight-symbol ()
   (use-package auto-highlight-symbol
     :defer t
