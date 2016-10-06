@@ -12,7 +12,6 @@
     column-marker
     diminish
     flatui-theme
-    helm
     highlight-parentheses
     python
     rainbow-delimiters
@@ -81,9 +80,16 @@
          `(default ((t (:background "#ffffff" :foreground ,midnight-blue))))
          `(fringe ((t (:background ,silver :foreground ,concrete))))
          `(header-line ((t (:background ,clouds :box (:line-width 1 :color ,silver)))))
-         `(helm-header-line-left-margin ((t (:background ,nephritis :foreground ,clouds))))
          `(highlight-indentation-current-column-face ((t (:background ,silver))))
          `(highlight-indentation-face ((t (:background ,silver))))
+         `(ivy-confirm-face ((t (:inherit minibuffer-prompt :foreground ,nephritis))))
+         `(ivy-current-match ((t (:background ,sun-flower :foreground ,midnight-blue))))
+         `(ivy-match-required-face ((t (:inherit minibuffer-prompt :foreground ,alizarin))))
+         `(ivy-minibuffer-match-face-1 ((t (:foreground ,pomegranate :weight bold))))
+         `(ivy-minibuffer-match-face-2 ((t (:foreground ,green-sea :weight bold))))
+         `(ivy-minibuffer-match-face-3 ((t (:foreground ,belize-hole :weight bold))))
+         `(ivy-minibuffer-match-face-4 ((t (:background ,sun-flower :weight bold))))
+         `(ivy-remote ((t (:foreground ,peter-river))))
          `(match ((t (:background ,nephritis :foreground ,clouds))))
          `(mode-line ((t (:foreground ,clouds :background ,midnight-blue))))
          `(mode-line-buffer-id ((t (:inherit bold :foreground ,sun-flower))))
@@ -111,13 +117,6 @@
          `(show-paren-mismatch ((t (:background ,alizarin :foreground ,clouds :weight bold))))
          `(whitespace-tab ((t (:background ,sun-flower))))
          )))))
-
-(defun homecookin/post-init-helm ()
-  (use-package helm
-    :defer t
-    :bind (("C-x M-f" . helm-find-files)
-           ("C-x M-b" . helm-buffers-list)
-           ("C-x b" . helm-projectile-switch-to-buffer))))
 
 (defun homecookin/post-init-highlight-parentheses ()
   (use-package highlight-parentheses

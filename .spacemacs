@@ -27,6 +27,7 @@
      gtags
      homecookin
      html
+     ivy
      javascript
      markdown
      python
@@ -82,9 +83,6 @@ before layers configuration."
    dotspacemacs-enable-paste-micro-state nil
    dotspacemacs-fullscreen-at-startup nil
    dotspacemacs-fullscreen-use-non-native nil
-   dotspacemacs-helm-no-header nil
-   dotspacemacs-helm-position 'bottom
-   dotspacemacs-helm-resize nil
    dotspacemacs-highlight-delimiters nil
    dotspacemacs-inactive-transparency 100
    dotspacemacs-leader-key "SPC"
@@ -141,10 +139,6 @@ layers configuration. You are free to put any user code."
   (spacemacs/toggle-smartparens-globally-off) ; this doesn't work
   (spacemacs/toggle-whitespace-globally-on)
 
-  (with-eval-after-load 'helm-mode
-    (setq helm-completion-in-region-fuzzy-match t)
-    )
-
   ;; TODO remove this in spacemacs >= 0.106.x
   (spaceline-compile)
 
@@ -173,15 +167,12 @@ layers configuration. You are free to put any user code."
  '(custom-safe-themes
    (quote
     ("15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" default)))
- '(fci-rule-color "#f1c40f" t)
+ '(fci-rule-color "#f1c40f")
  '(highlight-indentation-offset 2)
  '(hl-paren-background-colors (quote ("#2492db" "#95a5a6" nil)))
  '(hl-paren-colors (quote ("#ecf0f1" "#ecf0f1" "#c0392b")) t)
  '(js-indent-level 2)
  '(js2-basic-offset 2)
- '(package-selected-packages
-   (quote
-    (yapfify uuidgen toc-org tide typescript-mode rake py-isort org-plus-contrib org-bullets mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint git-link eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff dumb-jump column-enforce-mode yaml-mode ws-butler window-numbering web-mode web-beautify wakatime-mode volatile-highlights vi-tilde-fringe tss yaxception log4e tagedit stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline powerline smooth-scrolling smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters pyvenv pytest pyenv-mode py-yapf protobuf-mode popwin pip-requirements persp-mode pcre2el paradox hydra spinner page-break-lines orgit open-junk-file noflet neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum linum-relative leuven-theme less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gtags helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags flycheck-pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight ensime sbt-mode scala-mode emmet-mode elisp-slime-nav dockerfile-mode disaster diff-hl define-word cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-quickhelp pos-tip company-go go-mode company-c-headers company-anaconda company column-marker coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler which-key use-package quelpa inf-ruby flatui-theme evil buffer-move bracketed-paste bind-map auto-yasnippet auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(perl-indent-level 2)
  '(python-indent-offset 2)
  '(safe-local-variable-values
@@ -207,6 +198,7 @@ layers configuration. You are free to put any user code."
  '(sml/active-foreground-color "#ecf0f1")
  '(sml/inactive-background-color "#dfe4ea")
  '(sml/inactive-foreground-color "#34495e")
+ '(swiper-include-line-number-in-search t)
  '(tramp-connection-timeout 10)
  '(typescript-indent-level 2)
  '(vc-annotate-background "#ecf0f1")
