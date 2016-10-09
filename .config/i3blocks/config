@@ -18,15 +18,16 @@ interval=120
 label=<span weight='heavy'>⚾</span>
 markup=pango
 
-# [temperature]
-# interval=10
-# # label=
-# label=🌡
-
 [disk]
 instance=/
 interval=30
 label=
+
+[temperature]
+instance=coretemp-isa-0000
+interval=10
+# label=
+label=🌡
 
 [load_average]
 interval=5
@@ -47,7 +48,7 @@ label=
 min_width= 00Z 00Z
 
 [wifi]
-instance=wlan0
+instance=wlp4s0
 interval=5
 # label=
 # label=

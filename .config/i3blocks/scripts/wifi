@@ -27,7 +27,7 @@ sudo iw dev $dev link | awk -f <(cat <<'EOF'
 }
 END {
   if (ssid) {
-    printf("%s %d on %s\n", q, signal, ssid);
+    printf("%s %d %s\n", q, signal, ssid);
     printf("%d\n", signal);
     if (color) {
       print color;

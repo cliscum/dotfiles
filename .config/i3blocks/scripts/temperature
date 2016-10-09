@@ -21,43 +21,50 @@ use strict;
 use warnings;
 use utf8;
 use Getopt::Long;
+use List::Util qw(sum);
+use POSIX qw(ceil);
 
 binmode(STDOUT, ":utf8");
 
 # default values
 my $t_warn = 70;
 my $t_crit = 90;
-my $chip = "";
-my $temperature = -9999;
+my $chip = $ENV{BLOCK_INSTANCE} || '';
+my @temperatures = ();
 
 sub help {
-    print "Usage: temperature [-w <warning>] [-c <critical>] [--chip <chip>]\n";
-    print "-w <percent>: warning threshold to become yellow\n";
-    print "-c <percent>: critical threshold to become red\n";
-    print "--chip <chip>: sensor chip\n";
-    exit 0;
+  print "Usage: temperature [-w <warning>] [-c <critical>] [--chip <chip>]\n";
+  print "-w <percent>: warning threshold to become yellow\n";
+  print "-c <percent>: critical threshold to become red\n";
+  print "--chip <chip>: sensor chip\n";
+  exit 0;
 }
 
-GetOptions("help|h" => \&help,
-           "w=i"    => \$t_warn,
-           "c=i"    => \$t_crit,
-           "chip=s" => \$chip);
+GetOptions(
+  "help|h" => \&help,
+  "w=i"    => \$t_warn,
+  "c=i"    => \$t_crit,
+  "chip=s" => \$chip,
+    );
+
+exit if (!$chip);
 
 # Get chip temperature
 open (SENSORS, "sensors -u $chip |") or die;
 while (<SENSORS>) {
-    if (/^\s+temp1_input:\s+[\+]*([\-]*\d+\.\d)/) {
-        $temperature = $1;
-        last;
-    }
+  if (/^\s+temp\d_input:\s+[\+]*([\-]*\d+\.\d)/) {
+    push @temperatures, $1;
+  }
 }
 close(SENSORS);
 
-$temperature eq -9999 and die 'Cannot find temperature';
-my $temperature_f = sprintf('%.0f', $temperature * 9 / 5 + 32);
+!@temperatures and die 'Cannot find temperature';
+
+my $temperature = ceil(sum(@temperatures) / @temperatures);
+# my $temperature_f = sprintf('%.0f', $temperature * 9 / 5 + 32);
 
 # Print short_text, full_text
-print "$temperature_f°F\n" x2;
+print "$temperature°C\n" x2;
 
 # Print color, if needed
 if ($temperature >= $t_crit) {

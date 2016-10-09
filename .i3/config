@@ -171,7 +171,7 @@ mode "resize" {
 }
 
 bar {
-  font pango: FontAwesome, SFNS Text, Droid Sans 11
+  font pango: SFNS Text, Droid Sans, Segoe UI, FontAwesome, Symbola, Unifont 11
   mode dock
   position top
   separator_symbol "│"

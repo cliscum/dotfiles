@@ -156,7 +156,7 @@ function handleForecastResponse(response) {
       } else if (1 > humidLevel) {
         humidSize = 'small';
         humidWeight = 'light';
-      } else if (3 == humidLevel) {
+      } else if (3 === humidLevel) {
         humidWeight = 'bold';
       } else if (3 < humidLevel) {
         humidSize = 'large';
@@ -194,7 +194,7 @@ function handleForecastResponse(response) {
 
       stdout.write(util.format('%s %s\n', icon, fullText));
       stdout.write(util.format('%s %s\n', icon, shortText));
-      if (color) {
+      if (!!color) {
         stdout.write(util.format('%s\n', color));
       }
     });

@@ -1,10 +1,13 @@
 #!/bin/bash
 
 bat_num=${BLOCK_INSTANCE:-0}
+dir=/sys/class/power_supply/BAT${bat_num}
+
+[ -d $dir ] || exit
 
 picowatts=$(( \
-  $(cat "/sys/class/power_supply/BAT0/current_now") * \
-  $(cat "/sys/class/power_supply/BAT0/voltage_now") \
+  $(cat "${dir}/current_now") * \
+  $(cat "${dir}/voltage_now") \
 ))
 
 acpi -i | grep "^Battery $bat_num:" | awk -f <(cat <<EOF

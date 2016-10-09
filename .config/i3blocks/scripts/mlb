@@ -30,10 +30,13 @@ function handleResponse(response) {
 
 function handleResponseBody(body) {
   var json = JSON.parse(body);
-  var game = json.data.games.game;
 
-  if (game) {
+  var game = json.data.games.game;
+  if (!!game) {
     game = game.reverse().filter(isTeamGame)[0];
+  }
+
+  if (!!game) {
     var home = game.home_name_abbrev;
     var away = game.away_name_abbrev;
     var status = game.status.status;
@@ -41,12 +44,12 @@ function handleResponseBody(body) {
     var summary;
     var color;
 
-    if ('Preview' == status || 'Pre-Game' == status) {
+    if ('Preview' === status || 'Pre-Game' === status) {
       summary = util.format(
         '%s @ %s %s%s',
         away, home,
-        (team == home ? game.home_time : game.away_time),
-        (team == home ? game.home_ampm : game.away_ampm));
+        (team === home ? game.home_time : game.away_time),
+        (team === home ? game.home_ampm : game.away_ampm));
     }
     else {
       summary = util.format(
@@ -54,17 +57,17 @@ function handleResponseBody(body) {
         away, (ls ? ls.r.away : 0),
         home, (ls ? ls.r.home : 0));
 
-      if ('In Progress' == status) {
+      if ('In Progress' === status) {
         var inningState = game.status.inning_state;
-        inningState = ('Top' == inningState ? '' : '');
+        inningState = ('Top' === inningState ? '' : '');
         summary = util.format(
           '%s %s %d',
           summary, inningState, game.status.inning);
       }
-      else if ('Final' == status || 'Game Over' == status) {
+      else if ('Final' === status || 'Game Over' === status) {
         color = (
-          ((team == home && ls.r.home > ls.r.away) ||
-           (team == away && ls.r.away > ls.r.home)) ?
+          ((team === home && ls.r.home > ls.r.away) ||
+           (team === away && ls.r.away > ls.r.home)) ?
             '#27ae60' : '#c0392b');
       }
       else {
@@ -74,14 +77,14 @@ function handleResponseBody(body) {
 
     stdout.write(util.format('%s\n', summary));
     stdout.write(util.format('%s\n', summary));
-    if (color) {
+    if (!!color) {
       stdout.write(util.format('%s\n', color));
     }
   }
 }
 
 function isTeamGame(game) {
-  return (game.home_name_abbrev == team || game.away_name_abbrev == team);
+  return (game.home_name_abbrev === team || game.away_name_abbrev === team);
 }
 
 function pad02(n) {
