@@ -10,55 +10,41 @@
   '(
     auto-highlight-symbol
     column-marker
-    diminish
     flatui-theme
     highlight-parentheses
     python
     rainbow-delimiters
     smartparens
-    web-mode
+    wakatime-mode
     ))
-
-(package-initialize)
-(require 'use-package)
 
 (defun homecookin/post-init-auto-highlight-symbol ()
   (use-package auto-highlight-symbol
-    :defer t
-    :init (progn
-            (message "+ homecookin/post-init-auto-highlight-symbol :init")
-            (setq-default
-             auto-highlight-symbol-mode-map
-             (let ((map (make-sparse-keymap)))
-               (define-key map (kbd "M-<up>") 'ahs-backward)
-               (define-key map (kbd "M-<down>") 'ahs-forward)
-               (define-key map (kbd "M-S-<up>") 'ahs-backward-definition)
-               (define-key map (kbd "M-S-<down>") 'ahs-forward-definition)
-               (define-key map (kbd "M--") 'ahs-back-to-start)
-               (define-key map (kbd "C-x C-'") 'ahs-change-range)
-               (define-key map (kbd "C-x C-a") 'ahs-edit-mode)
-               map)))))
+    :init
+    (progn
+      (message "+ homecookin/post-init-auto-highlight-symbol :init")
+      (setq-default
+       auto-highlight-symbol-mode-map
+       (let ((map (make-sparse-keymap)))
+         (define-key map (kbd "M-<up>") 'ahs-backward)
+         (define-key map (kbd "M-<down>") 'ahs-forward)
+         (define-key map (kbd "M-S-<up>") 'ahs-backward-definition)
+         (define-key map (kbd "M-S-<down>") 'ahs-forward-definition)
+         (define-key map (kbd "M--") 'ahs-back-to-start)
+         (define-key map (kbd "C-x C-'") 'ahs-change-range)
+         (define-key map (kbd "C-x C-a") 'ahs-edit-mode)
+         map)))))
 
 (defun homecookin/init-column-marker ()
   (use-package column-marker
-    :defer t
     :ensure t
-    :init (progn
-            (message "+ homecookin/init-column-marker :init")
-            (add-hook 'prog-mode-hook (lambda () (column-marker-1 80))))))
-
-(defun homecookin/post-init-diminish ()
-  (use-package diminish
-    :defer t
-    :config (progn
-              (message "+ homecookin/post-init-diminish :config")
-              (with-eval-after-load 'wakatime-mode
-                (spacemacs|diminish wakatime-mode " ⓦ" " w")
-                ))))
+    :init
+    (progn
+      (message "+ homecookin/init-column-marker :init")
+      (add-hook 'prog-mode-hook (lambda () (column-marker-1 80))))))
 
 (defun homecookin/init-flatui-theme ()
   (use-package flatui-theme
-    :defer t
     :config
     (progn
       (message "+ homecookin/init-flatui-theme :config")
@@ -120,59 +106,56 @@
 
 (defun homecookin/post-init-highlight-parentheses ()
   (use-package highlight-parentheses
-    :defer t
     :disabled t
-    :init (progn
-            (message "+ homecookin/post-init-highlight-parentheses :init")
-            (with-eval-after-load 'highlight-parentheses
-              (setq hl-paren-colors '(,clouds ,clouds ,pomegranate))
-              (setq hl-paren-background-colors '(,wisteria ,peter-river nil))
-              ))))
+    :init
+    (progn
+      (message "+ homecookin/post-init-highlight-parentheses :init")
+      (with-eval-after-load 'highlight-parentheses
+        (setq hl-paren-colors '(,clouds ,clouds ,pomegranate))
+        (setq hl-paren-background-colors '(,wisteria ,peter-river nil))
+        ))))
 
 (defun homecookin/post-init-python ()
   (use-package python
-    :defer t
-    :init (progn
-            (message "+ homecookin/post-init-python :init")
-            ;; (with-eval-after-load 'python-mode
-            ;;   (flycheck-mode -1)
-            ;;   (show-smartparens-mode -1)
-            ;;   )
-            (define-derived-mode python-no-flycheck-mode python-mode
-              "Python mode with flycheck disabled."
-              (flycheck-mode nil))
-            (add-to-list 'auto-mode-alist
-                         '("BUILD\\'" . python-no-flycheck-mode))
-            )))
+    :init
+    (progn
+      (message "+ homecookin/post-init-python :init")
+      (define-derived-mode python-no-flycheck-mode python-mode
+        "Python mode with flycheck disabled."
+        (flycheck-mode nil))
+      (add-to-list 'auto-mode-alist '("BUILD\\'" . python-no-flycheck-mode))
+      (add-to-list 'auto-mode-alist '("\\.bzl\\'" . python-no-flycheck-mode))
+      )))
 
 (defun homecookin/post-init-rainbow-delimiters ()
   (use-package rainbow-delimiters
-    :defer t
     :ensure t
-    :init (progn
-            (message "+ homecookin/post-init-rainbow-delimiters :init")
-            (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))))
+    :init
+    (progn
+      (message "+ homecookin/post-init-rainbow-delimiters :init")
+      (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))))
 
 (defun homecookin/post-init-smartparens ()
   (use-package smartparens
-    :defer t
-    :config (progn
-              (message "+ homecookin/post-init-smartparens :config")
-              ;; (with-eval-after-load 'smartparens
-              ;;   (sp-pair "(" nil :actions :rem)
-              ;;   (sp-pair "[" nil :actions :rem)
-              ;;   (sp-pair "'" nil :actions :rem)
-              ;;   (sp-pair "\"" nil :actions :rem)
-              ;;   (show-paren-mode nil)
-              ;;   (show-smartparens-mode nil)
-              ;;   )
-              )))
+    :config
+    (progn
+      (message "+ homecookin/post-init-smartparens :config")
+      (with-eval-after-load 'smartparens
+        (sp-pair "(" nil :actions :rem)
+        (sp-pair "[" nil :actions :rem)
+        (sp-pair "'" nil :actions :rem)
+        (sp-pair "\"" nil :actions :rem)
+        ;; (show-paren-mode nil)
+        ;; (show-smartparens-mode nil)
+        )
+      )))
 
-(defun homecookin/post-init-web-mode ()
-  (use-package web-mode
-    :defer t
-    :mode (("\\.jsx\\'" . web-mode)
-           ("\\.tsx\\'" . web-mode))
-    ))
+(defun homecookin/post-init-wakatime-mode ()
+  (use-package wakatime-mode
+    :config
+    (progn
+      (message "+ homecookin/post-init-wakatime-mode :config")
+      (spacemacs|diminish wakatime-mode " 🕒" " W")
+      )))
 
 ;;; packages.el ends here

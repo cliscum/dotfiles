@@ -1,0 +1,9 @@
+{
+  "extends": ["tslint:latest", "tslint:recommended", "tslint-react"],
+  "rules": {
+    "jsx-no-lambda": true,
+    "no-constructor-vars": true,
+    "quotemark": [true, "single"],
+    "semicolon": [true, "never"]
+  }
+}

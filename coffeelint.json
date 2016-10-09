@@ -32,7 +32,7 @@
     "hoist_local": true,
     "hoist_parent": true,
     "unused_variables": true,
-    "unused_arguments": false,
+    "unused_arguments": true,
     "unused_classes": true
   }
 }

@@ -46,6 +46,9 @@
      (wakatime :variables
                wakatime-api-key "247f1d7e-7b5d-4ef2-883e-5ad1bf478839"
                wakatime-cli-path "/usr/local/bin/wakatime"
+               ;; Setting wakatime-python-bin is prob preferable. Alternative:
+               ;; wakatime-cli-path "/usr/lib/python3.5/site-packages/wakatime/cli.py"
+               wakatime-python-bin "/usr/bin/python3"
                )
      yaml
      )
@@ -167,7 +170,8 @@ layers configuration. You are free to put any user code."
  '(custom-safe-themes
    (quote
     ("15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" default)))
- '(fci-rule-color "#f1c40f")
+ '(fci-rule-color "#f1c40f" t)
+ '(flycheck-coffeelintrc "~/coffeelint.json")
  '(highlight-indentation-offset 2)
  '(hl-paren-background-colors (quote ("#2492db" "#95a5a6" nil)))
  '(hl-paren-colors (quote ("#ecf0f1" "#ecf0f1" "#c0392b")) t)
