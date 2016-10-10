@@ -3,7 +3,7 @@
 bat_num=${BLOCK_INSTANCE:-0}
 dir=/sys/class/power_supply/BAT${bat_num}
 
-[ -d $dir ] || exit
+[ -d $dir ] || exit 0
 
 picowatts=$(( \
   $(cat "${dir}/current_now") * \

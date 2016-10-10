@@ -44,10 +44,8 @@
      typescript
      version-control
      (wakatime :variables
-               wakatime-api-key "247f1d7e-7b5d-4ef2-883e-5ad1bf478839"
+               ;; NOTE: The key is located in ~/.wakatime.cfg.
                wakatime-cli-path "/usr/local/bin/wakatime"
-               ;; Setting wakatime-python-bin is prob preferable. Alternative:
-               ;; wakatime-cli-path "/usr/lib/python3.5/site-packages/wakatime/cli.py"
                wakatime-python-bin "/usr/bin/python3"
                )
      yaml
