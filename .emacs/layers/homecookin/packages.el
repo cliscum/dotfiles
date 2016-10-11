@@ -54,6 +54,8 @@
          `(ahs-face ((t (:weight bold :foreground ,sun-flower))))
          `(ahs-plugin-whole-buffer-face ((t (:weight bold :background ,sun-flower :foreground ,wet-asphalt))))
          `(column-marker-1 ((t (:inverse-video t))))
+         `(command-log-key ((t (:foreground ,carrot))))
+         `(command-log-command ((t (:inherit default))))
          `(company-preview ((t (:background ,silver :foreground ,belize-hole))))
          `(company-preview-common ((t (:weight bold :background ,silver :foreground ,belize-hole))))
          `(company-scrollbar-bg ((t (:background ,concrete))))
