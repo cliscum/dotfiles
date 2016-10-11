@@ -2,8 +2,6 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
-;; Works with Spacemacs version: 0.105.11
-
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
@@ -15,23 +13,32 @@
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
                       )
-     better-defaults
+     (better-defaults :variables
+                      better-defaults-move-to-beginning-of-code-first t
+                      better-defaults-move-to-end-of-code-first t)
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t
             )
+     chrome
      command-log
+     csv
      dockerfile
      emacs-lisp
      git
-     go
+     (go :variables go-use-gometalinter t)
      gtags
      homecookin
      html
+     (ibuffer :variables
+              ibuffer-group-buffers-by 'projects)
+     imenu-list
      ivy
      javascript
      markdown
+     org
      python
+     rcirc
      react
      (ruby :variables
            ruby-version-manager 'rbenv
@@ -40,6 +47,7 @@
             scala-enable-eldoc-mode t
             )
      semantic
+     shell-scripts
      sql
      syntax-checking
      typescript
@@ -81,7 +89,7 @@ before layers configuration."
    dotspacemacs-editing-style 'emacs
    dotspacemacs-elpa-https nil
    dotspacemacs-elpa-timeout 5
-   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-emacs-leader-key "M-SPC"
    dotspacemacs-enable-paste-micro-state nil
    dotspacemacs-fullscreen-at-startup nil
    dotspacemacs-fullscreen-use-non-native nil
@@ -141,9 +149,6 @@ layers configuration. You are free to put any user code."
   (spacemacs/toggle-smartparens-globally-off) ; this doesn't work
   (spacemacs/toggle-whitespace-globally-on)
 
-  ;; TODO remove this in spacemacs >= 0.106.x
-  (spaceline-compile)
-
   (message "- dotspacemacs/user-config")
   )
 
@@ -169,6 +174,7 @@ layers configuration. You are free to put any user code."
  '(custom-safe-themes
    (quote
     ("15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" default)))
+ '(evil-want-Y-yank-to-eol t)
  '(fci-rule-color "#f1c40f" t)
  '(flycheck-coffeelintrc "~/coffeelint.json")
  '(highlight-indentation-offset 2)
@@ -178,7 +184,7 @@ layers configuration. You are free to put any user code."
  '(js2-basic-offset 2)
  '(package-selected-packages
    (quote
-    (command-log-mode yapfify yaml-mode ws-butler window-numbering which-key wgrep web-mode web-beautify wakatime-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline smex smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort protobuf-mode popwin pip-requirements persp-mode paradox orgit org-plus-contrib org-bullets open-junk-file noflet neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jade-mode ivy-hydra info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-make google-translate golden-ratio go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flycheck-pos-tip flx-ido flatui-theme fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ensime emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word cython-mode counsel-projectile company-web company-tern company-statistics company-go company-c-headers company-anaconda column-marker column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell)))
+    (rebox2 imenu-list gmail-message-mode ham-mode html-to-markdown flycheck-gometalinter fish-mode edit-server csv-mode company-shell selectric-mode org-projectile org-present org-pomodoro alert log4e gntp org-download ibuffer-projectile htmlize gnuplot rcirc-notify rcirc-color command-log-mode yapfify yaml-mode ws-butler window-numbering which-key wgrep web-mode web-beautify wakatime-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline smex smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort protobuf-mode popwin pip-requirements persp-mode paradox orgit org-plus-contrib org-bullets open-junk-file noflet neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jade-mode ivy-hydra info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-make google-translate golden-ratio go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flycheck-pos-tip flx-ido flatui-theme fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ensime emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word cython-mode counsel-projectile company-web company-tern company-statistics company-go company-c-headers company-anaconda column-marker column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell)))
  '(perl-indent-level 2)
  '(python-indent-offset 2)
  '(safe-local-variable-values
