@@ -10,8 +10,8 @@ update:
 
 # Symlink all from here to home.
 link:
-	cp -asf $$(pwd)/^(README.md|Makefile)*(D) ~/
+	cp -asf $$(pwd)/^(README.md|Makefile|.git)(D) ~/
 
-# Clean dangling links.
+# Clean dangling links in home pointing here.
 clean:
 	find -L ~/ -type l -lname "$$(pwd)/*" -delete -print

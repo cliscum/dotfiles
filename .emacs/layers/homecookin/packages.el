@@ -9,11 +9,16 @@
 (defconst homecookin-packages
   '(
     auto-highlight-symbol
+    cc-mode
     column-marker
+    counsel-projectile
     flatui-theme
     highlight-parentheses
+    (pmd :location local)
     python
     rainbow-delimiters
+    rcirc-notify
+    sbt-mode
     smartparens
     wakatime-mode
     ))
@@ -35,6 +40,39 @@
          (define-key map (kbd "C-x C-a") 'ahs-edit-mode)
          map)))))
 
+(defun homecookin/init-cc-mode ()
+  (use-package cc-mode
+    :defer t
+    :config
+    ;; List of specific rules for pmd
+    (setq pmd-specific-rules '(("prU" . "unusedcode")
+                               ("prE" . "empty")
+                               ("prN" . "unnecessary")
+                               ("prB" . "basic")
+                               ("prI" . "imports")))
+
+    ;; Generates spacemacs binding to call each specific rule
+    ;; - first, generates interactive function
+    (mapc (lambda (r) (eval `(mk-pmd-rule-function ,(cdr r))))
+          pmd-specific-rules)
+    ;; - then, creates spacemacs shortcut to this call.
+    (mapc (lambda (r)
+            (let ((plabel (car r))
+                  (pfun (intern (concat "pmd-project-" (cdr r))))
+                  (blabel (downcase (car r)))
+                  (bfun (intern (concat "pmd-buffer-" (cdr r)))))
+              (spacemacs/set-leader-keys-for-major-mode
+                'java-mode plabel pfun blabel bfun)))
+          pmd-specific-rules)
+
+    (spacemacs/set-leader-keys-for-major-mode 'java-mode
+      ;; PMD
+      ;; I have to put this here since pmd is lazy load
+      "pb" 'pmd-current-buffer
+      "pp" 'pmd-current-sbt-project
+      )
+    ))
+
 (defun homecookin/init-column-marker ()
   (use-package column-marker
     :ensure t
@@ -42,6 +80,29 @@
     (progn
       (message "+ homecookin/init-column-marker :init")
       (add-hook 'prog-mode-hook (lambda () (column-marker-1 80))))))
+
+(defun homecookin/post-init-counsel-projectile ()
+  (use-package counsel-projectile
+    ;; :defer t
+    :config
+    (progn
+      (message "+ homecookin/post-init-counsel-projectile :config")
+
+      ;; Redefine this to add a preselect param. TODO better way to do this?
+      (defun counsel-projectile-switch-to-buffer (&optional virtual)
+        "Switch to a project buffer (homecookin).
+If optional argument VIRTUAL is non-nil, add project files as
+virtual buffers."
+        (interactive)
+        (ivy-read (projectile-prepend-project-name "Switch to buffer: ")
+                  (counsel-projectile--buffer-list virtual)
+                  :matcher #'ivy--switch-buffer-matcher
+                  :action #'counsel-projectile--switch-buffer-action
+                  :preselect (buffer-name (other-buffer (current-buffer)))
+                  :require-match t
+                  :keymap counsel-projectile-map
+                  :caller 'counsel-projectile-switch-to-buffer))
+      )))
 
 (defun homecookin/init-flatui-theme ()
   (use-package flatui-theme
@@ -64,20 +125,27 @@
          `(company-tooltip-common ((t (:background ,silver))))
          `(company-tooltip-common-selection ((t (:weight bold :background ,silver))))
          `(company-tooltip-selection ((t (:weight bold :background ,silver :foreground ,belize-hole))))
-         `(cursor ((t (:background ,sun-flower))))
+         `(cursor ((t (:background ,peter-river))))
          `(default ((t (:background "#ffffff" :foreground ,midnight-blue))))
          `(fringe ((t (:background ,silver :foreground ,concrete))))
          `(header-line ((t (:background ,clouds :box (:line-width 1 :color ,silver)))))
+         `(highlight ((t (:background ,clouds))))
          `(highlight-indentation-current-column-face ((t (:background ,silver))))
          `(highlight-indentation-face ((t (:background ,silver))))
+         `(imenu-list-entry-face-0 ((t (:inherit imenu-list-entry-face :foreground ,amethyst))))
+         `(imenu-list-entry-face-1 ((t (:inherit imenu-list-entry-face :foreground ,belize-hole))))
+         `(imenu-list-entry-face-2 ((t (:inherit imenu-list-entry-face :foreground ,green-sea))))
+         `(imenu-list-entry-face-3 ((t (:inherit imenu-list-entry-face :foreground ,nephritis))))
+         `(isearch ((t (:background ,amethyst :foreground ,clouds))))
+         `(isearch-fail ((t (:background ,alizarin :foreground ,clouds))))
          `(ivy-confirm-face ((t (:inherit minibuffer-prompt :foreground ,nephritis))))
-         `(ivy-current-match ((t (:background ,sun-flower :foreground ,midnight-blue))))
+         `(ivy-current-match ((t (:inherit isearch-lazy-highlight-face))))
          `(ivy-match-required-face ((t (:inherit minibuffer-prompt :foreground ,alizarin))))
-         `(ivy-minibuffer-match-face-1 ((t (:foreground ,pomegranate :weight bold))))
-         `(ivy-minibuffer-match-face-2 ((t (:foreground ,green-sea :weight bold))))
-         `(ivy-minibuffer-match-face-3 ((t (:foreground ,belize-hole :weight bold))))
-         `(ivy-minibuffer-match-face-4 ((t (:background ,sun-flower :weight bold))))
-         `(ivy-remote ((t (:foreground ,peter-river))))
+         `(ivy-minibuffer-match-face-1 ((t (:background ,silver :weight bold))))
+         `(ivy-minibuffer-match-face-2 ((t (:background ,green-sea :foreground ,clouds :weight bold))))
+         `(ivy-minibuffer-match-face-3 ((t (:background ,peter-river :foreground ,clouds :weight bold))))
+         `(ivy-minibuffer-match-face-4 ((t (:background ,amethyst :foreground ,clouds :weight bold))))
+         `(ivy-remote ((t (:foreground ,belize-hole))))
          `(match ((t (:background ,nephritis :foreground ,clouds))))
          `(mode-line ((t (:foreground ,clouds :background ,midnight-blue))))
          `(mode-line-buffer-id ((t (:inherit bold :foreground ,sun-flower))))
@@ -117,6 +185,24 @@
         (setq hl-paren-background-colors '(,wisteria ,peter-river nil))
         ))))
 
+(defun homecookin/init-pmd ()
+  (use-package pmd
+    :commands (pmd-current-buffer pmd-file-or-dir)
+    ;; :init
+    ;; (push 'pmd company-backends-java-mode)
+    :config
+    ;; Point to the correct directories for java and pmd-home
+    (setq pmd-java-home "/usr/bin/env java")
+    (setq pmd-home "/usr/share/java/pmd")
+    (setq pmd-ruleset-list
+          (list "java-basic" "java-braces" "java-clone" "java-codesize"
+                "java-controversial" "java-coupling" "java-design" "java-empty"
+                "java-finalizers" "java-imports" "java-junit"
+                "java-logging-jakarta-commons" "java-logging-java" "java-naming"
+                "java-optimizations" "java-strictexception" "java-strings"
+                "java-sunsecure" "java-unnecessary" "java-unusedcode"))
+    ))
+
 (defun homecookin/post-init-python ()
   (use-package python
     :init
@@ -137,6 +223,46 @@
       (message "+ homecookin/post-init-rainbow-delimiters :init")
       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))))
 
+(defun homecookin/post-init-rcirc-notify ()
+  (use-package rcirc-notify
+    :config
+    (progn
+      (message "+ homecookin/post-init-rcirc-notify :config")
+
+      (setq rcirc-notify-message "%s: %s")
+      (setq rcirc-notify-popup-timeout 5000)
+      (setq rcirc-notify-timeout 0)
+
+      (defun my-rcirc-notify (proc sender response target text)
+        "Notify always."
+        (interactive)
+        (when (and (not (string= sender (rcirc-nick proc)))
+                   (not (string= sender (rcirc-server-name proc)))
+                   (rcirc-notify-allowed sender))
+          (rcirc-notify sender text)))
+
+      (add-hook 'rcirc-print-hooks 'my-rcirc-notify)
+      (remove-hook 'rcirc-notify-page-me-hooks 'spacemacs/rcirc-notify-beep)
+      )))
+
+(defun homecookin/init-sbt-mode ()
+  (use-package sbt-mode
+    :defer t
+    :init
+    (push 'sbt-mode company-backends-java-mode)
+    :config
+    ;; compilation-skip-threshold tells the compilation minor-mode
+    ;; which type of compiler output can be skipped. 1 = skip info
+    ;; 2 = skip info and warnings.
+    (setq compilation-skip-threshold 1)
+
+    ;; On 'sbt-run-previous-command skip the question to save buffers and
+    ;; have buffers saved automatically instead.
+    (setq compilation-ask-about-save nil)
+
+    ;; (spacemacs/declare-prefix-for-mode 'java-mode "ms" "sbt")
+    ))
+
 (defun homecookin/post-init-smartparens ()
   (use-package smartparens
     :config
@@ -144,6 +270,7 @@
       (message "+ homecookin/post-init-smartparens :config")
       (with-eval-after-load 'smartparens
         (sp-pair "(" nil :actions :rem)
+        (sp-pair "{" nil :actions :rem)
         (sp-pair "[" nil :actions :rem)
         (sp-pair "'" nil :actions :rem)
         (sp-pair "\"" nil :actions :rem)

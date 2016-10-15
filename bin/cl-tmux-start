@@ -35,7 +35,6 @@ tmux set-option -t system status-style bg=blue,fg=brightwhite
 tmux set-option -t system set-titles-string '#S:#I ⫽ #W #{session_alerts}'
 
 tmux new-window -d -t system -n ' htop' 'htop'
-tmux new-window -d -t system -n ' dstat' 'dstat --all --noupdate 60'
 tmux send-keys -R -t chat weechat C-m C-l
 
 tmux bind-key $nested_prefix last-window

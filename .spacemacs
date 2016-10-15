@@ -30,15 +30,12 @@
      gtags
      homecookin
      html
-     (ibuffer :variables
-              ibuffer-group-buffers-by 'projects)
      imenu-list
      ivy
      javascript
      markdown
      org
      python
-     rcirc
      react
      (ruby :variables
            ruby-version-manager 'rbenv
@@ -75,7 +72,7 @@ before layers configuration."
    dotspacemacs-auto-resume-layouts nil
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-check-for-update t
-   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-colorize-cursor-according-to-state nil
    dotspacemacs-command-key ":"
    dotspacemacs-default-font '("Inconsolata"
                                :size 16
@@ -89,13 +86,13 @@ before layers configuration."
    dotspacemacs-editing-style 'emacs
    dotspacemacs-elpa-https nil
    dotspacemacs-elpa-timeout 5
-   dotspacemacs-emacs-leader-key "M-SPC"
+   dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-enable-paste-micro-state nil
    dotspacemacs-fullscreen-at-startup nil
    dotspacemacs-fullscreen-use-non-native nil
    dotspacemacs-highlight-delimiters nil
    dotspacemacs-inactive-transparency 100
-   dotspacemacs-leader-key "SPC"
+   dotspacemacs-leader-key "m"
    dotspacemacs-line-numbers t
    dotspacemacs-loading-progress-bar nil
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
@@ -182,9 +179,6 @@ layers configuration. You are free to put any user code."
  '(hl-paren-colors (quote ("#ecf0f1" "#ecf0f1" "#c0392b")) t)
  '(js-indent-level 2)
  '(js2-basic-offset 2)
- '(package-selected-packages
-   (quote
-    (rebox2 imenu-list gmail-message-mode ham-mode html-to-markdown flycheck-gometalinter fish-mode edit-server csv-mode company-shell selectric-mode org-projectile org-present org-pomodoro alert log4e gntp org-download ibuffer-projectile htmlize gnuplot rcirc-notify rcirc-color command-log-mode yapfify yaml-mode ws-butler window-numbering which-key wgrep web-mode web-beautify wakatime-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline smex smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort protobuf-mode popwin pip-requirements persp-mode paradox orgit org-plus-contrib org-bullets open-junk-file noflet neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc jade-mode ivy-hydra info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-make google-translate golden-ratio go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flycheck-pos-tip flx-ido flatui-theme fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu ensime emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word cython-mode counsel-projectile company-web company-tern company-statistics company-go company-c-headers company-anaconda column-marker column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell)))
  '(perl-indent-level 2)
  '(python-indent-offset 2)
  '(safe-local-variable-values
@@ -211,6 +205,7 @@ layers configuration. You are free to put any user code."
  '(sml/inactive-background-color "#dfe4ea")
  '(sml/inactive-foreground-color "#34495e")
  '(swiper-include-line-number-in-search t)
+ '(swiper-min-highlight 1)
  '(tramp-connection-timeout 10)
  '(typescript-indent-level 2)
  '(vc-annotate-background "#ecf0f1")
@@ -240,4 +235,4 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata" :foundry "PfEd" :slant normal :weight normal :height 120 :width normal)))))
+ )

@@ -40,10 +40,11 @@ urgent_on_bell = true
 # #define COLOR_WISTERIA      #8e44ad
 
 [colors]
-background      = #2c3e50
-foreground      = #bdc3c7
+background = #2c3e50
+foreground = #bdc3c7
 foreground_bold = #ecf0f1
-cursor          = #3498db
+cursor = #f1c40f
+cursor_foreground = #2c3e50
 # Colors (dark, light)
 # black
 color0          = #2c3e50

@@ -1,1 +1,1 @@
-# `.zlogout' is sourced when login shells exit.
+.zprezto/runcoms/zlogout
