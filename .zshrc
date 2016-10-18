@@ -26,12 +26,18 @@ fpath=(~/.zsh $fpath)
 
 zmodload -i zsh/complist
 
+# Colorize completion lists
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} 'ma=00;30;103'
+
 # bindkey -e # emacs
 bindkey -M menuselect '^o' accept-and-infer-next-history
 bindkey "^[[1;3C" forward-word  # [M-Right]
 bindkey "^[[1;3D" backward-word # [M-Left]
 bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
+
+setopt INTERACTIVE_COMMENTS
+unsetopt SHARE_HISTORY
 
 uname -a |grep -q '^Linux' && alias ls='ls --color=auto'
 uname -a |grep -q '^Darwin' && export CLICOLOR=1
