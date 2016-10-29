@@ -40,10 +40,11 @@
          (define-key map (kbd "C-x C-a") 'ahs-edit-mode)
          map)))))
 
-(defun homecookin/init-cc-mode ()
+(defun homecookin/post-init-cc-mode ()
   (use-package cc-mode
     :defer t
     :config
+    (message "+ homecookin/post-init-cc-mode :config")
     ;; List of specific rules for pmd
     (setq pmd-specific-rules '(("prU" . "unusedcode")
                                ("prE" . "empty")
@@ -245,10 +246,11 @@ virtual buffers."
       (remove-hook 'rcirc-notify-page-me-hooks 'spacemacs/rcirc-notify-beep)
       )))
 
-(defun homecookin/init-sbt-mode ()
+(defun homecookin/post-init-sbt-mode ()
   (use-package sbt-mode
     :defer t
     :init
+    (message "+ homecookin/post-init-sbt-mode :init")
     (push 'sbt-mode company-backends-java-mode)
     :config
     ;; compilation-skip-threshold tells the compilation minor-mode

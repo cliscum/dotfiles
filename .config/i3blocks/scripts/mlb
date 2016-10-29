@@ -33,6 +33,9 @@ function handleResponseBody(body) {
 
   var game = json.data.games.game;
   if (!!game) {
+    if (!Array.isArray(game)) {
+      game = [game];
+    }
     game = game.reverse().filter(isTeamGame)[0];
   }
 
