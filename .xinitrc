@@ -7,10 +7,10 @@ exec 2> ~/.xsession-errors
 export DE=gnome
 export DESKTOP_SESSION=gnome
 export BROWSER=xdg-open
-export QT_SCALE_FACTOR=1
+export QT_SCALE_FACTOR=2
 export QT_QPA_PLATFORMTHEME=qgnomeplatform
-export GDK_SCALE=1
-export GDK_DPI_SCALE=1
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.5
 
 if [ -r /etc/default/locale ]; then
   source /etc/default/locale

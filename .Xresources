@@ -73,8 +73,8 @@ rofi.color-active:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_AS
 rofi.color-window:                   COLOR_WET_ASPHALT,COLOR_EMERALD
 rofi.padding:                        40
 
-i3wm.display0: __display0__
-i3wm.display1: __display1__
+i3wm.display0: eDP1
+i3wm.display1: eDP1
 
-*.dpi: 96
-*dpi: 96
+*.dpi: 240
+*dpi: 240
