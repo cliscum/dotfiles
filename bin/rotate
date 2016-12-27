@@ -1,0 +1,63 @@
+#!/bin/zsh
+
+set -e
+
+touchpad_device() {
+  xinput list \
+    | grep 'slave[[:space:]]*pointer' \
+    | grep -i 'touchpad' \
+    | sed 's#.*\bid=\([0-9]*\)\b.*#\1#'
+}
+
+touchscreen_device() {
+  xinput list \
+    | grep 'slave[[:space:]]*pointer' \
+    | grep -v 'XTEST' \
+    | grep -vi 'touchpad' \
+    | sed 's#.*\bid=\([0-9]*\)\b.*#\1#'
+}
+
+set_natural_scroll() {
+  pointer_id=$1
+  value=$2
+  prop=$( \
+    xinput list-props $pointer_id \
+      | grep 'Natural Scrolling' \
+      | grep -v 'Default' \
+      | sed 's#.*[[:space:]](\([[:digit:]]*\)):[[:space:]]*\([[:digit:]]*\)#\1#' \
+  )
+  [[ -z "$prop" ]] || echo "set-prop $pointer_id $prop $value" | xargs xinput
+}
+
+set_coordinate_matrix() {
+  pointer_id=$1
+  value=$2
+  prop='Coordinate Transformation Matrix'
+  [[ -z "$prop" ]] || echo "set-prop $pointer_id '$prop' $value" | xargs xinput
+}
+
+for pointer_id in $(touchpad_device) $(touchscreen_device); do
+  case $1 in
+    normal)
+      xrandr --output eDP-1 --rotate normal
+      set_natural_scroll $pointer_id 1
+      set_coordinate_matrix $pointer_id '1 0 0 0 1 0 0 0 1'
+      ;;
+    inverted)
+      xrandr --output eDP-1 --rotate inverted
+      set_natural_scroll $pointer_id 0
+      set_coordinate_matrix $pointer_id '-1 0 1 0 -1 1 0 0 1'
+      ;;
+    left)
+      xrandr --output eDP-1 --rotate left
+      set_coordinate_matrix $pointer_id '0 -1 1 1 0 0 0 0 1'
+      ;;
+    right)
+      xrandr --output eDP-1 --rotate right
+      set_coordinate_matrix $pointer_id '0 1 0 -1 0 1 0 0 1'
+      ;;
+    *)
+      echo 'What?'
+      exit 1
+  esac
+done

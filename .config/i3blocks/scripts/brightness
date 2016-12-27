@@ -1,0 +1,9 @@
+#!/bin/sh
+cur=$(cat /sys/class/backlight/*/brightness)
+max=$(cat /sys/class/backlight/*/max_brightness)
+echo "100 * $cur / $max" | bc
+
+case $BLOCK_BUTTON in
+  4) cltools-brightness -3 ;;
+  5) cltools-brightness +3 ;;
+esac

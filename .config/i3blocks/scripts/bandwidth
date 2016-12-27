@@ -91,3 +91,7 @@ function print_all {
 
 print_all
 print_all
+
+case $BLOCK_BUTTON in
+  1) gnome-nettool & ;;
+esac

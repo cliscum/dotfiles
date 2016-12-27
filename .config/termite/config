@@ -7,13 +7,13 @@ cursor_blink = on
 cursor_shape = block
 dynamic_title = true
 filter_unmatched_urls = false
-font = Inconsolata 13
+font = Inconsolata 12
 fullscreen = false
 mouse_autohide = false
 resize_grip = false
 scroll_on_keystroke = true
 scroll_on_output = false
-scrollback_lines = 1000
+scrollback_lines = 500
 search_wrap = true
 urgent_on_bell = true
 
@@ -48,7 +48,7 @@ cursor_foreground = #2c3e50
 # Colors (dark, light)
 # black
 color0          = #2c3e50
-color8          = #34495e
+color8          = #7f8c8d
 # red
 color1          = #c0392b
 color9          = #e74c3c

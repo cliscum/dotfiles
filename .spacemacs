@@ -51,7 +51,7 @@
      version-control
      (wakatime :variables
                ;; NOTE: The key is located in ~/.wakatime.cfg.
-               wakatime-cli-path "/usr/local/bin/wakatime"
+               wakatime-cli-path "/usr/bin/wakatime"
                wakatime-python-bin "/usr/bin/python3"
                )
      yaml
@@ -75,10 +75,11 @@ before layers configuration."
    dotspacemacs-colorize-cursor-according-to-state nil
    dotspacemacs-command-key ":"
    dotspacemacs-default-font '("Inconsolata"
+                               :powerline-scale 1.2
                                :size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               )
    dotspacemacs-default-layout-name "Default"
    dotspacemacs-default-package-repository nil
    dotspacemacs-display-default-layout nil
@@ -131,7 +132,7 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (message "+ dotspacemacs/user-config")
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-default)
-  (setq-default powerline-default-separator (quote slant))
+  (setq-default powerline-default-separator (quote arrow))
 
   (spacemacs/add-to-hooks 'spacemacs/toggle-golden-ratio-on '(prog-mode-hook))
   ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-highlight-indentation-on)
@@ -156,8 +157,8 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#ecf0f1" "#e74c3c" "#2ecc71" "#f1c40f" "#2492db" "#9b59b6" "#1abc9c" "#2c3e50"])
+ '(blink-matching-delay 0.5)
+ '(blink-matching-paren (quote jump))
  '(browse-url-browser-function (quote browse-url-generic))
  '(browse-url-generic-program "/usr/bin/xdg-open")
  '(c-basic-offset 2)
@@ -170,18 +171,15 @@ layers configuration. You are free to put any user code."
  '(css-indent-offset 2)
  '(custom-safe-themes
    (quote
-    ("15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" default)))
+    ("065efdd71e6d1502877fd5621b984cded01717930639ded0e569e1724d058af8" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" default)))
  '(evil-want-Y-yank-to-eol t)
- '(fci-rule-color "#f1c40f" t)
  '(flycheck-coffeelintrc "~/coffeelint.json")
  '(highlight-indentation-offset 2)
- '(hl-paren-background-colors (quote ("#2492db" "#95a5a6" nil)))
- '(hl-paren-colors (quote ("#ecf0f1" "#ecf0f1" "#c0392b")) t)
  '(js-indent-level 2)
  '(js2-basic-offset 2)
  '(package-selected-packages
    (quote
-    (dockerfile-mode docker tablist docker-tramp minitest insert-shebang hide-comnt go-guru yapfify yaml-mode ws-butler window-numbering which-key wgrep web-mode web-beautify wakatime-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide typescript-mode tagedit stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline powerline smex smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode protobuf-mode popwin pip-requirements persp-mode pcre2el paradox spinner orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file noflet neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra info+ indent-guide imenu-list ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-make helm helm-core haml-mode google-translate golden-ratio go-eldoc gnuplot gmail-message-mode ham-mode markdown-mode html-to-markdown gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags flycheck-pos-tip pos-tip flycheck-gometalinter flycheck flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ensime sbt-mode scala-mode emmet-mode elisp-slime-nav edit-server dumb-jump disaster diminish diff-hl define-word cython-mode csv-mode counsel-projectile projectile pkg-info epl counsel swiper ivy company-web web-completion-data company-tern dash-functional tern company-statistics company-shell company-go go-mode company-c-headers company-anaconda company command-log-mode column-marker column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed async anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup quelpa package-build flatui-theme)))
+    (xresources-theme fontawesome unicode-fonts pcache dockerfile-mode docker tablist docker-tramp minitest insert-shebang hide-comnt go-guru yapfify yaml-mode ws-butler window-numbering which-key wgrep web-mode web-beautify wakatime-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide typescript-mode tagedit stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline powerline smex smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode protobuf-mode popwin pip-requirements persp-mode pcre2el paradox spinner orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file noflet neotree mwim move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra info+ indent-guide imenu-list ido-vertical-mode hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-make helm helm-core haml-mode google-translate golden-ratio go-eldoc gnuplot gmail-message-mode ham-mode markdown-mode html-to-markdown gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags flycheck-pos-tip pos-tip flycheck-gometalinter flycheck flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight ensime sbt-mode scala-mode emmet-mode elisp-slime-nav edit-server dumb-jump disaster diminish diff-hl define-word cython-mode csv-mode counsel-projectile projectile pkg-info epl counsel swiper ivy company-web web-completion-data company-tern dash-functional tern company-statistics company-shell company-go go-mode company-c-headers company-anaconda company command-log-mode column-marker column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed async anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup quelpa package-build flatui-theme)))
  '(perl-indent-level 2)
  '(python-indent-offset 2)
  '(safe-local-variable-values
@@ -203,30 +201,14 @@ layers configuration. You are free to put any user code."
              (quote go))))))
  '(sh-basic-offset 2)
  '(sh-indentation 2)
- '(sml/active-background-color "#34495e")
- '(sml/active-foreground-color "#ecf0f1")
- '(sml/inactive-background-color "#dfe4ea")
- '(sml/inactive-foreground-color "#34495e")
+ '(show-paren-when-point-in-periphery t)
+ '(show-paren-when-point-inside-paren t)
+ '(smartparens-global-mode t)
  '(swiper-include-line-number-in-search t)
- '(swiper-min-highlight 1)
+ '(swiper-min-highlight 2)
  '(tramp-connection-timeout 10)
  '(typescript-indent-level 2)
- '(vc-annotate-background "#ecf0f1")
- '(vc-annotate-color-map
-   (quote
-    ((30 . "#e74c3c")
-     (60 . "#c0392b")
-     (90 . "#e67e22")
-     (120 . "#d35400")
-     (150 . "#f1c40f")
-     (180 . "#d98c10")
-     (210 . "#2ecc71")
-     (240 . "#27ae60")
-     (270 . "#1abc9c")
-     (300 . "#16a085")
-     (330 . "#2492db")
-     (360 . "#0a74b9"))))
- '(vc-annotate-very-old-color "#0a74b9")
+ '(wakatime-cli-path "/usr/bin/wakatime")
  '(web-mode-attr-indent-offset 2)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)

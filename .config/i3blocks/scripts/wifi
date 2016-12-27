@@ -2,7 +2,7 @@
 
 dev=${BLOCK_INSTANCE:-wlan0}
 
-sudo iw dev $dev link | awk -f <(cat <<'EOF'
+iw dev $dev link | awk -f <(cat <<'EOF'
 {
   if ($1 == "SSID:") {
     ssid = $2;
@@ -35,4 +35,8 @@ END {
   }
 }
 EOF
-                                 )
+                                )
+
+case $BLOCK_BUTTON in
+  1) gnome-nettool & ;;
+esac

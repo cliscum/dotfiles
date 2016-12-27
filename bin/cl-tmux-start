@@ -5,7 +5,8 @@ set -ex
 # echo Adding regular ssh keys...
 # ls -1 ~/.ssh/keys/agent-* |grep -v '\.pub$' |xargs ssh-add
 
-nested_prefix=C-b
+prefix_ctrl_key='\'
+prefix="C-${prefix_ctrl_key}"
 
 tmux new-session -d -s meta -n system
 tmux send-keys -R -t meta "TMUX= tmux new-session -s system -c $HOME" C-m C-l
@@ -17,26 +18,27 @@ sleep 2
 
 tmux set-option -t meta status-position top
 
-tmux set-option -t chat prefix $nested_prefix
+tmux set-option -t chat prefix "$prefix"
 tmux set-option -t chat status-left-style fg=magenta,bg=brightwhite,bold
-tmux set-option -t chat status-style bg=magenta,fg=brightwhite
+tmux set-option -t chat status-style bg=magenta,fg=white
 tmux set-option -t chat set-titles-string '#S:#I ⫽ #W #{session_alerts}'
-tmux set-option -t code prefix $nested_prefix
+tmux set-option -t code prefix "$prefix"
 tmux set-option -t code status-left-style fg=cyan,bg=brightwhite,bold
-tmux set-option -t code status-style bg=cyan,fg=brightwhite
+tmux set-option -t code status-style bg=cyan,fg=white
 tmux set-option -t code set-titles-string '#S:#I ⫽ #W #{session_alerts}'
-tmux set-option -t dbs prefix $nested_prefix
+tmux set-option -t dbs prefix "$prefix"
 tmux set-option -t dbs status-left-style fg=yellow,bg=brightwhite
-tmux set-option -t dbs status-style bg=yellow,fg=brightwhite
+tmux set-option -t dbs status-style bg=yellow,fg=white
 tmux set-option -t dbs set-titles-string '#S:#I ⫽ #W #{session_alerts}'
-tmux set-option -t system prefix $nested_prefix
+tmux set-option -t system prefix "$prefix"
 tmux set-option -t system status-left-style fg=blue,bg=brightwhite,bold
-tmux set-option -t system status-style bg=blue,fg=brightwhite
+tmux set-option -t system status-style bg=blue,fg=white
 tmux set-option -t system set-titles-string '#S:#I ⫽ #W #{session_alerts}'
 
 tmux new-window -d -t system -n ' htop' 'htop'
 tmux send-keys -R -t chat weechat C-m C-l
 
-tmux bind-key $nested_prefix last-window
+tmux bind-key "$prefix" last-window
+tmux bind-key "$prefix_ctrl_key" send-prefix
 
 # exec tmux attach-session -t meta

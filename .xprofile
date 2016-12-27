@@ -1,24 +1,19 @@
 #!/bin/zsh
 
-# Old setting; for what?
-# xmodmap -e "keycode 96 = Insert Insert"
+xrandr --dpi 96
 
-# Options: CLIPBOARD, PRIMARY, SECONDARY
-autocutsel -fork -selection CLIPBOARD
+setxkbmap \
+  -option caps:super \
+  -option ctrl:ralt_rctrl \
+  -option ctrl:rctrl_ralt
 
-feh --bg-scale "$HOME/.config/backgrounds/Wave.jpg"
+xset r rate 220 50
 
-# TODO fix for arch
-#gnome-settings-daemon &
-redshift-gtk &
-nm-applet &
-#blueman-applet &
-dropbox start -i &
+feh --bg-scale "$HOME/.config/backgrounds/Wave.png"
 
-xkbmap_options='-option ctrl:nocaps'
-if [ $(hostname) = "strudel" ]; then
-  xkbmap_options="$xkbmap_options -option altwin:swap_alt_win"
-fi
-setxkbmap $xkbmap_options
-
-[ -f $HOME/bin/natural-scrolling ] && source $HOME/bin/natural-scrolling
+services=(xsettingsd redshift autocutsel xautolock dropbox)
+for service in $services; do
+  echo -n "Starting ${service} ... "
+  systemctl --user start ${service}.service
+  echo 'done'
+done

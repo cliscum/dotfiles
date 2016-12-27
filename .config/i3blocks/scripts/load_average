@@ -33,3 +33,12 @@ awk -v cpus=$cpus -v cpuload=$load '
     }
   }
 '
+
+case $BLOCK_BUTTON in
+  1)
+    tmux new-window -t system:10 dstat 10
+    tmux select-window -t meta:1
+    tmux select-window -t system:10
+    i3-msg '[class="Termite"]' focus
+    ;;
+esac

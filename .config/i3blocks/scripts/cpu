@@ -1,0 +1,24 @@
+#!/bin/sh
+
+dirs=/sys/devices/system/cpu/cpu[0-9]
+cpus=$(ls -1d $dirs |wc -l)
+
+# Get usage
+function idle() {
+  cat /proc/stat |grep '^cpu' |head -n1 |awk '{print$5}'
+}
+idle0=$(idle)
+sleep 1
+idle1=$(idle)
+usage=$(echo "100 - ($idle1 - $idle0) / $cpus" |bc)
+
+# Get frequency
+tot=$(cat $dirs/cpufreq/scaling_cur_freq | paste -sd+ | bc)
+freq=$(printf '%0.01f' $(echo "2 k $tot $cpus 1000000 * / p" | dc))
+
+echo "${usage}% ${freq}GHz"
+echo "${usage}% ${freq}GHz"
+
+case $BLOCK_BUTTON in
+  1) gnome-system-monitor -p & ;;
+esac

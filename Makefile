@@ -6,7 +6,7 @@ install:
 	git submodule update --init --recursive
 
 update:
-	git submodule update --remote --recursive
+	git submodule update --remote
 
 # Symlink all from here to home.
 link:

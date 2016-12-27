@@ -34,3 +34,7 @@ END {
 	}
 }
 '
+
+case $BLOCK_BUTTON in
+  1) gnome-system-monitor -f & ;;
+esac

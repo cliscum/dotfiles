@@ -1,3 +1,3 @@
 # Dotfiles
 
-Check the Makefile.
+Check out the Makefile for usage and installation hints.

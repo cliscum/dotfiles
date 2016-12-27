@@ -1,0 +1,8 @@
+[Unit]
+Description=autocutsel
+
+[Service]
+ExecStart=/usr/bin/autocutsel -selection CLIPBOARD
+
+[Install]
+WantedBy=default.target

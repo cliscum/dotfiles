@@ -29,42 +29,20 @@ my @shortMetadata = ();
 my $player_arg = "";
 
 if ($BLOCK_INSTANCE) {
-    $player_arg = "--player='$BLOCK_INSTANCE'";
+  $player_arg = "--player='$BLOCK_INSTANCE'";
 }
 
-if ($ENV{'BLOCK_BUTTON'} == 1) {
-    system("playerctl $player_arg previous");
-} elsif ($ENV{'BLOCK_BUTTON'} == 2) {
-    system("playerctl $player_arg play-pause");
-} elsif ($ENV{'BLOCK_BUTTON'} == 3) {
-    system("playerctl $player_arg next");
+if (1 == $ENV{'BLOCK_BUTTON'}) {
+  system("playerctl $player_arg previous");
+} elsif (2 == $ENV{'BLOCK_BUTTON'}) {
+  system("playerctl $player_arg play-pause");
+} elsif (3 == $ENV{'BLOCK_BUTTON'}) {
+  system("playerctl $player_arg next");
+} elsif (4 == $ENV{'BLOCK_BUTTON'}) {
+  system("playerctl $player_arg previous");
+} elsif (5 == $ENV{'BLOCK_BUTTON'}) {
+  system("playerctl $player_arg next");
 }
-
-# if ($player_arg eq '' or $player_arg =~ /cmus$/) {
-#     # try cmus first
-#     my @cmus = split /^/, qx(cmus-remote -Q);
-#     if ($? == 0) {
-#         foreach my $line (@cmus) {
-#             my @data = split /\s/, $line;
-#             if (shift @data eq 'tag') {
-#                 my $key = shift @data;
-#                 my $value = join ' ', @data;
-
-#                 @metadata[0] = $value if $key eq 'artist';
-#                 @metadata[1] = $value if $key eq 'title';
-#             }
-#         }
-
-#         if (@metadata) {
-#             # metadata found so we are done
-#             print(join ' - ', @metadata);
-#             exit 0;
-#         }
-#     }
-
-#     # if cmus was given, we are done
-#     exit 0 unless $player_arg eq '';
-# }
 
 sub my_truncate {
   my ($s, $len) = @_;

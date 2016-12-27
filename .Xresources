@@ -22,8 +22,7 @@
 
 *customization: -color
 
-!*background: COLOR_CLOUDS
-*background: #ffffff
+*background: COLOR_CLOUDS
 *foreground: COLOR_MIDNIGHT_BLUE
 
 ! Colors (dark, light)
@@ -53,19 +52,18 @@
 *color7:  COLOR_SILVER
 *color15: COLOR_CLOUDS
 
-Xft.dpi:        96
-Xft.antialias:  1
-Xft.hinting:    1
-Xft.hintstyle:  hintslight
-Xft.rgba:       rgb
-Xft.lcdfilter:  lcddefault
+Xft.antialias: 1
+Xft.hinting:   1
+Xft.hintstyle: hintslight
+Xft.rgba:      rgb
+Xft.lcdfilter: lcddefault
 
 rofi.modi:                           window,run,ssh
 rofi.opacity:                        100
-rofi.width:                          36
+rofi.width:                          48
 rofi.lines:                          8
 rofi.columns:                        1
-rofi.font:                           SFNS Text 24
+rofi.font:                           SFNS Text 32
 rofi.color-enabled:                  true
 !! bg, fg, bg alt, highlight bg, highlight fg
 rofi.color-normal:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_ASPHALT,COLOR_WET_ASPHALT,COLOR_SUN_FLOWER
@@ -74,3 +72,9 @@ rofi.color-active:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_AS
 !! bg, border
 rofi.color-window:                   COLOR_WET_ASPHALT,COLOR_EMERALD
 rofi.padding:                        40
+
+i3wm.display0: __display0__
+i3wm.display1: __display1__
+
+*.dpi: 96
+*dpi: 96

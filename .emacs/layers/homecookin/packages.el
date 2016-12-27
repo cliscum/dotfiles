@@ -8,20 +8,28 @@
 
 (defconst homecookin-packages
   '(
+    ace-window
     auto-highlight-symbol
     cc-mode
     column-marker
     counsel-projectile
     flatui-theme
-    highlight-parentheses
+    ivy
     (pmd :location local)
     python
     rainbow-delimiters
     rcirc-notify
     sbt-mode
-    smartparens
     wakatime-mode
     ))
+
+(defun homecookin/post-init-ace-window ()
+  (use-package ace-window
+    :init
+    (progn
+      (message "+ homecookin/post-init-ace-window :init")
+      (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
+      )))
 
 (defun homecookin/post-init-auto-highlight-symbol ()
   (use-package auto-highlight-symbol
@@ -127,17 +135,18 @@ virtual buffers."
          `(company-tooltip-common-selection ((t (:weight bold :background ,silver))))
          `(company-tooltip-selection ((t (:weight bold :background ,silver :foreground ,belize-hole))))
          `(cursor ((t (:background ,peter-river))))
-         `(default ((t (:background "#ffffff" :foreground ,midnight-blue))))
+         `(default ((t (:background ,clouds :foreground ,midnight-blue))))
          `(fringe ((t (:background ,silver :foreground ,concrete))))
          `(header-line ((t (:background ,clouds :box (:line-width 1 :color ,silver)))))
-         `(highlight ((t (:background ,clouds))))
+         `(highlight ((t (:background ,silver))))
          `(highlight-indentation-current-column-face ((t (:background ,silver))))
          `(highlight-indentation-face ((t (:background ,silver))))
+         `(hl-paren-face ((t (:inverse-video t :weight bold))))
          `(imenu-list-entry-face-0 ((t (:inherit imenu-list-entry-face :foreground ,amethyst))))
          `(imenu-list-entry-face-1 ((t (:inherit imenu-list-entry-face :foreground ,belize-hole))))
          `(imenu-list-entry-face-2 ((t (:inherit imenu-list-entry-face :foreground ,green-sea))))
          `(imenu-list-entry-face-3 ((t (:inherit imenu-list-entry-face :foreground ,nephritis))))
-         `(isearch ((t (:background ,amethyst :foreground ,clouds))))
+         `(isearch ((t (:inverse-video t :weight bold))))
          `(isearch-fail ((t (:background ,alizarin :foreground ,clouds))))
          `(ivy-confirm-face ((t (:inherit minibuffer-prompt :foreground ,nephritis))))
          `(ivy-current-match ((t (:inherit isearch-lazy-highlight-face))))
@@ -148,21 +157,21 @@ virtual buffers."
          `(ivy-minibuffer-match-face-4 ((t (:background ,amethyst :foreground ,clouds :weight bold))))
          `(ivy-remote ((t (:foreground ,belize-hole))))
          `(match ((t (:background ,nephritis :foreground ,clouds))))
-         `(mode-line ((t (:foreground ,clouds :background ,midnight-blue))))
-         `(mode-line-buffer-id ((t (:inherit bold :foreground ,sun-flower))))
+         `(mode-line ((t (:foreground ,clouds :background ,midnight-blue :box nil))))
+         `(mode-line-buffer-id ((t (:inherit bold :foreground ,carrot))))
          `(mode-line-highlight ((t (:underline t))))
-         `(mode-line-inactive ((t (:foreground ,concrete :background ,midnight-blue))))
+         `(mode-line-inactive ((t (:foreground ,asbestos :background ,silver :box nil))))
          `(persp-selected-face ((t (:foreground ,belize-hole))))
-         `(powerline-active1 ((t (:background ,green-sea :foreground ,clouds))))
-         `(powerline-active2 ((t (:background ,wet-asphalt :foreground ,clouds))))
-         `(powerline-inactive1 ((t (:background ,midnight-blue :foreground ,concrete))))
-         `(powerline-inactive2 ((t (:background ,midnight-blue :foreground ,emerald))))
+         `(powerline-active1 ((t (:inherit mode-line :background ,green-sea :foreground ,clouds))))
+         `(powerline-active2 ((t (:inherit mode-line :background ,silver :foreground ,wet-asphalt))))
+         `(powerline-inactive1 ((t (:inherit mode-line-inactive :foreground ,green-sea))))
+         `(powerline-inactive2 ((t (:inherit mode-line-inactive))))
          `(rainbow-delimiters-depth-1-face ((t (:foreground ,wet-asphalt))))
          `(rainbow-delimiters-depth-10-face ((t (:foreground ,belize-hole))))
          `(rainbow-delimiters-depth-11-face ((t (:foreground ,nephritis))))
          `(rainbow-delimiters-depth-12-face ((t (:foreground ,green-sea))))
          `(rainbow-delimiters-depth-2-face ((t (:foreground ,amethyst))))
-         `(rainbow-delimiters-depth-3-face ((t (:foreground ,peter-river))))
+         `(rainbow-delimiters-depth-3-face ((t (:foreground ,belize-hole))))
          `(rainbow-delimiters-depth-4-face ((t (:foreground ,emerald))))
          `(rainbow-delimiters-depth-5-face ((t (:foreground ,turquoise))))
          `(rainbow-delimiters-depth-6-face ((t (:foreground ,sun-flower))))
@@ -170,20 +179,23 @@ virtual buffers."
          `(rainbow-delimiters-depth-8-face ((t (:foreground ,alizarin))))
          `(rainbow-delimiters-depth-9-face ((t (:foreground ,wisteria))))
          `(secondary-selection ((t (:inverse-video t))))
-         `(show-paren-match ((t (:inverse-video t :weight bold))))
+         `(show-paren-match ((t (:inverse-video t))))
          `(show-paren-mismatch ((t (:background ,alizarin :foreground ,clouds :weight bold))))
          `(whitespace-tab ((t (:background ,sun-flower))))
          )))))
 
-(defun homecookin/post-init-highlight-parentheses ()
-  (use-package highlight-parentheses
-    :disabled t
+(defun homecookin/post-init-ivy ()
+  (use-package ivy
     :init
     (progn
-      (message "+ homecookin/post-init-highlight-parentheses :init")
-      (with-eval-after-load 'highlight-parentheses
-        (setq hl-paren-colors '(,clouds ,clouds ,pomegranate))
-        (setq hl-paren-background-colors '(,wisteria ,peter-river nil))
+      (message "+ homecookin/post-init-ivy :init")
+      (with-eval-after-load 'ivy
+        (setq ivy-count-format "(%d of %d) ")
+        (setq ivy-format-function 'ivy-format-function-line)
+        (setq ivy-re-builders-alist
+              '(
+                (t . ivy--regex-ignore-order)
+                ))
         ))))
 
 (defun homecookin/init-pmd ()
@@ -264,22 +276,6 @@ virtual buffers."
 
     ;; (spacemacs/declare-prefix-for-mode 'java-mode "ms" "sbt")
     ))
-
-(defun homecookin/post-init-smartparens ()
-  (use-package smartparens
-    :config
-    (progn
-      (message "+ homecookin/post-init-smartparens :config")
-      (with-eval-after-load 'smartparens
-        (sp-pair "(" nil :actions :rem)
-        (sp-pair "{" nil :actions :rem)
-        (sp-pair "[" nil :actions :rem)
-        (sp-pair "'" nil :actions :rem)
-        (sp-pair "\"" nil :actions :rem)
-        ;; (show-paren-mode nil)
-        ;; (show-smartparens-mode nil)
-        )
-      )))
 
 (defun homecookin/post-init-wakatime-mode ()
   (use-package wakatime-mode

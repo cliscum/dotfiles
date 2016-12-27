@@ -2,7 +2,7 @@ align=center
 command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME
 markup=none
 separator=true
-separator_block_width=15
+separator_block_width=25
 
 [mediaplayer]
 # instance=spotify
@@ -23,21 +23,21 @@ instance=/
 interval=30
 label=
 
-[temperature]
-instance=coretemp-isa-0000
-interval=10
-# label=
-label=🌡
-
 [load_average]
 interval=5
 label=
 min_width= 0.0
 
-[cpu_usage]
+[cpu]
 interval=5
 label=
-min_width= 00%
+min_width= 00% 0.0ZZz
+
+[temperature]
+instance=coretemp-isa-0000
+interval=10
+# label=
+label=🌡
 
 [memory]
 interval=15
@@ -48,10 +48,18 @@ label=
 min_width= 00Z 00Z
 
 [wifi]
-instance=wlp4s0
+instance=wlp1s0
 interval=5
 # label=
 # label=
+
+[battery]
+interval=10
+
+[brightness]
+label= 
+interval=once
+signal=2
 
 [volume]
 instance=Master
@@ -59,16 +67,12 @@ interval=once
 label=
 signal=1
 
-[battery]
-interval=10
-
 [weather]
 instance=19102
 interval=180
 markup=pango
 
 [date]
-command=date '+%a, %b %e'
 interval=60
 label=
 

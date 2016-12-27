@@ -1,0 +1,9 @@
+[Unit]
+Description=XSettings daemon
+
+[Service]
+ExecStart=/usr/bin/xsettingsd
+ExecReload=/usr/bin/pkill -HUP xsettingsd
+
+[Install]
+WantedBy=default.target

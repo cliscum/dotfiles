@@ -1,0 +1,8 @@
+[Unit]
+Description=Auto Lock
+
+[Service]
+ExecStart=/usr/bin/xautolock -time 2 -locker 'i3lock -fc 7f8c8d'
+
+[Install]
+WantedBy=default.target

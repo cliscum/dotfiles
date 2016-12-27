@@ -1,7 +1,7 @@
 [global]
   alignment = right
   browser = sensible-browser
-  font = "SFNS Text 14"
+  font = "SFNS Text 16"
   format = "<b>%s</b> ␥ %a\n%b"
   geometry = "0x0-10+35"
   horizontal_padding = 8
