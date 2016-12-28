@@ -8,7 +8,7 @@
   indicate_hidden = yes
   monitor = 1
   padding = 8
-  transparency = 0
+  transparency = 15
   word_wrap = yes
 
 [urgency_low]
