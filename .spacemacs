@@ -76,7 +76,7 @@ before layers configuration."
    dotspacemacs-command-key ":"
    dotspacemacs-default-font '("Inconsolata"
                                :powerline-scale 1.2
-                               :size 16
+                               :size 36
                                :weight normal
                                :width normal
                                )
