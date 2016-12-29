@@ -1,6 +1,6 @@
 (global-set-key (kbd "C--") 'spacemacs/scale-down-font)
 (global-set-key (kbd "C-=") 'spacemacs/scale-up-font)
-(global-set-key (kbd "C-x C-f") 'counsel-projectile-find-file)
+(global-set-key (kbd "C-x C-f") 'counsel-projectile)
 (global-set-key (kbd "C-x M-b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-x M-f") 'counsel-find-file)
 (global-set-key (kbd "C-x b") 'projectile-switch-to-buffer)
