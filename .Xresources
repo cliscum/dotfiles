@@ -58,6 +58,10 @@ Xft.hintstyle: hintslight
 Xft.rgba:      rgb
 Xft.lcdfilter: lcddefault
 
+#define ARGB_ROFI_BG        #e034495e
+#define ARGB_ROFI_HILITE_BG #20ecf0f1
+#define ARGB_TRANSPARENT    #00000000
+
 rofi.bw:                             4
 rofi.color-enabled:                  true
 rofi.columns:                        1
@@ -65,15 +69,14 @@ rofi.font:                           SFNS Text 32
 rofi.lines:                          8
 rofi.matching:                       fuzzy
 rofi.modi:                           window,run,ssh
-rofi.opacity:                        80
 rofi.padding:                        40
 rofi.width:                          48
 !! bg, fg, bg alt, highlight bg, highlight fg
-rofi.color-normal:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_ASPHALT,COLOR_WET_ASPHALT,COLOR_SUN_FLOWER
-rofi.color-urgent:                   COLOR_WET_ASPHALT,COLOR_ALIZARIN,COLOR_WET_ASPHALT,COLOR_ALIZARIN,COLOR_CLOUDS
-rofi.color-active:                   COLOR_WET_ASPHALT,COLOR_CLOUDS,COLOR_WET_ASPHALT,COLOR_WET_ASPHALT,COLOR_EMERALD
+rofi.color-normal:                   ARGB_TRANSPARENT,COLOR_CLOUDS,ARGB_TRANSPARENT,ARGB_ROFI_HILITE_BG,COLOR_SUN_FLOWER
+rofi.color-urgent:                   ARGB_TRANSPARENT,COLOR_ALIZARIN,ARGB_TRANSPARENT,COLOR_ALIZARIN,COLOR_CLOUDS
+rofi.color-active:                   ARGB_TRANSPARENT,COLOR_CLOUDS,ARGB_TRANSPARENT,ARGB_TRANSPARENT,COLOR_EMERALD
 !! bg, border
-rofi.color-window:                   COLOR_WET_ASPHALT,COLOR_BELIZE_HOLE
+rofi.color-window:                   ARGB_ROFI_BG,COLOR_BELIZE_HOLE
 
 i3wm.display0: __display0__
 i3wm.display1: __display1__
