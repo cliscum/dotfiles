@@ -1,9 +1,9 @@
 [global]
   alignment = right
   browser = sensible-browser
-  font = "SFNS Text 16"
+  font = "SFNS Text 14"
   format = "<b>%s</b> ␥ %a\n%b"
-  geometry = "0x0-10+35"
+  geometry = "0x0-30+75"
   horizontal_padding = 8
   indicate_hidden = yes
   monitor = 1
