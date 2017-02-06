@@ -1,3 +1,10 @@
+# This is mainly for emacs remote sessions, and there is probably a better way.
+if [ "$TERM" = 'dumb' ]; then
+  unsetopt zle
+  PS1='$ '
+  return
+fi
+
 # This must come before zprezto modules are loaded.
 autoload -U select-word-style && select-word-style B # bash +subword
 
@@ -14,13 +21,6 @@ export SAVEHIST=50000 # <= HISTSIZE
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export TERMINAL=termite
 export VISUAL=emacsclient
-
-# This is mainly for emacs remote sessions, and there is probably a better way.
-# if [ "$TERM" = 'dumb' ]; then
-#   unsetopt zle
-#   PS1='$ '
-#   return
-# fi
 
 fpath=(~/.zsh $fpath)
 

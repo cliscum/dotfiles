@@ -1,9 +1,9 @@
-# Begin i3-gaps config
-gaps inner 8
-gaps outer 0
-smart_gaps on
-smart_borders on
-# End i3-gaps config
+# # Begin i3-gaps config
+# gaps inner 8
+# gaps outer 0
+# smart_gaps on
+# smart_borders on
+# # End i3-gaps config
 
 # xmodmap -pm
 set $mod Mod4
@@ -71,7 +71,7 @@ floating_modifier $mod
 font pango: SFNS Display 11
 
 for_window [class=".*"] title_format " %title"
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 3
 
 new_window pixel 1
 
