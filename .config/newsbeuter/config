@@ -1,0 +1,7 @@
+color info color15 color2
+color listfocus color0 color11
+color listfocus_unread color1 color11 bold
+color listnormal_unread color9 default bold
+download-path ~/Downloads/%n
+max-downloads 3
+player mplayer

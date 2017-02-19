@@ -37,7 +37,13 @@ tmux set-option -t system status-left-style fg=blue,bg=brightwhite,bold
 tmux set-option -t system status-style bg=blue,fg=white
 tmux set-option -t system set-titles-string '#S:#I ⫽ #W #{session_alerts}'
 
-tmux split-window -v -b -l 15 -t system:1 'htop'
+tmux split-window -v -b -l 15 -t system:1 htop
+tmux select-pane -t 1.0
+
+tmux new-window -n podcasts -t system:2 newsbeuter
+tmux split-window -v -t system:2 podbeuter
+tmux select-pane -t 2.0
+
 tmux send-keys -R -t chat weechat C-m C-l
 
 tmux bind-key "$prefix" last-window
