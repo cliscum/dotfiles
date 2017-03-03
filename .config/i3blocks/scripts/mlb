@@ -68,10 +68,9 @@ function handleResponseBody(body) {
           summary, inningState, game.status.inning);
       }
       else if ('Final' === status || 'Game Over' === status) {
-        color = (
-          ((team === home && ls.r.home > ls.r.away) ||
-           (team === away && ls.r.away > ls.r.home)) ?
-            '#27ae60' : '#c0392b');
+        var homeWins = parseInt(ls.r.home) > parseInt(ls.r.away);
+        color = ((team === home && homeWins) || (team === away && !homeWins)) ?
+          '#27ae60' : '#c0392b';
       }
       else {
         summary = util.format('%s %s', summary, status);

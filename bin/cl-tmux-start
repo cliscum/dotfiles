@@ -38,15 +38,19 @@ tmux set-option -t system status-style bg=blue,fg=white
 tmux set-option -t system set-titles-string '#S:#I ⫽ #W #{session_alerts}'
 
 tmux split-window -v -b -l 15 -t system:1 htop
-tmux select-pane -t 1.0
+tmux select-pane -t system:1.0
 
-tmux new-window -n podcasts -t system:2 newsbeuter
-tmux split-window -v -t system:2 podbeuter
-tmux select-pane -t 2.0
+tmux new-window -n podcasts -t system:2
+tmux split-window -v -t system:2
+tmux select-pane -t system:2.0
 
-tmux send-keys -R -t chat weechat C-m C-l
+tmux send-keys -R -t system:2.0 newsbeuter C-m C-l
+tmux send-keys -R -t system:2.1 podbeuter C-m C-l
+tmux send-keys -R -t chat:1.0 weechat C-m C-l
 
 tmux bind-key "$prefix" last-window
 tmux bind-key "$prefix_ctrl_key" send-prefix
 
-# exec tmux attach-session -t meta
+tmux select-window -t system:1
+
+exec tmux attach-session -t meta
