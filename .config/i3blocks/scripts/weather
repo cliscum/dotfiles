@@ -175,8 +175,7 @@ function handleForecastResponse(response) {
           '<sup><span size="smaller">%d</span></sup></span>',
         humidSize, humidStretch, humidWeight, humidLevel);
 
-      var fullSummary = json.minutely.summary
-          .replace(/.$/, '');
+      var fullSummary = json.currently.summary
       var shortSummary = fullSummary
           .replace(' and', ' &')
           .replace(' in', '')
