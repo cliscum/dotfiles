@@ -113,11 +113,11 @@ virtual buffers."
                   :caller 'counsel-projectile-switch-to-buffer))
       )))
 
-(defun homecookin/init-flatui-theme ()
+(defun homecookin/post-init-flatui-theme ()
   (use-package flatui-theme
     :config
     (progn
-      (message "+ homecookin/init-flatui-theme :config")
+      (message "+ homecookin/post-init-flatui-theme :config")
       (flatui/with-color-variables
         (custom-theme-set-faces
          'flatui
