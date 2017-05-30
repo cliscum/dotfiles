@@ -24,7 +24,9 @@ set $screen_brightness cltools-brightness
 set $screen_lock i3lock -fc 16a085
 set $screenshot scrot -e 'mv $f ~/Desktop/ 2>/dev/null'
 set $terminal i3-sensible-terminal
-set $volume amixer set Master
+set $volume pactl set-sink-volume $(pactl list short sinks |tail -n1 |awk '{print$1}')
+set $volume_toggle pactl set-sink-mute $(pactl list short sinks |tail -n1 |awk '{print$1}') toggle
+set $volume_ding play -q /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 set $xrandr xrandr --output $display0
 
 set $black #000000
@@ -149,19 +151,16 @@ bindsym $mod+s layout stacking
 bindsym $mod+v split v
 bindsym $mod+w layout tabbed
 bindsym $mod+z mode "resize"
-bindsym F10 exec --no-startup-id $volume 5%+ && $signal_volume
 bindsym F5 restart
-bindsym F8 exec --no-startup-id $volume toggle && $signal_volume
-bindsym F9 exec --no-startup-id $volume 5%- && $signal_volume
 # bindsym Menu exec --no-startup-id $rofi -show run
 bindsym Print exec --no-startup-id $screenshot
-bindsym XF86AudioLowerVolume exec --no-startup-id $volume 5%- && $signal_volume
-bindsym XF86AudioMute exec --no-startup-id $volume toggle && $signal_volume
+bindsym XF86AudioLowerVolume exec --no-startup-id $volume -5% && $signal_volume && $volume_ding
+bindsym XF86AudioMute exec --no-startup-id $volume_toggle && $signal_volume && $volume_ding
 bindsym XF86AudioNext exec --no-startup-id $playerctl next
 bindsym XF86AudioPause exec --no-startup-id $playerctl pause
 bindsym XF86AudioPlay exec --no-startup-id $playerctl play
 bindsym XF86AudioPrev exec --no-startup-id $playerctl previous
-bindsym XF86AudioRaiseVolume exec --no-startup-id $volume 5%+ && $signal_volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id $volume +5% && $signal_volume && $volume_ding
 bindsym XF86Eject exec --no-startup-id $screenshot
 bindsym XF86LaunchA exec --no-startup-id $rofi -show run
 bindsym XF86LaunchB exec --no-startup-id $rofi -show window

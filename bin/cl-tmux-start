@@ -43,7 +43,7 @@ tmux set-option -t podcasts prefix "$prefix"
 tmux set-option -t podcasts status-left-style fg=green,bg=brightwhite,bold
 tmux set-option -t podcasts status-style bg=green,fg=white
 
-tmux split-window -vdb -l 16 -t system:1
+tmux split-window -vdb -l 16 -t system:1.0
 tmux split-window -vd -t podcasts:1.0
 
 tmux send-keys -R -t system:1.1 htop C-m C-l

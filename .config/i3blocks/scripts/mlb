@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var child_process = require('child_process');
 var http = require('http');
 var util = require('util');
 
@@ -8,14 +9,15 @@ var team = process.env.BLOCK_INSTANCE || process.argv[2];
 
 var now = new Date();
 var year = now.getFullYear();
-var month = now.getMonth() + 1;
-var day = now.getDate();
+var month = pad02(now.getMonth() + 1);
+var day = pad02(now.getDate());
 
-var uriPath = util.format(
+var host = 'gd2.mlb.com'
+var path = util.format(
   '/components/game/mlb/year_%d/month_%s/day_%s/master_scoreboard.json',
-  year, pad02(month), pad02(day));
+  year, month, day);
 
-http.get({host: 'gd2.mlb.com', path: uriPath}, handleResponse);
+http.get({host, path}, handleResponse);
 
 function handleResponse(response) {
   var body = '';
@@ -46,6 +48,7 @@ function handleResponseBody(body) {
     var ls = game.linescore;
     var summary;
     var color;
+    var browserUrl;
 
     if ('Preview' === status || 'Pre-Game' === status) {
       summary = util.format(
@@ -53,6 +56,11 @@ function handleResponseBody(body) {
         away, home,
         (team === home ? game.home_time : game.away_time),
         (team === home ? game.home_ampm : game.away_ampm));
+      if (process.env.BLOCK_BUTTON === '1') {
+        browserUrl = util.format(
+          'http://www.baseball-reference.com/previews/%s/%s%s%s%s0.shtml',
+          year, home, year, month, day);
+      }
     }
     else {
       summary = util.format(
@@ -75,6 +83,12 @@ function handleResponseBody(body) {
       else {
         summary = util.format('%s %s', summary, status);
       }
+
+      if (process.env.BLOCK_BUTTON === '1') {
+        browserUrl = util.format(
+          'http://www.baseball-reference.com/boxes/%s/%s%s%s%s0.shtml',
+          home, home, year, month, day);
+      }
     }
 
     stdout.write(util.format('%s\n', summary));
@@ -82,6 +96,12 @@ function handleResponseBody(body) {
     if (!!color) {
       stdout.write(util.format('%s\n', color));
     }
+  }
+
+  if (browserUrl) {
+    child_process.spawn('xdg-open', [browserUrl], {
+      detached: true,
+    });
   }
 }
 

@@ -1,7 +1,19 @@
 #!/bin/sh
 cur=$(cat /sys/class/backlight/*/brightness)
 max=$(cat /sys/class/backlight/*/max_brightness)
-echo "100 * $cur / $max" | bc
+pct=$(echo "100 * $cur / $max" | bc)
+
+if [ $pct -lt 20 ]; then
+  color='#e74c3c'
+elif [ $pct -ge 80 ]; then
+  color='#27ae60'
+else
+  color='#f1c40f'
+fi
+
+echo $pct
+echo $pct
+echo $color
 
 case $BLOCK_BUTTON in
   4) cltools-brightness -3 ;;

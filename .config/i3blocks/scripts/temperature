@@ -61,10 +61,10 @@ close(SENSORS);
 !@temperatures and die 'Cannot find temperature';
 
 my $temperature = ceil(sum(@temperatures) / @temperatures);
-# my $temperature_f = sprintf('%.0f', $temperature * 9 / 5 + 32);
+my $temperature_f = sprintf('%.0f', $temperature * 9 / 5 + 32);
 
 # Print short_text, full_text
-print "$temperature°C\n" x2;
+print "$temperature_f°\n" x2;
 
 # Print color, if needed
 if ($temperature >= $t_crit) {

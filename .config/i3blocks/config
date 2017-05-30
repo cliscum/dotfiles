@@ -57,12 +57,11 @@ interval=5
 interval=10
 
 [brightness]
-label= 
 interval=once
+label= 
 signal=2
 
 [volume]
-instance=Master
 interval=once
 label=
 signal=1

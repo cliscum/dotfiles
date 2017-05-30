@@ -19,7 +19,7 @@ export HISTSIZE=50000 # >= SAVEHIST
 export PYTHONDONTWRITEBYTECODE=1
 export SAVEHIST=50000 # <= HISTSIZE
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-export TERMINAL=termite
+export TERMINAL=urxvt
 export VISUAL=emacsclient
 
 fpath=(~/.zsh $fpath)
