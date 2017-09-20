@@ -1,1 +1,14 @@
-/home/cliscum/.bazel/etc/bazel.bazelrc
+common --color=yes
+common --keep_going
+
+build --ignore_unsupported_sandboxing
+build --jobs=2
+build --verbose_failures
+
+test --ignore_unsupported_sandboxing
+test --jobs=2
+# /usr/local/py2 contains one symlink: python -> /usr/bin/python2
+test --test_env=PATH=/usr/local/py2:/usr/bin
+test --test_output=errors
+test --test_verbose_timeout_warnings
+test --verbose_failures
