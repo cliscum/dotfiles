@@ -16,6 +16,7 @@ scroll_on_output = false
 scrollback_lines = 500
 search_wrap = true
 urgent_on_bell = true
+client_side_decoration = false
 
 # ! Colors from http://flatuicolors.com
 # #define COLOR_ALIZARIN      #e74c3c

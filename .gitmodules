@@ -16,7 +16,7 @@
 	branch = master
 [submodule ".zprezto"]
 	path = .zprezto
-	url = git@github.com:cliscum/prezto.git
+	url = git@github.com:sorin-ionescu/prezto.git
 	branch = master
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
