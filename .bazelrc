@@ -1,14 +1,3 @@
-common --color=yes
-common --keep_going
-
-build --ignore_unsupported_sandboxing
-build --jobs=2
-build --verbose_failures
-
-test --ignore_unsupported_sandboxing
-test --jobs=2
-# /usr/local/py2 contains one symlink: python -> /usr/bin/python2
-test --test_env=PATH=/usr/local/py2:/bin:/usr/bin
+build --experimental_remote_spawn_cache
+build --remote_rest_cache=http://bazel-cache.phl6.vistarmedia.com:5007/cache
 test --test_output=errors
-test --test_verbose_timeout_warnings
-test --verbose_failures
