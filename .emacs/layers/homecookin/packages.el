@@ -221,11 +221,16 @@ virtual buffers."
     :init
     (progn
       (message "+ homecookin/post-init-python :init")
-      (define-derived-mode python-no-flycheck-mode python-mode
-        "Python mode with flycheck disabled."
+      (define-derived-mode python-bazel-build-mode python-mode
+        "Bazel BUILD"
+        (setq python-indent-offset 4)
         (flycheck-mode nil))
-      (add-to-list 'auto-mode-alist '("BUILD\\'" . python-no-flycheck-mode))
-      (add-to-list 'auto-mode-alist '("\\.bzl\\'" . python-no-flycheck-mode))
+      (define-derived-mode python-skylark-mode python-mode
+        "Skylark"
+        (flycheck-mode nil))
+      (add-to-list 'auto-mode-alist '("BUILD\\'" . python-bazel-build-mode))
+      (add-to-list 'auto-mode-alist '("WORKSPACE\\'" . python-bazel-build-mode))
+      (add-to-list 'auto-mode-alist '("\\.bzl\\'" . python-skylark-mode))
       )))
 
 (defun homecookin/post-init-rainbow-delimiters ()

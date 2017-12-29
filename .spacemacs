@@ -135,6 +135,9 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (message "+ dotspacemacs/user-config")
+  (setq ivy-re-builders-alist
+        '((swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-default)
   (setq-default powerline-default-separator (quote arrow))
 
