@@ -103,7 +103,7 @@
 
 (use-package helm
   :bind (("C-x C-f" . helm-find-files)
-         ("C-x b" . helm-buffers-list)
+         ("C-x b" . helm-mini)
          ("M-x" . helm-M-x))
 
   :config
