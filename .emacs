@@ -37,6 +37,8 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+(global-subword-mode)
+
 (use-package ace-window
   :bind
   (("M-p" . ace-window))
@@ -73,9 +75,7 @@
 
 (use-package fill-column-indicator
   :init
-  (define-globalized-minor-mode global-fci-mode fci-mode
-    (lambda () (fci-mode 1)))
-  (global-fci-mode 1)
+  (add-hook 'prog-mode-hook 'fci-mode)
   )
 
 (use-package company
