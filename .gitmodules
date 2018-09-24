@@ -10,15 +10,10 @@
 	path = .tmux/tmux-copycat
 	url = git@github.com:tmux-plugins/tmux-copycat
 	branch = master
-[submodule ".emacs.d"]
-	path = .emacs.d
-	url = git@github.com:syl20bnr/spacemacs
-	branch = master
-[submodule ".zprezto"]
-	path = .zprezto
-	url = git@github.com:sorin-ionescu/prezto.git
-	branch = master
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = git@github.com:VundleVim/Vundle.vim.git
 	branch = master
+[submodule ".zprezto"]
+	path = .zprezto
+	url = git@github.com:sorin-ionescu/prezto.git
