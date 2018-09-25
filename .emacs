@@ -11,8 +11,8 @@
 
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("melpa" . "https://melpa.org/packages/"))
+        ("melpa" . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/"))
       package-archive-priorities
       '(("melpa-stable" . 2)
         ("gnu" . 1)
@@ -68,16 +68,6 @@
 
 (use-package coffee-mode)
 
-(use-package dashboard
-  :config
-  (dashboard-setup-startup-hook)
-  )
-
-(use-package fill-column-indicator
-  :init
-  (add-hook 'prog-mode-hook 'fci-mode)
-  )
-
 (use-package company
   :config
   (global-company-mode)
@@ -88,12 +78,12 @@
   (add-hook 'company-mode-hook 'company-statistics-mode)
   )
 
-(use-package counsel
-  :config
-  (counsel-mode)
-  )
-
 (use-package csv-mode)
+
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  )
 
 (use-package dockerfile-mode)
 
@@ -101,6 +91,11 @@
   :bind
   (("M-<up>" . er/expand-region)
    ("M-<down>" . er/contract-region))
+  )
+
+(use-package fill-column-indicator
+  :init
+  (add-hook 'prog-mode-hook 'fci-mode)
   )
 
 (use-package flatui-theme
@@ -128,8 +123,6 @@
 
 (use-package guide-key
   :config
-  (setq guide-key/guide-key-sequence t)
-  (setq guide-key/idle-delay 0.5)
   (guide-key-mode t)
   )
 
@@ -159,9 +152,9 @@
   (helm-projectile-toggle 1)
   )
 
-(use-package ivy
-  :config
-  (ivy-mode)
+(use-package helm-swoop
+  :bind (("C-c s" . helm-swoop)
+         ("M-i" . helm-swoop))
   )
 
 (use-package js2-mode)
@@ -175,16 +168,17 @@
 
 (use-package markdown-mode)
 
+(use-package multiple-cursors
+  :bind (("C-M-e" . mc/edit-lines)
+         ("C-M-<down>" . mc/mark-next-like-this)
+         ("C-M-<up>" . mc/mark-previous-like-this)
+         ("C-M-<right>" . mc/mark-all-like-this))
+  )
+
 (use-package mwim
   :init
   (global-set-key (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (global-set-key (kbd "C-e") 'mwim-end-of-code-or-line)
-  )
-
-(use-package spaceline
-  :init
-  (require 'spaceline-config)
-  (spaceline-emacs-theme)
   )
 
 (use-package projectile
@@ -213,11 +207,17 @@
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   )
 
-(use-package smartparens)
-
 (use-package scala-mode
   :interpreter
   ("scala" . scala-mode))
+
+(use-package smartparens)
+
+(use-package spaceline
+  :init
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  )
 
 (use-package sql)
 
@@ -225,11 +225,6 @@
   :diminish
   :init
   (super-save-mode)
-  )
-
-(use-package swiper-helm
-  :bind
-  (("C-c s" . swiper-helm))
   )
 
 (use-package tide)
@@ -295,16 +290,15 @@
  '(flycheck-coffeelintrc "~/coffeelint.json")
  '(global-display-line-numbers-mode t)
  '(global-hl-line-mode t)
- '(helm-command-prefix-key "C-c h")
+ '(guide-key/guide-key-sequence t)
+ '(guide-key/idle-delay 0.5)
+ '(helm-command-prefix-key "C-c c")
  '(highlight-indentation-offset 2)
  '(inhibit-startup-screen t)
- '(initial-buffer-choice (quote helm-find))
- '(ivy-count-format "(%d/%d) ")
- '(ivy-use-virtual-buffers t)
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio counsel yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode ivy helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
+    (use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(perl-indent-level 2)
  '(projectile-completion-system (quote helm))
  '(python-indent-offset 2)
@@ -315,8 +309,6 @@
  '(show-paren-when-point-inside-paren t)
  '(smartparens-global-mode t)
  '(super-save-auto-save-when-idle t)
- '(swiper-include-line-number-in-search t)
- '(swiper-min-highlight 2)
  '(tab-width 2)
  '(tramp-connection-timeout 10 nil (tramp))
  '(typescript-indent-level 2)
