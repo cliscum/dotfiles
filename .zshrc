@@ -13,6 +13,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+source "${ZDOTDIR:-$HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
 export EDITOR='emacsclient -t'
 export GTK2_RC_FILES="$HOME/.gtkrc.mine"
 export HISTSIZE=50000 # >= SAVEHIST
