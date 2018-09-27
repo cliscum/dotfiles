@@ -4,7 +4,7 @@
 
 [core]
   excludesfile = "~/.gitignore"
-  pager = diff-so-fancy | less --tabs=2 -RFXN
+  pager = less --tabs=2 -RFX
 [user]
   name = Casey Liscum
   email = casey@vistarmedia.com
