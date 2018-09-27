@@ -39,6 +39,12 @@
 
 (global-subword-mode)
 
+(defun set-local-whitespace-style-no-tabs ()
+  (setq-local whitespace-style
+              (seq-remove (lambda (s) (eq s 'tabs)) whitespace-style)))
+
+(add-hook 'makefile-mode-hook 'set-local-whitespace-style-no-tabs)
+
 (use-package ace-window
   :bind (("M-p" . ace-window)))
 
@@ -93,7 +99,11 @@
   :after flycheck
   :init (flycheck-pos-tip-mode))
 
-(use-package go-mode)
+(use-package go-mode
+  :init (add-hook 'go-mode-hook
+                  (lambda ()
+                    (set-local-whitespace-style-no-tabs)
+                    (add-hook 'before-save-hook 'gofmt-before-save))))
 
 (use-package golden-ratio
   :config (golden-ratio-mode 1))
