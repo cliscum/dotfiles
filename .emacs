@@ -37,13 +37,26 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+(global-auto-revert-mode)
 (global-subword-mode)
 
 (defun set-local-whitespace-style-no-tabs ()
+  "Strip 'tabs' from whitespace-style for the local buffer."
   (setq-local whitespace-style
               (seq-remove (lambda (s) (eq s 'tabs)) whitespace-style)))
 
 (add-hook 'makefile-mode-hook 'set-local-whitespace-style-no-tabs)
+
+(defun colorize-compilation ()
+  "Colorize the *compilation* buffer."
+  (progn
+    (require 'ansi-color)
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region compilation-filter-start (point)))))
+
+(add-hook 'compilation-filter-hook #'colorize-compilation)
+
+(savehist-mode t)
 
 (use-package ace-window
   :bind (("M-p" . ace-window)))
@@ -73,7 +86,7 @@
   :config (global-company-mode))
 
 (use-package company-statistics
-  :init (add-hook 'company-mode-hook 'company-statistics-mode))
+  :init (add-hook 'company-mode-hook #'company-statistics-mode))
 
 (use-package csv-mode)
 
@@ -87,7 +100,7 @@
          ("M-<down>" . er/contract-region)))
 
 (use-package fill-column-indicator
-  :init (add-hook 'prog-mode-hook 'fci-mode))
+  :init (add-hook 'prog-mode-hook #'fci-mode))
 
 (use-package flatui-theme
   :config (load-theme 'flatui t))
@@ -103,7 +116,7 @@
   :init (add-hook 'go-mode-hook
                   (lambda ()
                     (set-local-whitespace-style-no-tabs)
-                    (add-hook 'before-save-hook 'gofmt-before-save))))
+                    (add-hook 'before-save-hook #'gofmt-before-save t t))))
 
 (use-package golden-ratio
   :config (golden-ratio-mode 1))
@@ -127,7 +140,7 @@
 
 (use-package helm-flycheck
   :after flycheck
-  :init (define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))
+  :init (define-key flycheck-mode-map (kbd "C-c ! h") #'helm-flycheck))
 
 (use-package helm-projectile
   :config (helm-projectile-toggle 1))
@@ -156,20 +169,28 @@
 (use-package mwim
   :init
   (progn
-    (global-set-key (kbd "C-a") 'mwim-beginning-of-code-or-line)
-    (global-set-key (kbd "C-e") 'mwim-end-of-code-or-line)))
+    (global-set-key (kbd "C-a") #'mwim-beginning-of-code-or-line)
+    (global-set-key (kbd "C-e") #'mwim-end-of-code-or-line)))
 
 (use-package projectile
   :bind-keymap ("C-c p" . projectile-command-map)
   :config (projectile-mode))
+
+(use-package protobuf-mode)
 
 (use-package python
   :config
   (progn
     (define-derived-mode python-bazel-build-mode python-mode
       "Bazel BUILD"
-      (setq python-indent-offset 4)
-      (flycheck-mode nil))
+      (setq-local python-indent-offset 4)
+      (flycheck-mode nil)
+      (add-hook 'after-save-hook
+                (lambda ()
+                  (shell-command
+                   (concat "buildifier -mode=fix " buffer-file-name))
+                  (revert-buffer nil t t))
+                t t))
     (define-derived-mode python-skylark-mode python-mode
       "Skylark"
       (flycheck-mode nil))
@@ -217,12 +238,13 @@
               (lambda ()
                 (when (string-equal "tsx"
                                     (file-name-extension buffer-file-name))
-                  (setup-tide-mode))))
-    (flycheck-add-mode 'typescript-tslint 'web-mode)))
+                  (setup-tide-mode)))
+              t t)
+    (flycheck-add-mode 'typescript-tslint #'web-mode)))
 
 (use-package whitespace
   :diminish global-whitespace-mode
-  :init (add-hook 'before-save-hook 'whitespace-cleanup)
+  :init (add-hook 'before-save-hook #'whitespace-cleanup)
   :config (global-whitespace-mode))
 
 (use-package yaml-mode)
@@ -260,7 +282,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
+    (protobuf-mode use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(perl-indent-level 2)
  '(projectile-completion-system (quote helm))
  '(python-indent-offset 2)

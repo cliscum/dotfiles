@@ -1,3 +1,1 @@
-build --experimental_remote_spawn_cache
-build --remote_rest_cache=http://bazel-cache.phl6.vistarmedia.com:5007/cache
 test --test_output=errors
