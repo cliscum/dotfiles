@@ -39,6 +39,7 @@
 
 (global-auto-revert-mode)
 (global-subword-mode)
+(delete-selection-mode)
 
 (defun set-local-whitespace-style-no-tabs ()
   "Strip 'tabs' from whitespace-style for the local buffer."
@@ -55,8 +56,6 @@
       (ansi-color-apply-on-region compilation-filter-start (point)))))
 
 (add-hook 'compilation-filter-hook #'colorize-compilation)
-
-(savehist-mode t)
 
 (use-package ace-window
   :bind (("M-p" . ace-window)))
@@ -201,8 +200,14 @@
 (use-package rainbow-delimiters
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package savehist
+  :config (savehist-mode t))
+
 (use-package scala-mode
   :interpreter ("scala" . scala-mode))
+
+(use-package session
+  :init (add-hook 'after-init-hook #'session-initialize))
 
 (use-package smartparens)
 
@@ -276,17 +281,21 @@
  '(golden-ratio-auto-scale t)
  '(guide-key/guide-key-sequence t)
  '(guide-key/idle-delay 0.5)
+ '(helm-M-x-always-save-history t)
  '(helm-command-prefix-key "C-c c")
  '(highlight-indentation-offset 2)
  '(inhibit-startup-screen t)
  '(js-indent-level 2)
+ '(mouse-yank-at-point nil)
  '(package-selected-packages
    (quote
-    (protobuf-mode use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
+    (session use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(perl-indent-level 2)
  '(projectile-completion-system (quote helm))
  '(python-indent-offset 2)
  '(recentf-mode t)
+ '(savehist-additional-variables (quote (regexp-search-ring search-ring)))
+ '(session-use-package t nil (session))
  '(sh-basic-offset 2)
  '(show-paren-delay 0.25)
  '(show-paren-when-point-in-periphery t)
