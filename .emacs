@@ -77,7 +77,10 @@
   (progn
     ;; TODO: 0.1.3 always sets ido-mode, but subsequent version will not
     ;; if helm-mode is on.
-    (ido-mode nil)))
+    (ido-mode nil)
+    ;; Undo a couple settings that I don't like.
+    (setq mouse-yank-at-point nil
+          x-select-enable-primary nil)))
 
 (use-package coffee-mode)
 
@@ -286,7 +289,6 @@
  '(highlight-indentation-offset 2)
  '(inhibit-startup-screen t)
  '(js-indent-level 2)
- '(mouse-yank-at-point nil)
  '(package-selected-packages
    (quote
     (session use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
