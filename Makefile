@@ -1,6 +1,6 @@
 SHELL = /bin/zsh --extendedglob
 
-all: install link clean
+all: install link clean ssm
 
 install:
 	git submodule update --init --recursive
@@ -10,8 +10,24 @@ update:
 
 # Symlink all from here to home.
 link:
-	cp -asf $$(pwd)/^(README.md|Makefile|.git)(D) ~/
+	cp -asf $$(pwd)/^(README.md|Makefile|.git|*.ssm)(D) ~/
 
 # Clean dangling links in home pointing here.
 clean:
-	find -L ~/ -type l -lname "$$(pwd)/*" -delete -print
+	find -L ~/ -type l -lname "$$(pwd)/*" -delete -print || echo 'clean failures'
+
+SSM := \
+	.Xresources \
+	.config/termite/config \
+	.wakatime.cfg \
+	.xinitrc \
+	.xprofile \
+	.xsettingsd
+
+SSMGEN = $(SSM:%=$(HOME)/%)
+
+ssm: $(SSMGEN)
+
+$(SSMGEN): $(HOME)/%: %.ssm $(HOME)/bin/ssm-replace
+	@mkdir -p $(dir $@)
+	$(HOME)/bin/ssm-replace $< > $@

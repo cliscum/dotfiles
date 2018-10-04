@@ -1,0 +1,47 @@
+#!/bin/zsh
+
+set -eo pipefail
+
+function fail {
+  echo "ssm-replace failure: $1" 1>&2
+  exit 1
+}
+
+function tempfile {
+  mktemp -t ssm-replace.XXXXXXXX
+}
+
+host="host-$(hostname)"
+IFS=$'\n' keys=($(cat $1 | awk -f <(cat - <<-'EOF'
+{
+  while (match($0, /{{[^}]+}}/)) {
+    print substr($0, RSTART + 2, RLENGTH - 4);
+    $0 = substr($0, RSTART + RLENGTH);
+  }
+}
+EOF
+) | sort | uniq))
+
+src=$(tempfile)
+cp $1 $src
+
+for key in $keys; do
+  val=$(aws ssm get-parameters \
+            --profile=personal \
+            --names "$key/$host" "$key" \
+            --with-decryption \
+            --output json \
+          | jq -r '.Parameters | sort_by(.Name) | reverse | .[].Value' \
+          | head -n1)
+
+  [ "$val" ] || fail("no value for key: $key")
+
+  dst=$(tempfile)
+
+  sed "s#{{$key}}#$val#g" $src > $dst
+
+  rm -f $src
+  src=$dst
+done
+
+[ -z "$dst" ] || (cat $dst && rm -f $dst)

@@ -8,8 +8,8 @@ export DE=gnome
 export DESKTOP_SESSION=gnome
 export BROWSER=xdg-open
 export QT_QPA_PLATFORMTHEME=qgnomeplatform
-export GDK_SCALE=1
-export GDK_DPI_SCALE=1
+export GDK_SCALE={{/x/gdk-scale}}
+export GDK_DPI_SCALE={{/x/gdk-dpi-scale}}
 
 if [ -r /etc/default/locale ]; then
   source /etc/default/locale

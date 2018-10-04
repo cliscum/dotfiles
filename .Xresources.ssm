@@ -110,8 +110,8 @@ URxvt*scrollWithBuffer: true
 URxvt*urgentOnBell: true
 URxvt*url-launcher: /usr/bin/xdg-open
 
-i3wm.display0: __display0__
-i3wm.display1: __display1__
+i3wm.display0: {{/x/display0}}
+i3wm.display1: {{/x/display1}}
 
-*.dpi: 96
-*dpi: 96
+*.dpi: {{/x/dpi}}
+*dpi: {{/x/dpi}}

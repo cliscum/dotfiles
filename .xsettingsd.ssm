@@ -1,8 +1,8 @@
-Gdk/UnscaledDPI 98304
+Gdk/UnscaledDPI {{/xsettings/dpi}}
 Gdk/WindowScalingFactor 1
 Gtk/CursorBlinkTimeout 10
 Gtk/CursorThemeName "Paper"
-Gtk/CursorThemeSize 24
+Gtk/CursorThemeSize {{/xsettings/cursor-size}}
 Gtk/DecorationLayout "menu:close"
 Gtk/DialogsUseHeader 1
 Gtk/EnableAnimations 1
@@ -29,7 +29,7 @@ Net/IconThemeName "Paper"
 Net/SoundThemeName "freedesktop"
 Net/ThemeName "Flat-Plat"
 Xft/Antialias 1
-Xft/DPI 98304
+Xft/DPI {{/xsettings/dpi}}
 Xft/Hinting 1
 Xft/HintStyle "hintslight"
 Xft/RGBA "rgb"
