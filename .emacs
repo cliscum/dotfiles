@@ -155,6 +155,8 @@
 
 (use-package json-mode)
 
+(use-package jsonnet-mode)
+
 (use-package magit
   :bind (("C-c m b" . magit-blame)
          ("C-c m r" . magit-rebase-interactive)
@@ -291,7 +293,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (session use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
+    (jsonnet-mode session use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(perl-indent-level 2)
  '(projectile-completion-system (quote helm))
  '(python-indent-offset 2)
