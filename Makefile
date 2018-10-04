@@ -19,6 +19,7 @@ clean:
 SSM := \
 	.Xresources \
 	.config/termite/config \
+	.gitconfig \
 	.wakatime.cfg \
 	.xinitrc \
 	.xprofile \

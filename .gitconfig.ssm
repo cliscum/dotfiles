@@ -6,8 +6,8 @@
   excludesfile = "~/.gitignore"
   pager = less --tabs=2 -RFX
 [user]
-  name = Casey Liscum
-  email = casey@vistarmedia.com
+  name = {{/git/user-name}}
+  email = {{/git/user-email}}
 [alias]
   ci = commit
   co = checkout
