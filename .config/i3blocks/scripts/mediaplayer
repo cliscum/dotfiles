@@ -60,14 +60,14 @@ if ($artist && $artist ne '(null)') {
   push(@shortMetadata, my_truncate($artist, 10));
 }
 
-# my $title = qx(playerctl $player_arg metadata title);
-# exit(0) if $?;
-# if ($title && $title ne '(null)') {
-#   push(@fullMetadata, encode_entities($title));
-#   push(
-#     @shortMetadata,
-#     sprintf('<span size="x-small">%s</span>', my_truncate($title, 10)));
-# }
+my $title = qx(playerctl $player_arg metadata title);
+exit(0) if $?;
+if ($title && $title ne '(null)') {
+  push(@fullMetadata, encode_entities($title));
+  push(
+    @shortMetadata,
+    sprintf('<span size="x-small">%s</span>', my_truncate($title, 10)));
+}
 
 print(join(" - ", @fullMetadata) . "\n") if @fullMetadata;
 print(join(" - ", @shortMetadata) . "\n") if @shortMetadata;

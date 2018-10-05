@@ -9,7 +9,7 @@ setxkbmap \
 
 xset r rate 220 50
 
-feh --bg-scale "$HOME/.config/backgrounds/Wave.png"
+xsetroot -cursor_name gumby -solid '#2c3e50'
 
 services=(xsettingsd redshift autocutsel xautolock dropbox)
 for service in $services; do
