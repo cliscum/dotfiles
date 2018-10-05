@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/zsh
 
-dev=${BLOCK_INSTANCE:-wlan0}
+set -eo pipefail
 
-iw dev $dev link | awk -f <(cat <<'EOF'
+[ "$BLOCK_INSTANCE" -a "$BLOCK_INSTANCE" != "NONE" ] || exit 0
+
+iw dev "$BLOCK_INSTANCE" link | awk -f <(cat <<'EOF'
 {
   if ($1 == "SSID:") {
     ssid = $2;

@@ -5,16 +5,16 @@ separator=true
 separator_block_width=25
 
 [mediaplayer]
-# instance=spotify
+instance=spotify
 # instance=google-play-music-desktop-player
-interval=5
+interval=15
 label=
 markup=pango
 signal=10
 
 [mlb]
 instance=PHI
-interval=120
+interval=300
 label=<span weight='heavy'>⚾</span>
 markup=pango
 
@@ -24,7 +24,7 @@ interval=30
 label=
 
 [load_average]
-interval=5
+interval=10
 label=
 min_width= 0.0
 
@@ -43,13 +43,13 @@ label=🌡
 interval=15
 
 [bandwidth]
-interval=5
+interval=10
 label=
 min_width= 00Z 00Z
 
 [wifi]
-instance=wlp1s0
-interval=5
+instance={{/net/wireless-device}}
+interval=30
 # label=
 # label=
 
@@ -68,7 +68,7 @@ signal=1
 
 [weather]
 instance=19102
-interval=180
+interval=600
 markup=pango
 
 [date]

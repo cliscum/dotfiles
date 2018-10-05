@@ -18,6 +18,7 @@ clean:
 
 SSM := \
 	.Xresources \
+	.config/i3blocks/config \
 	.config/termite/config \
 	.gitconfig \
 	.wakatime.cfg \
