@@ -22,8 +22,12 @@ IFS=$'\n' keys=($(cat $1 | awk -f <(cat - <<-'EOF'
 EOF
 ) | sort | uniq))
 
-src=$(tempfile)
-cp $1 $src
+[ "$keys" ] || fail 'no keys in file'
+
+tmp=$(tempfile)
+trap "rm -f $tmp" EXIT
+
+cp -fp $1 $tmp
 
 for key in $keys; do
   val=$(aws ssm get-parameters \
@@ -34,14 +38,9 @@ for key in $keys; do
           | jq -r '.Parameters | sort_by(.Name) | reverse | .[].Value' \
           | head -n1)
 
-  [ "$val" ] || fail("no value for key: $key")
+  [ "$val" ] || fail "no value for key: $key"
 
-  dst=$(tempfile)
-
-  sed "s#{{$key}}#$val#g" $src > $dst
-
-  rm -f $src
-  src=$dst
+  sed -i "s#{{$key}}#$val#g" $tmp
 done
 
-[ -z "$dst" ] || (cat $dst && rm -f $dst)
+mv -f $tmp $2

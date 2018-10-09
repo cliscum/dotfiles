@@ -1,0 +1,51 @@
+#!/bin/zsh
+
+set -euxo pipefail
+
+notify-send 'i3 setup' 'begin'
+
+if [ "{{/x/display0}}" != "{{/x/display1}}" ]; then
+  xrandr --output '{{/x/display0}}' --auto --left-of '{{/x/display1}}'
+fi
+
+systemctl --user start redshift-gtk
+systemctl --user start dropbox
+systemctl --user start xautolock
+
+($HOME/bin/natural-scrolling || true)
+sleep 5
+
+i3-msg workspace 1
+notify-send 'workspace 1' 'emacs'
+emacs &
+sleep $((3*{{/i3/init-multiplier}}))
+notify-send 'workspace 1' 'htop'
+termite --role=htop -e htop &
+sleep 3
+i3-msg split v
+notify-send 'workspace 1' 'tmux'
+termite --role=meta -e cl-tmux &
+sleep 3
+i3-msg resize grow height 20 px or 20 ppt
+i3-msg focus left
+sleep 3
+
+i3-msg workspace 5
+notify-send 'workspace 5' 'chrome-work'
+google-chrome-stable --user-data-dir=$HOME/.config/google-chrome-work &
+sleep $((5*{{/i3/init-multiplier}}))
+
+i3-msg workspace 6
+notify-send 'workspace 6' 'chrome'
+google-chrome-stable &
+sleep $((3*{{/i3/init-multiplier}}))
+
+i3-msg workspace 8
+notify-send 'workspace 8' 'spotify'
+spotify --force-device-scale-factor={{/x/gdk-scale}} &
+sleep $((5*{{/i3/init-multiplier}}))
+
+i3-msg workspace 5
+i3-msg workspace 1
+
+notify-send 'i3 setup' 'complete'

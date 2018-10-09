@@ -24,7 +24,8 @@ SSM := \
 	.wakatime.cfg \
 	.xinitrc \
 	.xprofile \
-	.xsettingsd
+	.xsettingsd \
+	bin/i3-init
 
 SSMGEN = $(SSM:%=$(HOME)/%)
 
@@ -32,4 +33,4 @@ ssm: $(SSMGEN)
 
 $(SSMGEN): $(HOME)/%: %.ssm $(HOME)/bin/ssm-replace
 	@mkdir -p $(dir $@)
-	$(HOME)/bin/ssm-replace $< > $@
+	$(HOME)/bin/ssm-replace $< $@
