@@ -10,11 +10,9 @@ prefix="C-${prefix_ctrl_key}"
 status_right_fg=$(printf "colour%02d" $((0x$(sha1sum <<<$HOST |cut -c1-6)%6+1)))
 
 tmux -2u new-session -d -s meta -n system
-tmux -2u new-session -d -s chat -n chat -c "$HOME"
-tmux -2u new-session -d -s podcasts -n podcasts -c "$HOME"
 tmux send-keys -R -t meta "TMUX= tmux -2u new-session -s system -c $HOME" C-m C-l
 tmux new-window -d -t meta -n code "TMUX= tmux -2u new-session -s code -c $HOME/Work"
-tmux new-window -d -t meta -n dbs "TMUX= tmux -2u new-session -s dbs -c $HOME/Docker/postgres"
+tmux new-window -d -t meta -n dbs "TMUX= tmux -2u new-session -s dbs -c $HOME"
 
 sleep 2
 
@@ -34,22 +32,6 @@ tmux set-option -t system prefix "$prefix"
 tmux set-option -t system status-left-style fg=blue,bg=brightwhite,bold
 tmux set-option -t system status-style bg=blue,fg=white
 tmux set-option -t system set-titles-string '#S:#I ⫽ #W #{session_alerts}'
-
-# Configure stand-alone windows.
-tmux set-option -t chat prefix "$prefix"
-tmux set-option -t chat status-left-style fg=magenta,bg=brightwhite,bold
-tmux set-option -t chat status-style bg=magenta,fg=white
-tmux set-option -t podcasts prefix "$prefix"
-tmux set-option -t podcasts status-left-style fg=green,bg=brightwhite,bold
-tmux set-option -t podcasts status-style bg=green,fg=white
-
-tmux split-window -vdb -l 16 -t system:1.0
-tmux split-window -vd -t podcasts:1.0
-
-tmux send-keys -R -t system:1.1 htop C-m C-l
-tmux send-keys -R -t chat:1.0 weechat C-m C-l
-tmux send-keys -R -t podcasts:1.0 newsbeuter C-m C-l
-tmux send-keys -R -t podcasts:1.1 podbeuter C-m C-l
 
 tmux bind-key "$prefix" last-window
 
