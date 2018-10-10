@@ -10,6 +10,7 @@ fi
 
 systemctl --user start redshift-gtk
 systemctl --user start xautolock
+systemctl --user start xsettingsd
 
 ($HOME/bin/natural-scrolling || true)
 sleep 5
@@ -22,10 +23,10 @@ notify-send 'workspace 1' 'htop'
 termite --role=htop -e htop &
 sleep 3
 i3-msg split v
-i3-msg resize grow height 20 px or 20 ppt
 notify-send 'workspace 1' 'tmux'
 termite --role=meta -e cl-tmux &
 sleep 3
+i3-msg resize grow height 20 px or 20 ppt
 i3-msg focus left
 
 i3-msg workspace 5
@@ -46,6 +47,7 @@ sleep $((5*{{/i3/init-multiplier}}))
 i3-msg workspace 5
 i3-msg workspace 1
 
+notify-send 'systemctl' 'dropbox'
 # Disable automatic updates, which have caused loops/cpu churn in the past.
 install -dm0 ~/.dropbox-dist
 systemctl --user start dropbox

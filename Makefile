@@ -1,4 +1,18 @@
-SHELL = /bin/zsh --extendedglob
+SHELL := /bin/zsh --extendedglob
+
+SSM := \
+	.Xresources \
+	.config/i3blocks/config \
+	.config/termite/config \
+	.gitconfig \
+	.wakatime.cfg \
+	.xinitrc \
+	.xprofile \
+	.xsettingsd \
+	bin/i3-init
+
+SSMGEN := $(SSM:%=$(HOME)/%)
+SSM_REPLACE := $(HOME)/bin/ssm-replace
 
 all: install link clean ssm
 
@@ -16,21 +30,8 @@ link:
 clean:
 	find -L ~/ -type l -lname "$$(pwd)/*" -delete -print || echo 'clean failures'
 
-SSM := \
-	.Xresources \
-	.config/i3blocks/config \
-	.config/termite/config \
-	.gitconfig \
-	.wakatime.cfg \
-	.xinitrc \
-	.xprofile \
-	.xsettingsd \
-	bin/i3-init
-
-SSMGEN = $(SSM:%=$(HOME)/%)
-
 ssm: $(SSMGEN)
 
-$(SSMGEN): $(HOME)/%: %.ssm $(HOME)/bin/ssm-replace
+$(SSMGEN): $(HOME)/%: %.ssm $(SSM_REPLACE)
 	@mkdir -p $(dir $@)
-	$(HOME)/bin/ssm-replace $< $@
+	$(SSM_REPLACE) $< $@
