@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -eu
+
 xrandr --dpi {{/x/dpi}}
 
 setxkbmap \
@@ -10,10 +12,3 @@ setxkbmap \
 xset r rate 220 50
 
 xsetroot -cursor_name gumby -solid '#2c3e50'
-
-services=(xsettingsd redshift autocutsel xautolock dropbox)
-for service in $services; do
-  echo -n "Starting ${service} ... "
-  systemctl --user start ${service}.service
-  echo 'done'
-done

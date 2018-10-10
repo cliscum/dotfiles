@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -eu
+
 dir=$(dirname $0)
 
 if tmux has -t meta 2>/dev/null; then

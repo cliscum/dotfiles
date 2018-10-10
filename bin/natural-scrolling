@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-set -e
+set -eu
 
 # Reverse scroll direction. Prefer this to setting pointer in ~/.Xmodmap, which
 # has stopped working with xinput2 apps.

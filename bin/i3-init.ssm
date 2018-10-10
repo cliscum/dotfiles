@@ -9,7 +9,6 @@ if [ "{{/x/display0}}" != "{{/x/display1}}" ]; then
 fi
 
 systemctl --user start redshift-gtk
-systemctl --user start dropbox
 systemctl --user start xautolock
 
 ($HOME/bin/natural-scrolling || true)
@@ -23,12 +22,11 @@ notify-send 'workspace 1' 'htop'
 termite --role=htop -e htop &
 sleep 3
 i3-msg split v
+i3-msg resize grow height 20 px or 20 ppt
 notify-send 'workspace 1' 'tmux'
 termite --role=meta -e cl-tmux &
 sleep 3
-i3-msg resize grow height 20 px or 20 ppt
 i3-msg focus left
-sleep 3
 
 i3-msg workspace 5
 notify-send 'workspace 5' 'chrome-work'
@@ -47,5 +45,9 @@ sleep $((5*{{/i3/init-multiplier}}))
 
 i3-msg workspace 5
 i3-msg workspace 1
+
+# Disable automatic updates, which have caused loops/cpu churn in the past.
+install -dm0 ~/.dropbox-dist
+systemctl --user start dropbox
 
 notify-send 'i3 setup' 'complete'

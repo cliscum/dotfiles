@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
+
+set -eu
 
 ARG=$1
 SCREEN_MAX=$(cat /sys/class/backlight/*/max_brightness \

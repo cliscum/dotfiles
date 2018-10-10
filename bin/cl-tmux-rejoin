@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
+
+set -eux
 
 tmux list-sessions |cut -d: -f1 |while read session
 do

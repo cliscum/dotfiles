@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-set -ex
+set -eux
 
 # echo Adding regular ssh keys...
 # ls -1 ~/.ssh/keys/agent-* |grep -v '\.pub$' |xargs ssh-add
