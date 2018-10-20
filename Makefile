@@ -3,6 +3,7 @@ SHELL := /bin/zsh --extendedglob
 SSM := \
 	.Xresources \
 	.config/i3blocks/config \
+	.config/systemd/user/xautolock.service \
 	.config/termite/config \
 	.gitconfig \
 	.wakatime.cfg \
