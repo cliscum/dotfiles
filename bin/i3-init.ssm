@@ -11,6 +11,7 @@ fi
 systemctl --user start redshift-gtk
 systemctl --user start xautolock
 systemctl --user start xsettingsd
+systemctl --user start hotcorner
 
 ($HOME/bin/natural-scrolling || true)
 sleep 5

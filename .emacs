@@ -6,6 +6,11 @@
 ;;;
 ;;; Code:
 
+(defvar casey/t0)
+(make-local-variable 'casey/t0)
+(setq casey/t0 (current-time))
+(message (format "BEGIN %s" (format-time-string "%c" casey/t0)))
+
 (require 'package)
 (require 'seq)
 
@@ -29,7 +34,8 @@
 
 (eval-when-compile
   (defvar use-package-verbose t)
-  (require 'use-package))
+  (require 'use-package)
+  (declare-function use-package-autoload-keymap "use-package"))
 (setq use-package-always-ensure t)
 
 (dolist (combo (list "C-z" "C-x C-z"))
@@ -43,6 +49,7 @@
 
 (defun set-local-whitespace-style-no-tabs ()
   "Strip 'tabs' from whitespace-style for the local buffer."
+  (defvar whitespace-style)
   (setq-local whitespace-style
               (seq-remove (lambda (s) (eq s 'tabs)) whitespace-style)))
 
@@ -52,6 +59,8 @@
   "Colorize the *compilation* buffer."
   (progn
     (require 'ansi-color)
+    (declare-function ansi-color-apply-on-region "ansi-color")
+    (defvar compilation-filter-start)
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region compilation-filter-start (point)))))
 
@@ -80,7 +89,7 @@
     (ido-mode nil)
     ;; Undo a couple settings that I don't like.
     (setq mouse-yank-at-point nil
-          x-select-enable-primary nil)))
+          select-enable-primary nil)))
 
 (use-package coffee-mode)
 
@@ -93,7 +102,10 @@
 (use-package csv-mode)
 
 (use-package dashboard
-  :config (dashboard-setup-startup-hook))
+  :config
+  (progn
+    (dashboard-setup-startup-hook)
+    (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))))
 
 (use-package dockerfile-mode)
 
@@ -220,7 +232,8 @@
   :init
   (progn
     (require 'spaceline-config)
-    (spaceline-emacs-theme)))
+    (declare-function spaceline-emacs-theme "spaceline-config"))
+  :config (spaceline-emacs-theme))
 
 (use-package sql)
 
@@ -243,6 +256,8 @@
   :after (flycheck tide)
   :init
   (progn
+    (declare-function flycheck-add-mode "flycheck")
+    (declare-function setup-tide-mode "tide")
     (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
     (add-hook 'web-mode-hook
               (lambda ()
@@ -328,5 +343,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(message (format "DONE %s (%g seconds)"
+                 (current-time-string)
+                 (float-time (time-subtract (current-time) casey/t0))))
 
 ;;; .emacs ends here

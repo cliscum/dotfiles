@@ -15,14 +15,14 @@ fi
 
 source "${ZDOTDIR:-$HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-export EDITOR='emacs -nw -Q'
+export EDITOR='emacsclient -nw'
 export GTK2_RC_FILES="$HOME/.gtkrc.mine"
 export HISTSIZE=50000 # >= SAVEHIST
 export PYTHONDONTWRITEBYTECODE=1
 export SAVEHIST=50000 # <= HISTSIZE
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export TERMINAL=urxvt
-export VISUAL=$EDITOR
+export VISUAL='emacsclient'
 
 fpath=(~/.zsh $fpath)
 
