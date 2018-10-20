@@ -18,7 +18,7 @@ sleep 5
 
 i3-msg workspace 1
 notify-send 'workspace 1' 'emacs'
-emacs &
+emacsclient -c &
 sleep $((3*{{/i3/init-multiplier}}))
 notify-send 'workspace 1' 'htop'
 termite --role=htop -e htop &

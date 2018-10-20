@@ -344,8 +344,9 @@
  ;; If there is more than one, they won't work right.
  )
 
-(message (format "DONE %s (%g seconds)"
-                 (current-time-string)
-                 (float-time (time-subtract (current-time) casey/t0))))
+(let ((t1 (current-time)))
+  (message (format "DONE %s (%g seconds)"
+                   (format-time-string "%c" t1)
+                   (float-time (time-subtract t1 casey/t0)))))
 
 ;;; .emacs ends here
