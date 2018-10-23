@@ -1,8 +1,0 @@
-[Unit]
-Description=Hot Corner
-
-[Service]
-ExecStart=/usr/bin/xdotool behave_screen_edge --delay 500 bottom-left exec i3lock -fc 2c3e50
-
-[Install]
-WantedBy=default.target

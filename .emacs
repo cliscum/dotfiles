@@ -6,10 +6,10 @@
 ;;;
 ;;; Code:
 
-(defvar casey/t0)
-(make-local-variable 'casey/t0)
-(setq casey/t0 (current-time))
-(message (format "BEGIN %s" (format-time-string "%c" casey/t0)))
+(defvar homecookin/t0)
+(make-local-variable 'homecookin/t0)
+(setq homecookin/t0 (current-time))
+(message (format "BEGIN %s" (format-time-string "%c" homecookin/t0)))
 
 (require 'package)
 (require 'seq)
@@ -347,6 +347,6 @@
 (let ((t1 (current-time)))
   (message (format "DONE %s (%g seconds)"
                    (format-time-string "%c" t1)
-                   (float-time (time-subtract t1 casey/t0)))))
+                   (float-time (time-subtract t1 homecookin/t0)))))
 
 ;;; .emacs ends here

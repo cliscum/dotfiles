@@ -73,7 +73,7 @@ floating_modifier $mod
 font pango: SFNS Display 11
 
 for_window [class=".*"] title_format " %title"
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 2
 
 new_window pixel 1
 

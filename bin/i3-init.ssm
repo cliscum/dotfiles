@@ -8,10 +8,9 @@ if [ "{{/x/display0}}" != "{{/x/display1}}" ]; then
   xrandr --output '{{/x/display0}}' --auto --left-of '{{/x/display1}}'
 fi
 
-systemctl --user start redshift-gtk
-systemctl --user start xautolock
 systemctl --user start xsettingsd
-systemctl --user start hotcorner
+systemctl --user start xautolock
+systemctl --user start redshift-gtk
 
 ($HOME/bin/natural-scrolling || true)
 sleep 5
@@ -37,6 +36,7 @@ sleep $((5*{{/i3/init-multiplier}}))
 
 i3-msg workspace 6
 notify-send 'workspace 6' 'chrome'
+sleep 1
 google-chrome-stable &
 sleep $((3*{{/i3/init-multiplier}}))
 
