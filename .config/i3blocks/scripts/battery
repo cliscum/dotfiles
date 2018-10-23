@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -euo pipefail
+
 bat_num=${BLOCK_INSTANCE:-1}
 dir=/sys/class/power_supply/BAT$bat_num
 

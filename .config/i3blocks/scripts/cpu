@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/zsh
+
+set -euo pipefail
 
 dirs=/sys/devices/system/cpu/cpu[0-9]
 cpus=$(ls -1d $dirs |wc -l)

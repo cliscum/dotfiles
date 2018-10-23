@@ -1,11 +1,14 @@
-#!/bin/sh
+#!/bin/zsh
+
+set -euo pipefail
+
 cur=$(cat /sys/class/backlight/*/brightness)
 max=$(cat /sys/class/backlight/*/max_brightness)
 pct=$(echo "100 * $cur / $max" | bc)
 
-if [ $pct -lt 20 ]; then
+if [ $pct -lt 33 ]; then
   color='#e74c3c'
-elif [ $pct -ge 80 ]; then
+elif [ $pct -ge 66 ]; then
   color='#27ae60'
 else
   color='#f1c40f'
@@ -16,6 +19,6 @@ echo $pct
 echo $color
 
 case $BLOCK_BUTTON in
-  4) cltools-brightness -3 ;;
-  5) cltools-brightness +3 ;;
+  4) cltools-brightness -5 ;;
+  5) cltools-brightness +5 ;;
 esac

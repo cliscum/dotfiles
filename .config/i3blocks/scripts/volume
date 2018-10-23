@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/zsh
+
+set -euo pipefail
 
 mute=$(pactl list sinks |grep 'Mute: yes')
 if [ -n "$mute" ]; then
@@ -6,9 +8,9 @@ if [ -n "$mute" ]; then
   color='#e74c3c'
 else
   vol=$(pactl list sinks |grep '^[[:space:]]Volume:' |tail -n1 |awk '{print$5}' |sed 's#%$##')
-  if [ $vol -lt 20 ]; then
+  if [ $vol -lt 33 ]; then
     color='#e74c3c'
-  elif [ $vol -ge 80 ]; then
+  elif [ $vol -ge 66 ]; then
     color='#27ae60'
   else
     color='#f1c40f'
