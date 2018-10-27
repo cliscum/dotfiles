@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-mute=$(pactl list sinks |grep 'Mute: yes')
+mute=$(pactl list sinks |grep 'Mute: yes' || echo '')
 if [ -n "$mute" ]; then
   vol="M̶"
   color='#e74c3c'
@@ -22,8 +22,7 @@ echo $vol
 echo $vol
 echo $color
 
-case $BLOCK_BUTTON in
-  1)
-    pavucontrol &
-    ;;
+mouse_button=${BLOCK_BUTTON:-}
+case "$mouse_button" in
+  1) pavucontrol & ;;
 esac

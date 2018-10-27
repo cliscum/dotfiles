@@ -2,25 +2,26 @@
 
 set -euo pipefail
 
-dirs=/sys/devices/system/cpu/cpu[0-9]
-cpus=$(ls -1d $dirs |wc -l)
+read cpu a b c previdle rest < /proc/stat
+prevtotal=$((a + b + c + previdle))
 
-# Get usage
-function idle() {
-  cat /proc/stat |grep '^cpu' |head -n1 |awk '{print$5}'
-}
-idle0=$(idle)
-sleep 1
-idle1=$(idle)
-usage=$(echo "100 - ($idle1 - $idle0) / $cpus" |bc)
+sleep 0.5 &
 
-# Get frequency
-tot=$(cat $dirs/cpufreq/scaling_cur_freq | paste -sd+ | bc)
+root=/sys/devices/system/cpu
+cpus=$(ls -1d $root/cpu[0-9]*/ |wc -l)
+tot=$(cat $root/cpu[0-9]*/cpufreq/scaling_cur_freq | paste -sd+ | bc)
 freq=$(printf '%0.01f' $(echo "2 k $tot $cpus 1000000 * / p" | dc))
 
+wait
+
+read cpu a b c idle rest < /proc/stat
+total=$((a + b + c + idle))
+usage=$((100 * (total - prevtotal - (idle - previdle)) / (total - prevtotal)))
+
 echo "${usage}% ${freq}GHz"
 echo "${usage}% ${freq}GHz"
 
-case $BLOCK_BUTTON in
+mouse_button=${BLOCK_BUTTON:-}
+case "$mouse_button" in
   1) gnome-system-monitor -p & ;;
 esac

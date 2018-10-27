@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+set -euo pipefail
+
+pkg=$1
+if [ -z "$pkg" ]; then
+  echo "Usage: aurtool <package>"
+  exit 1
+fi
+
+tmp=$(mktemp -d -t aurtool-$pkg.XXXXXXXX)
+trap "rm -rf $tmp" EXIT
+
+installed_version=$(pacman -Q $pkg 2>/dev/null |cut -d' ' -f2 || echo '')
+
+curl -s "https://aur.archlinux.org/cgit/aur.git/snapshot/$pkg.tar.gz" \
+  | tar xzf - -C $tmp 2>/dev/null \
+  || (echo 'Failed to get AUR package.' && false)
+
+cd "$tmp/$pkg"
+
+relver=("${(@f)$(grep -E '^pkg(ver|rel)' PKGBUILD |sort |cut -d'=' -f2)}")
+next_version="${relver[2]}-${relver[1]}"
+
+if [ "$installed_version" = "$next_version" ]; then
+  echo "${pkg} ${next_version} is already installed."
+else
+  echo "Upgrading from ${pkg} ${installed_version}..."
+  makepkg -sri --needed
+fi
+
+cd -
