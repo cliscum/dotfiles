@@ -30,14 +30,14 @@ i3-msg resize grow height 20 px or 20 ppt
 i3-msg focus left
 
 i3-msg workspace 5
-notify-send 'workspace 5' 'chrome-work'
-google-chrome-stable --user-data-dir=$HOME/.config/google-chrome-work &
+notify-send 'workspace 5' 'chromium-work'
+chromium --user-data-dir=$HOME/.config/chromium-work &
 sleep $((5*{{/i3/init-multiplier}}))
 
 i3-msg workspace 6
-notify-send 'workspace 6' 'chrome'
+notify-send 'workspace 6' 'chromium-personal'
 sleep 1
-google-chrome-stable &
+chromium &
 sleep $((3*{{/i3/init-multiplier}}))
 
 i3-msg workspace 8

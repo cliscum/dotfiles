@@ -19,8 +19,12 @@ curl -s "https://aur.archlinux.org/cgit/aur.git/snapshot/$pkg.tar.gz" \
 
 cd "$tmp/$pkg"
 
-relver=("${(@f)$(grep -E '^pkg(ver|rel)' PKGBUILD |sort |cut -d'=' -f2)}")
-next_version="${relver[2]}-${relver[1]}"
+ver=("${(@f)$(grep -E '^(epoch|pkg(ver|rel))=' PKGBUILD |sort |cut -d'=' -f2)}")
+if [ $#ver -eq 3 ]; then
+  next_version="${ver[1]}:${ver[3]}-${ver[2]}"
+else
+  next_version="${ver[2]}-${ver[1]}"
+fi
 
 if [ "$installed_version" = "$next_version" ]; then
   echo "${pkg} ${next_version} is already installed."

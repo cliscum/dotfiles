@@ -11,6 +11,15 @@ capacity=$(cat "${dir}/capacity")
 microwatts=$(cat "${dir}/power_now")
 state=$(cat "${dir}/status")
 
+get_state() {
+  cat $1 |tail -n1 |sed 's#%$##'
+}
+
+state_file=/tmp/i3blocks.battery.state
+if [ -f $state_file ]; then
+  prev_state=$(get_state $state_file)
+fi
+
 echo "$state $capacity $microwatts" | awk -f <(cat <<EOF
 {
   state = \$1;
@@ -62,8 +71,24 @@ END {
   exit exit_code;
 }
 EOF
-    )
+    ) |tee $state_file
 
-case $BLOCK_BUTTON in
+if [ "$prev_state" ]; then
+  curr_state=$(get_state $state_file)
+  if [ $curr_state -lt $prev_state ]; then
+    if [[ ($curr_state -le 5 && $prev_state -gt 5)
+          || ($curr_state -le 10 && $prev_state -gt 10)
+          || ($curr_state -le 15 && $prev_state -gt 15) ]]; then
+      notify-send -u critical Battery "now at ${curr_state}%"
+    elif [[ $curr_state -le 25 && $prev_state -gt 25 ]]; then
+      notify-send -u normal Battery "now at ${curr_state}%"
+    elif [[ $curr_state -le 50 && $prev_state -gt 50 ]]; then
+      notify-send -u low Battery "now at ${curr_state}%"
+    fi
+  fi
+fi
+
+mouse_button=${BLOCK_BUTTON:-}
+case $mouse_button in
   1) gnome-power-statistics & ;;
 esac
