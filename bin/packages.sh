@@ -2,7 +2,7 @@
 
 set -eux
 
-pacman -Syu --needed \
+exec pacman -Syu --needed \
   base-devel \
   bc \
   chromium \
@@ -25,7 +25,6 @@ pacman -Syu --needed \
   lsof \
   nodejs \
   pacman-contrib \
-  pactl \
   pavucontrol \
   perl-html-parser \
   playerctl \
@@ -42,6 +41,5 @@ pacman -Syu --needed \
   xautolock \
   xorg \
   xorg-xinit \
-  xrandr \
-  xsettings \
+  xorg-xrandr \
   zsh
