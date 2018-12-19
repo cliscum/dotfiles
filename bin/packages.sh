@@ -1,15 +1,20 @@
 #!/bin/sh
+#
+# Package installations to help setting up new Arch systems.
 
 set -eux
 
-exec pacman -Syu --needed \
+pacman -Syu --needed \
+  aws-cli \
   base-devel \
   bc \
   chromium \
+  curl \
   docker \
   dunst \
   emacs \
   git \
+  git-review \
   gnome-nettool \
   gnome-power-manager \
   gnome-system-monitor \
@@ -21,6 +26,7 @@ exec pacman -Syu --needed \
   i3lock \
   i3status \
   intel-ucode \
+  iotop \
   keepassx2 \
   lsof \
   nodejs \
@@ -30,16 +36,22 @@ exec pacman -Syu --needed \
   playerctl \
   pulseaudio \
   pulseaudio-alsa \
+  python-gobject \
+  python-pip \
   python3 \
   redshift \
   rofi \
   sudo \
   termite \
+  the_silver_searcher \
   tmux \
   tree \
   vim \
+  wget \
   xautolock \
   xorg \
   xorg-xinit \
   xorg-xrandr \
   zsh
+
+pip install wakatime
