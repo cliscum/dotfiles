@@ -4,7 +4,7 @@
 
 set -eux
 
-pacman -Syu --needed \
+sudo pacman -Syu --needed \
   aws-cli \
   base-devel \
   bc \
@@ -30,6 +30,7 @@ pacman -Syu --needed \
   keepassx2 \
   lsof \
   nodejs \
+  noto-fonts \
   pacman-contrib \
   pavucontrol \
   perl-html-parser \
@@ -46,6 +47,18 @@ pacman -Syu --needed \
   the_silver_searcher \
   tmux \
   tree \
+  ttf-bitstream-vera \
+  ttf-croscore \
+  ttf-dejavu \
+  ttf-droid \
+  ttf-fira-mono \
+  ttf-fira-sans \
+  ttf-freefont \
+  ttf-inconsolata \
+  ttf-liberation \
+  ttf-opensans \
+  ttf-roboto \
+  ttf-ubuntu-font-family \
   vim \
   wget \
   xautolock \
@@ -54,4 +67,19 @@ pacman -Syu --needed \
   xorg-xrandr \
   zsh
 
-pip install wakatime
+if [ -x $HOME/bin/aurtool ]; then
+  $HOME/bin/aurtool \
+    dropbox \
+    jsonnet \
+    spotify \
+    ttf-merriweather \
+    ttf-merriweather-sans \
+    ttf-oswald \
+    ttf-quintessential \
+    ttf-signika \
+    wakatime
+  # These don't keep PKGBUILD up to date w/ version, so they always install.
+  # $HOME/bin/aurtool \
+  #   sway-git \
+  #   ttf-google-fonts-git \
+fi
