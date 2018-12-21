@@ -10,7 +10,6 @@ SSM := \
 	.wakatime.cfg \
 	.xinitrc \
 	.xprofile \
-	.xsettingsd \
 	bin/i3-init
 
 SSMGEN := $(SSM:%=$(HOME)/%)

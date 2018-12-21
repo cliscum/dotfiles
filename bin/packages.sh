@@ -1,8 +1,15 @@
-#!/bin/sh
+#!/bin/zsh
 #
 # Package installations to help setting up new Arch systems.
+#
+# Usage: packages.sh [+[+]] [package] ...
 
-set -eux
+set -eu
+
+arg=${1:-}
+if [ "$arg" -a "x${arg[1,1]}" = 'x+' ]; then
+  shift
+fi
 
 sudo pacman -Syu --needed \
   aws-cli \
@@ -35,6 +42,7 @@ sudo pacman -Syu --needed \
   pavucontrol \
   perl-html-parser \
   playerctl \
+  postgresql \
   pulseaudio \
   pulseaudio-alsa \
   python-gobject \
@@ -42,6 +50,7 @@ sudo pacman -Syu --needed \
   python3 \
   redshift \
   rofi \
+  sshuttle \
   sudo \
   termite \
   the_silver_searcher \
@@ -65,21 +74,27 @@ sudo pacman -Syu --needed \
   xorg \
   xorg-xinit \
   xorg-xrandr \
-  zsh
+  zsh \
+  $*
 
 if [ -x $HOME/bin/aurtool ]; then
-  $HOME/bin/aurtool \
-    dropbox \
-    jsonnet \
-    spotify \
-    ttf-merriweather \
-    ttf-merriweather-sans \
-    ttf-oswald \
-    ttf-quintessential \
-    ttf-signika \
-    wakatime
+  if [ "$arg" -a "x${arg[1,1]}" = 'x+' ]; then
+    $HOME/bin/aurtool \
+      dropbox \
+      jsonnet \
+      spotify \
+      ttf-merriweather \
+      ttf-merriweather-sans \
+      ttf-oswald \
+      ttf-quintessential \
+      ttf-signika \
+      wakatime
+  fi
+
   # These don't keep PKGBUILD up to date w/ version, so they always install.
-  # $HOME/bin/aurtool \
-  #   sway-git \
-  #   ttf-google-fonts-git \
+  if [ "x$arg" = 'x++' ]; then
+    $HOME/bin/aurtool \
+      sway-git \
+      ttf-google-fonts-git
+  fi
 fi
