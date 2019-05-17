@@ -34,11 +34,12 @@ sudo pacman -Syu --needed \
   i3status \
   intel-ucode \
   iotop \
-  keepassx2 \
+  keepassxc \
   lsof \
   nodejs \
   noto-fonts \
   pacman-contrib \
+  parallel \
   pavucontrol \
   perl-html-parser \
   playerctl \
@@ -82,6 +83,7 @@ if [ -x $HOME/bin/aurtool ]; then
     $HOME/bin/aurtool \
       dropbox \
       jsonnet \
+      signal \
       spotify \
       ttf-merriweather \
       ttf-merriweather-sans \
@@ -94,6 +96,7 @@ if [ -x $HOME/bin/aurtool ]; then
   # These don't keep PKGBUILD up to date w/ version, so they always install.
   if [ "x$arg" = 'x++' ]; then
     $HOME/bin/aurtool \
+      wlroots-git \
       sway-git \
       ttf-google-fonts-git
   fi

@@ -109,6 +109,11 @@
 
 (use-package dockerfile-mode)
 
+(use-package emacs
+  :bind (("C--" . text-scale-decrease)
+         ("C-=" . text-scale-increase)
+         ("C-+" . text-scale-increase)))
+
 (use-package expand-region
   :bind (("M-<up>" . er/expand-region)
          ("M-<down>" . er/contract-region)))

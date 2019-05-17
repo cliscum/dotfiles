@@ -30,7 +30,7 @@ for pkg in "$@"; do
     echo "${pkg} ${next_version} is already installed."
   else
     echo "Upgrading from ${pkg} ${installed_version}..."
-    makepkg -sri --needed
+    makepkg -sric --needed
   fi
 
   cd -
