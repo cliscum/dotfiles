@@ -34,6 +34,8 @@ sudo pacman -Syu --needed \
   i3status \
   intel-ucode \
   iotop \
+  jdk-openjdk \
+  jdk8-openjdk \
   keepassxc \
   lsof \
   nodejs \
@@ -51,6 +53,7 @@ sudo pacman -Syu --needed \
   python3 \
   redshift \
   rofi \
+  scala \
   sshuttle \
   sudo \
   termite \
@@ -69,6 +72,7 @@ sudo pacman -Syu --needed \
   ttf-opensans \
   ttf-roboto \
   ttf-ubuntu-font-family \
+  unzip \
   vim \
   wget \
   xautolock \
