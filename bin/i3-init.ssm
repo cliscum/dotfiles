@@ -38,6 +38,10 @@ notify-send 'workspace 6' 'chromium-personal'
 sleep 1
 chromium &
 sleep $((3*{{/i3/init-multiplier}}))
+signal-desktop &
+sleep $((2*{{/i3/init-multiplier}}))
+i3-msg resize shrink width 20 px or 20 ppt
+i3-msg focus left
 
 i3-msg workspace 8
 notify-send 'workspace 8' 'spotify'
