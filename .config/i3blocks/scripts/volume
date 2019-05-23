@@ -2,12 +2,13 @@
 
 set -euo pipefail
 
-mute=$(pactl list sinks |grep 'Mute: yes' || echo '')
-if [ -n "$mute" ]; then
+sink_name=$(pactl list short sinks |grep -v SUSPENDED |tail -n1 |awk '{print$2}')
+mute=$(pactl list sinks |awk "{if(\$1~/^Name:\$/){n=\$2}if(n==\"$sink_name\"&&\$1~/^Mute:\$/){print\$2}}")
+if [ _"$mute" = "_yes" ]; then
   vol="M̶"
   color='#e74c3c'
 else
-  vol=$(pactl list sinks |grep '^[[:space:]]Volume:' |tail -n1 |awk '{print$5}' |sed 's#%$##')
+  vol=$(pactl list sinks |awk "{if(\$1~/^Name:\$/){n=\$2}if(n==\"$sink_name\"&&\$1~/^Volume:\$/){print\$5}}" |sed 's#%$##')
   if [ $vol -lt 33 ]; then
     color='#e74c3c'
   elif [ $vol -ge 66 ]; then

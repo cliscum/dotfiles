@@ -24,8 +24,8 @@ set $screen_brightness cltools-brightness
 set $screen_lock i3lock -fc 16a085
 set $screenshot scrot -e 'mv $f ~/Desktop/ 2>/dev/null'
 set $terminal i3-sensible-terminal
-set $volume pactl set-sink-volume $(pactl list short sinks |tail -n1 |awk '{print$1}')
-set $volume_toggle pactl set-sink-mute $(pactl list short sinks |tail -n1 |awk '{print$1}') toggle
+set $volume pactl set-sink-volume $(pactl list short sinks |grep -v SUSPENDED |tail -n1 |awk '{print$1}')
+set $volume_toggle pactl set-sink-mute $(pactl list short sinks |grep -v SUSPENDED |tail -n1 |awk '{print$1}') toggle
 set $volume_ding play -q /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 set $xrandr xrandr --output $display0
 
