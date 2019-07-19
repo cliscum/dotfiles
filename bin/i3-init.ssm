@@ -2,6 +2,27 @@
 
 set -euxo pipefail
 
+function poll_window {
+  key=$1
+  value=$2
+  msg="$key ~ /$value/"
+  clause="select(.${key} | test(\"${value}\"))"
+  key2=${3:-}
+  [ "$key2" ] && {
+    value2=${4:-}
+    msg="$msg && $key2 ~ /$value2/"
+    clause="$clause | select(.${key2} | test(\"${value2}\"))"
+  }
+  echo "polling for window with: $msg ..."
+  while true; do
+    i3-msg -t get_tree \
+      | jq -r '.. | objects | select(.window != null).window_properties | '${clause} \
+      | grep -q . \
+      && break
+    sleep 0.5
+  done
+}
+
 notify-send 'i3 setup' 'begin'
 
 if [ "{{/x/display0}}" != "{{/x/display1}}" ]; then
@@ -17,36 +38,35 @@ sleep 5
 i3-msg workspace 1
 notify-send 'workspace 1' 'emacs'
 emacsclient -c &
-sleep $((3*{{/i3/init-multiplier}}))
+poll_window class '^Emacs$'
 notify-send 'workspace 1' 'htop'
 termite --role=htop -e htop &
-sleep 3
+poll_window class '^Termite$' window_role '^htop$'
 i3-msg split v
 notify-send 'workspace 1' 'tmux'
 termite --role=meta -e cl-tmux &
-sleep 3
+poll_window class '^Termite$' window_role '^meta$'
 i3-msg resize grow height 20 px or 20 ppt
 i3-msg focus left
 
 i3-msg workspace 5
 notify-send 'workspace 5' 'chromium-work'
 chromium --user-data-dir=$HOME/.config/chromium-work &
-sleep $((5*{{/i3/init-multiplier}}))
+poll_window class '^Chromium$' instance "$HOME/.config/chromium-work"
 
 i3-msg workspace 6
 notify-send 'workspace 6' 'chromium-personal'
-sleep 1
 chromium &
-sleep $((3*{{/i3/init-multiplier}}))
+poll_window class '^Chromium$' instance '^chromium$'
 signal-desktop &
-sleep $((2*{{/i3/init-multiplier}}))
+poll_window class '^Signal$'
 i3-msg resize shrink width 20 px or 20 ppt
 i3-msg focus left
 
 i3-msg workspace 8
 notify-send 'workspace 8' 'spotify'
 spotify --force-device-scale-factor={{/x/gdk-scale}} &
-sleep $((5*{{/i3/init-multiplier}}))
+poll_window class '^Spotify$'
 
 i3-msg workspace 5
 i3-msg workspace 1

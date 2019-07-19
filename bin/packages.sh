@@ -66,7 +66,6 @@ sudo pacman -Syu --needed \
   ttf-droid \
   ttf-fira-mono \
   ttf-fira-sans \
-  ttf-freefont \
   ttf-inconsolata \
   ttf-liberation \
   ttf-opensans \
