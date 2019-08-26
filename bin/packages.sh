@@ -36,6 +36,7 @@ sudo pacman -Syu --needed \
   iotop \
   jdk-openjdk \
   jdk8-openjdk \
+  jupyter \
   keepassxc \
   lsof \
   nodejs \
@@ -57,6 +58,8 @@ sudo pacman -Syu --needed \
   sshuttle \
   sudo \
   termite \
+  texlive-core \
+  texlive-latexextra \
   the_silver_searcher \
   tmux \
   tree \
@@ -66,6 +69,7 @@ sudo pacman -Syu --needed \
   ttf-droid \
   ttf-fira-mono \
   ttf-fira-sans \
+  ttf-ibm-plex \
   ttf-inconsolata \
   ttf-liberation \
   ttf-opensans \

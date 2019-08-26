@@ -14,6 +14,12 @@
 (require 'package)
 (require 'seq)
 
+;; This works around a bug causing Bad Requests responses from
+;; https://elpa.gnu.org/packages/
+;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
+(defvar gnutls-algorithm-priority)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("melpa" . "https://melpa.org/packages/")
@@ -66,6 +72,8 @@
 
 (add-hook 'compilation-filter-hook #'colorize-compilation)
 
+(set-face-attribute 'default nil :font "IBM Plex Mono" :height 100)
+
 (use-package ace-window
   :bind (("M-p" . ace-window)))
 
@@ -74,7 +82,7 @@
 (use-package auto-complete)
 
 (use-package auto-package-update
-  :config (auto-package-update-maybe))
+  :config (auto-package-update-now))
 
 (use-package avy
   :bind (("C-c a s" . avy-goto-char-timer)
@@ -168,6 +176,31 @@
   :bind (("C-c s" . helm-swoop)
          ("M-i" . helm-swoop)))
 
+(use-package htmlize
+  :defer t
+  :config
+  (progn
+    ;; Ripped from
+    ;; https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-htmlize.el
+    ;;
+    ;; It is required to disable `fci-mode' when `htmlize-buffer' is called;
+    ;; otherwise the invisible fci characters show up as funky looking
+    ;; visible characters in the source code blocks in the html file.
+    ;; http://lists.gnu.org/archive/html/emacs-orgmode/2014-09/msg00777.html
+    (with-eval-after-load 'fill-column-indicator
+      (defvar homecookin/htmlize-initial-fci-state nil
+        "Variable to store the state of `fci-mode' when
+        `htmlize-buffer' is called.")
+      (defun homecookin/htmlize-before-hook-fci-disable ()
+        (setq homecookin/htmlize-initial-fci-state fci-mode)
+        (when fci-mode
+          (fci-mode -1)))
+      (defun homecookin/htmlize-after-hook-fci-enable-maybe ()
+        (when homecookin/htmlize-initial-fci-state
+          (fci-mode 1)))
+      (add-hook 'htmlize-before-hook #'homecookin/htmlize-before-hook-fci-disable)
+      (add-hook 'htmlize-after-hook #'homecookin/htmlize-after-hook-fci-enable-maybe))))
+
 (use-package js2-mode)
 
 (use-package json-mode)
@@ -193,6 +226,26 @@
     (global-set-key (kbd "C-a") #'mwim-beginning-of-code-or-line)
     (global-set-key (kbd "C-e") #'mwim-end-of-code-or-line)))
 
+(use-package ob-go)
+
+(use-package ob-ipython)
+
+(use-package ob-typescript)
+
+(use-package org
+  :config
+  (progn
+    (setq org-export-backends (quote (ascii html icalendar latex md odt)))
+    (setq org-startup-truncated nil)
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
+(use-package org-bullets
+  :config
+  (progn
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))))
+
+(use-package ox-gfm)
+
 (use-package projectile
   :bind-keymap ("C-c p" . projectile-command-map)
   :config (projectile-mode))
@@ -212,12 +265,9 @@
                    (concat "buildifier -mode=fix " buffer-file-name))
                   (revert-buffer nil t t))
                 t t))
-    (define-derived-mode python-skylark-mode python-mode
-      "Skylark"
-      (flycheck-mode nil))
     (add-to-list 'auto-mode-alist '("BUILD\\'" . python-bazel-build-mode))
     (add-to-list 'auto-mode-alist '("WORKSPACE\\'" . python-bazel-build-mode))
-    (add-to-list 'auto-mode-alist '("\\.bzl\\'" . python-skylark-mode))))
+    (add-to-list 'auto-mode-alist '("\\.bzl\\'" . python-bazel-build-mode))))
 
 (use-package rainbow-delimiters
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
@@ -314,7 +364,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (jsonnet-mode session use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
+    (org-bullets ob-go ob-ipython ob-typescript ox-gfm htmlize jsonnet-mode session use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(perl-indent-level 2)
  '(projectile-completion-system (quote helm))
  '(projectile-tags-command "ctags -Re -f \"%s\" --exclude=\"bazel-*\" %s")
@@ -347,7 +397,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:foreground "#2c3e50" :background "#ecf0f1")))))
 
 (let ((t1 (current-time)))
   (message (format "DONE %s (%g seconds)"

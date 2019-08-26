@@ -2,6 +2,11 @@
 
 set -euxo pipefail
 
+function cleanup {
+  last_errno=$?
+  [ $last_errno = 0 ] || notify-send 'i3 setup' "failed: $last_errno"
+}
+
 function poll_window {
   key=$1
   value=$2
@@ -23,6 +28,8 @@ function poll_window {
   done
 }
 
+trap cleanup EXIT
+
 notify-send 'i3 setup' 'begin'
 
 if [ "{{/x/display0}}" != "{{/x/display1}}" ]; then
@@ -31,6 +38,7 @@ fi
 
 systemctl --user start xautolock
 systemctl --user start redshift-gtk
+systemctl --user start dunst
 
 ($HOME/bin/natural-scrolling || true)
 sleep 5
