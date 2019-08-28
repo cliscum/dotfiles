@@ -85,8 +85,8 @@
   :config (auto-package-update-now))
 
 (use-package avy
-  :bind (("C-c a s" . avy-goto-char-timer)
-         ("C-c a l" . avy-goto-line)))
+  :bind (("C-c v s" . avy-goto-char-timer)
+         ("C-c v l" . avy-goto-line)))
 
 (use-package better-defaults
   :after helm
@@ -237,10 +237,16 @@
 (use-package org
   :config
   (progn
+    (setq org-agenda-files
+          (directory-files-recursively "~/Dropbox/Documents/org/" "\.org$"))
     (setq org-export-backends (quote (ascii html icalendar latex md odt)))
     (setq org-startup-truncated nil)
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
+          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c c") 'org-capture)))
+
 (use-package org-bullets
   :config
   (progn
