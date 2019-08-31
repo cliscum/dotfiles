@@ -271,6 +271,15 @@
   :after org
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode t))))
 
+(use-package origami
+  :config
+  (define-key origami-mode-map (kbd "C-c o C-_") 'origami-undo)
+  (define-key origami-mode-map (kbd "C-c o c") 'origami-close-all-nodes)
+  (define-key origami-mode-map (kbd "C-c o o") 'origami-open-all-nodes)
+  (define-key origami-mode-map (kbd "C-c o r") 'origami-recursively-toggle-node)
+  (define-key origami-mode-map (kbd "C-c o s") 'origami-show-only-node)
+  (global-origami-mode))
+
 (use-package ox-gfm)
 
 (use-package paren
@@ -434,6 +443,7 @@
    (quote
     (fix-word menu-bar emacs-lisp-mode emacs-lisp faces use-package-ensure makefile makefile-mode subr org-bullets ob-go ob-ipython ob-typescript ox-gfm htmlize jsonnet-mode use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(session-use-package t nil (session))
+ '(scroll-conservatively 101)
  '(tab-width 2))
 
 (custom-set-faces
