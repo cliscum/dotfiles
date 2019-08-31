@@ -69,13 +69,13 @@
 (use-package better-defaults
   :after helm
   :config
-  ;; TODO: 0.1.3 always sets ido-mode, but subsequent version will not
-  ;; if helm-mode is on.
-  (ido-mode nil)
-  :custom
-  ;; Undo a couple settings that I don't like.
-  (mouse-yank-at-point nil)
-  (select-enable-primary nil))
+  (progn
+    ;; TODO: 0.1.3 always sets ido-mode, but subsequent version will not
+    ;; if helm-mode is on.
+    (ido-mode nil)
+    ;; Undo a couple settings that I don't like.
+    (mouse-yank-at-point nil)
+    (select-enable-primary nil)))
 
 (use-package browse-url
   :custom
@@ -324,6 +324,10 @@
   :custom
   (savehist-additional-variables (quote (regexp-search-ring search-ring))))
 
+(use-package saveplace
+  :custom
+  (save-place-ignore-files-regexp "COMMIT_EDITMSG\\'"))
+
 (use-package scala-mode
   :interpreter ("scala" . scala-mode))
 
@@ -331,7 +335,10 @@
 
 (use-package session
   :commands session-initialize
-  :init (add-hook 'after-init-hook #'session-initialize))
+  :init (add-hook 'after-init-hook #'session-initialize)
+  :custom
+  (session-set-file-name-exclude-regexp
+   "[/\\]\\.overview\\|[/\\]\\.session\\|News[/\\]\\|COMMIT_EDITMSG"))
 
 (use-package sh-script
   :custom (sh-basic-offset 2))
