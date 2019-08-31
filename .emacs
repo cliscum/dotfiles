@@ -74,8 +74,8 @@
     ;; if helm-mode is on.
     (ido-mode nil)
     ;; Undo a couple settings that I don't like.
-    (mouse-yank-at-point nil)
-    (select-enable-primary nil)))
+    (setq mouse-yank-at-point nil)
+    (setq select-enable-primary nil)))
 
 (use-package browse-url
   :custom
@@ -117,6 +117,11 @@
 (use-package fill-column-indicator
   :config (add-hook 'prog-mode-hook 'fci-mode)
   :custom (fci-rule-column 80))
+
+(use-package fix-word
+  :bind (("M-c" . fix-word-capitalize)
+         ("M-l" . fix-word-downcase)
+         ("M-u" . fix-word-upcase)))
 
 (use-package flatui-theme)
 
@@ -242,10 +247,8 @@
          ("C-M-<right>" . mc/mark-all-like-this)))
 
 (use-package mwim
-  :init
-  (progn
-    (global-set-key (kbd "C-a") #'mwim-beginning-of-code-or-line)
-    (global-set-key (kbd "C-e") #'mwim-end-of-code-or-line)))
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)))
 
 (use-package ob-go)
 
@@ -254,11 +257,9 @@
 (use-package ob-typescript)
 
 (use-package org
-  :config
-  (progn
-    (global-set-key (kbd "C-c l") 'org-store-link)
-    (global-set-key (kbd "C-c a") 'org-agenda)
-    (global-set-key (kbd "C-c c") 'org-capture))
+  :bind (("C-c l" . org-store-link)
+         ("C-c a" . org-agenda)
+         ("C-c c" . org-capture))
   :custom
   (org-agenda-files (list "~/Dropbox/Documents/org"))
   (org-export-backends (quote (ascii html icalendar latex md odt)))
@@ -431,7 +432,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (menu-bar emacs-lisp-mode emacs-lisp faces use-package-ensure makefile makefile-mode subr org-bullets ob-go ob-ipython ob-typescript ox-gfm htmlize jsonnet-mode use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
+    (fix-word menu-bar emacs-lisp-mode emacs-lisp faces use-package-ensure makefile makefile-mode subr org-bullets ob-go ob-ipython ob-typescript ox-gfm htmlize jsonnet-mode use-package helm-swoop dashboard esup flycheck-pos-tip helm-flycheck super-save jiggle-mode web-mode spaceline fill-column-indicator column-marker wakatime-mode undo-tree powerline expand-region golden-ratio yaml-mode use-package tide smartparens rainbow-delimiters markdown-mode magit json-mode js2-mode helm-projectile helm-ag guide-key go-mode ensime eclim dockerfile-mode delight csv-mode coffee-mode better-defaults auto-complete ace-window)))
  '(session-use-package t nil (session))
  '(tab-width 2))
 
