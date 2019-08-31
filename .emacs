@@ -150,12 +150,6 @@
   :config (golden-ratio-mode 1)
   :custom (golden-ratio-auto-scale t))
 
-(use-package guide-key
-  :config (guide-key-mode t)
-  :custom
-  (guide-key/guide-key-sequence t)
-  (guide-key/idle-delay 0.5))
-
 (use-package helm
   :bind (("C-x C-f" . helm-find-files)
          ("C-x b" . helm-mini)
@@ -411,6 +405,10 @@
   (web-mode-css-indent-offset 2)
   (web-mode-markup-indent-offset 2)
   (web-mode-sql-indent-offset 2))
+
+(use-package which-key
+  :custom
+  (which-key-idle-delay 0.5))
 
 (use-package whitespace
   :diminish global-whitespace-mode
